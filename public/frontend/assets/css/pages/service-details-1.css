@@ -1,0 +1,24 @@
+/* Service Details Custom Styling */
+.service-image-wrap img {
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+.service-content h1 {
+    font-weight: 800;
+    color: var(--rr-color-heading, #212b36);
+}
+.service-content .lead {
+    font-size: 18px;
+    line-height: 1.8;
+}
+.description-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--rr-color-border-1, #eee);
+}
+.description-content {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--rr-color-text-body, #637381);
+}
