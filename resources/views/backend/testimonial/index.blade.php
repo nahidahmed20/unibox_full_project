@@ -52,12 +52,15 @@
                     @csrf
                     <input type="hidden" id="testimonial_id" name="testimonial_id">
 
-                    <div class="modern-card-header d-flex justify-content-between align-items-center" style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 id="modalTitle" style="color:#fff; margin-bottom:0;">Add Testimonial</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold d-flex align-items-center gap-2" id="modalTitle">
+                            <i class="fa-solid fa-comment-dots text-primary"></i>
+                            <span>Add Testimonial</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="modal-body p-4">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="fw-semibold">Customer Name <span class="text-danger">*</span></label>
@@ -109,8 +112,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="saveBtn">Save Testimonial</button>
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm" id="saveBtn">Save Testimonial</button>
                     </div>
                 </form>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Color;
+use App\Models\Coupon;
 use App\Models\Location;
 use App\Models\Order;
 use App\Models\Product;
@@ -53,15 +54,79 @@ class FontOrderController extends Controller
         }
 
         $divisions = Location::where('type', 'division')->get();
-        $shippingCost = Shipping::where('zone', session('shipping_zone', 'inside_dhaka'))->value('shipping_cost') ?? 0;
-        session(['shipping_cost' => $shippingCost]);
         $subtotal = collect($cart)->sum(fn ($i) => $i['price'] * $i['quantity']);
-        $total = $subtotal + $shippingCost;
+
+        // Shipping Calculation with Free Shipping Threshold
+        $shippingCost = (float) (Shipping::where('zone', session('shipping_zone', 'inside_dhaka'))->value('shipping_cost') ?? 0);
+        $freeThreshold = (float) setting('free_shipping_threshold', 0);
+        if ($freeThreshold > 0 && $subtotal >= $freeThreshold) {
+            $shippingCost = 0.00;
+        }
+        session(['shipping_cost' => $shippingCost]);
+
+        // Coupon calculation
+        $discount = 0.00;
+        $appliedCoupon = session('coupon');
+        if ($appliedCoupon && !empty($appliedCoupon['code'])) {
+            $coupon = Coupon::where('code', $appliedCoupon['code'])->where('status', 1)->first();
+            if ($coupon) {
+                $check = $coupon->isValidForAmount($subtotal);
+                if ($check['valid']) {
+                    $discount = $coupon->calculateDiscount($subtotal);
+                    session(['coupon' => ['code' => $coupon->code, 'discount' => $discount, 'id' => $coupon->id]]);
+                } else {
+                    session()->forget('coupon');
+                    $appliedCoupon = null;
+                }
+            } else {
+                session()->forget('coupon');
+                $appliedCoupon = null;
+            }
+        }
+
+        $total = max(0, round(($subtotal - $discount) + $shippingCost, 2));
 
         return view(
             'frontend.checkout.place-order',
-            compact('cart', 'subtotal', 'shippingCost', 'total', 'divisions')
+            compact('cart', 'subtotal', 'shippingCost', 'discount', 'appliedCoupon', 'total', 'divisions')
         );
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $request->validate([
+            'coupon_code' => 'required|string',
+        ]);
+
+        $code = strtoupper(trim($request->coupon_code));
+        $coupon = Coupon::where('code', $code)->first();
+
+        if (! $coupon) {
+            return back()->with('error', 'Invalid coupon code.');
+        }
+
+        $cart = session('cart', []);
+        $subtotal = collect($cart)->sum(fn ($i) => $i['price'] * $i['quantity']);
+
+        $check = $coupon->isValidForAmount($subtotal);
+        if (! $check['valid']) {
+            return back()->with('error', $check['message']);
+        }
+
+        $discount = $coupon->calculateDiscount($subtotal);
+        session(['coupon' => [
+            'id' => $coupon->id,
+            'code' => $coupon->code,
+            'discount' => $discount
+        ]]);
+
+        return back()->with('success', "Coupon '{$coupon->code}' applied successfully! You saved ৳" . number_format($discount, 2));
+    }
+
+    public function removeCoupon()
+    {
+        session()->forget('coupon');
+        return back()->with('success', 'Coupon removed successfully.');
     }
 
     public function getDistricts($division_id)
@@ -99,7 +164,11 @@ class FontOrderController extends Controller
         ]);
         try {
             $order = app(CheckoutService::class)->place(
-                $data, session('cart', []), session('shipping_zone', 'inside_dhaka'), auth('customer')->id()
+                $data,
+                session('cart', []),
+                session('shipping_zone', 'inside_dhaka'),
+                auth('customer')->id(),
+                session('coupon')
             );
         } catch (ValidationException $e) {
             throw $e;
@@ -109,7 +178,7 @@ class FontOrderController extends Controller
             return back()->withInput()->with('error', 'Unable to place the order. Please try again.');
         }
         session()->put('placed_orders.'.$order->order_number, true);
-        session()->forget(['cart', 'shipping_cost']);
+        session()->forget(['cart', 'shipping_cost', 'coupon']);
 
         return redirect()->route('order.success', $order->order_number)->with('success', 'Order placed successfully.');
     }

@@ -20,6 +20,9 @@
     <main id="main-content">@yield('content')</main>
     @include('frontend.partials.footer')
     @include('frontend.partials.script')
+    @if(setting('custom_footer_scripts'))
+        {!! setting('custom_footer_scripts') !!}
+    @endif
     <script
         src="{{ asset('frontend/assets/js/storefront.js') }}?v={{ filemtime(public_path('frontend/assets/js/storefront.js')) }}"
         defer></script>

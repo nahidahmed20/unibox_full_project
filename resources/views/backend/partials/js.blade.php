@@ -191,48 +191,157 @@
         sparkline3.render();
     </script>
     <!-- jQuery (already included) -->
+    <!-- Toastr (for compatibility) & SweetAlert2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <!-- DataTables JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- DataTables Core & Export Plugins -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
-
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- Optional: jsPDF & pdfmake for PDF export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
     <script>
+        // =========================================================
+        // SWEETALERT2 MODERN TOAST SYSTEM (GLOBAL REPLACEMENT FOR TOASTR)
+        // =========================================================
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+        window.Toast = Toast;
+
+        // Bridge legacy toastr calls directly to SweetAlert2 so all pages look uniform
+        window.toastr = {
+            success: function(message, title) {
+                Toast.fire({
+                    icon: 'success',
+                    title: title || message,
+                    html: title ? message : undefined,
+                    customClass: { popup: 'swal-toast-custom' }
+                });
+            },
+            error: function(message, title) {
+                Toast.fire({
+                    icon: 'error',
+                    title: title || message,
+                    html: title ? message : undefined,
+                    customClass: { popup: 'swal-toast-custom' }
+                });
+            },
+            warning: function(message, title) {
+                Toast.fire({
+                    icon: 'warning',
+                    title: title || message,
+                    html: title ? message : undefined,
+                    customClass: { popup: 'swal-toast-custom' }
+                });
+            },
+            info: function(message, title) {
+                Toast.fire({
+                    icon: 'info',
+                    title: title || message,
+                    html: title ? message : undefined,
+                    customClass: { popup: 'swal-toast-custom' }
+                });
+            }
+        };
+
+        // Automatic Flash Session Messages via SweetAlert2
         $(document).ready(function() {
             @if(session('success'))
-                toastr.success("{{ session('success') }}");
+                Toast.fire({
+                    icon: 'success',
+                    title: "{{ session('success') }}",
+                    customClass: { popup: 'swal-toast-custom' }
+                });
             @endif
 
             @if(session('error'))
-                toastr.error("{{ session('error') }}");
+                Toast.fire({
+                    icon: 'error',
+                    title: "{{ session('error') }}",
+                    customClass: { popup: 'swal-toast-custom' }
+                });
+            @endif
+
+            @if(session('warning'))
+                Toast.fire({
+                    icon: 'warning',
+                    title: "{{ session('warning') }}",
+                    customClass: { popup: 'swal-toast-custom' }
+                });
+            @endif
+
+            @if(session('info'))
+                Toast.fire({
+                    icon: 'info',
+                    title: "{{ session('info') }}",
+                    customClass: { popup: 'swal-toast-custom' }
+                });
             @endif
         });
 
+        // =========================================================
+        // GLOBAL DATATABLES DEFAULTS & EXPORT BUTTONS
+        // =========================================================
+        if (typeof $.fn.dataTable !== 'undefined') {
+            $.extend(true, $.fn.dataTable.defaults, {
+                dom: '<"row align-items-center mb-3"' +
+                    '<"col-md-4 col-sm-12"l>' +
+                    '<"col-md-4 col-sm-12 d-flex justify-content-center my-2 my-md-0"B>' +
+                    '<"col-md-4 col-sm-12 d-flex justify-content-end"f>' +
+                    '>rt' +
+                    '<"d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2"ip>',
+                buttons: [
+                    { extend: 'copy', text: '<i class="fa-regular fa-copy me-1"></i> Copy', className: 'btn btn-sm btn-light border shadow-sm' },
+                    { extend: 'excel', text: '<i class="fa-regular fa-file-excel me-1 text-success"></i> Excel', className: 'btn btn-sm btn-light border shadow-sm' },
+                    { extend: 'csv', text: '<i class="fa-solid fa-file-csv me-1 text-info"></i> CSV', className: 'btn btn-sm btn-light border shadow-sm' },
+                    { extend: 'pdf', text: '<i class="fa-regular fa-file-pdf me-1 text-danger"></i> PDF', className: 'btn btn-sm btn-light border shadow-sm' },
+                    { extend: 'print', text: '<i class="fa-solid fa-print me-1 text-dark"></i> Print', className: 'btn btn-sm btn-light border shadow-sm' }
+                ],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search records...",
+                    lengthMenu: "Show _MENU_ entries",
+                    paginate: {
+                        previous: '<i class="fa-solid fa-chevron-left"></i>',
+                        next: '<i class="fa-solid fa-chevron-right"></i>'
+                    }
+                }
+            });
+        }
+
+        // Global Delete Confirmation Action
         $(document).ready(function(){
             $(document).on('click', '.btn-delete', function() {
                 let form = $(this).closest('.delete-form');
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "This product will be permanently deleted!",
+                    text: "This item will be permanently deleted!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#e74c3c',
-                    cancelButtonColor: '#6c757d',
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#64748b',
                     confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel',
                     customClass: {
-                        confirmButton: 'rounded-pill px-4',
-                        cancelButton: 'rounded-pill px-4'
+                        confirmButton: 'btn btn-danger px-4',
+                        cancelButton: 'btn btn-light border px-4'
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -241,9 +350,14 @@
                             type: 'POST',
                             data: form.serialize(),
                             success: function(res) {
-                                toastr.success(res.message);
+                                toastr.success(res.message || 'Item deleted successfully!');
                                 let dt = form.closest('table').DataTable();
-                                dt.ajax.reload(null, false);
+                                if (dt) {
+                                    dt.ajax.reload(null, false);
+                                }
+                            },
+                            error: function(err) {
+                                toastr.error('Failed to delete item.');
                             }
                         });
                     }

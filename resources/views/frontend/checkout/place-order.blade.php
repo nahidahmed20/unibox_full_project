@@ -168,15 +168,45 @@
                             @endforelse
                         </div>
 
-                        <div class="mt-4 px-2">
+                        {{-- COUPON VOUCHER INPUT BOX --}}
+                        <div class="coupon-box mt-3 mb-2 px-2">
+                            @if(!empty($appliedCoupon))
+                                <div class="p-2 d-flex justify-content-between align-items-center rounded" style="background: #ecfdf5; border: 1px dashed #10b981;">
+                                    <div>
+                                        <span class="badge bg-success" style="letter-spacing: 1px;">{{ $appliedCoupon['code'] }}</span>
+                                        <small class="text-success ms-1 fw-bold">-৳{{ number_format($discount ?? $appliedCoupon['discount'], 2) }} OFF</small>
+                                    </div>
+                                    <button type="submit" form="removeCouponForm" class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size: 11px;">Remove</button>
+                                </div>
+                            @else
+                                <div class="input-group">
+                                    <input type="text" name="coupon_code" form="applyCouponForm" class="form-control form-control-sm text-uppercase" placeholder="Coupon Code (e.g. EID50)" required>
+                                    <button type="submit" form="applyCouponForm" class="btn btn-dark btn-sm px-3" style="font-size: 12px; font-weight: 600;">Apply</button>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="mt-3 px-2">
                             <div class="totals-row">
                                 <span>Subtotal</span>
                                 <span style="font-weight: 600; color: #111;">৳{{ number_format($subtotal, 2) }}</span>
                             </div>
                             <div class="totals-row">
                                 <span>Shipping Cost</span>
-                                <span style="font-weight: 600; color: #111;">৳{{ number_format($shippingCost, 2) }}</span>
+                                <span style="font-weight: 600; color: #111;">
+                                    @if($shippingCost == 0)
+                                        <span class="text-success fw-bold">FREE</span>
+                                    @else
+                                        ৳{{ number_format($shippingCost, 2) }}
+                                    @endif
+                                </span>
                             </div>
+                            @if(!empty($discount) && $discount > 0)
+                            <div class="totals-row" style="color: #16a34a;">
+                                <span>Coupon Discount ({{ $appliedCoupon['code'] ?? '' }})</span>
+                                <span style="font-weight: 600;">-৳{{ number_format($discount, 2) }}</span>
+                            </div>
+                            @endif
                             <div class="totals-row grand-total">
                                 <span>Total Amount</span>
                                 <span>৳{{ number_format($total, 2) }}</span>
@@ -213,6 +243,14 @@
         </form>
     </div>
 </section>
+
+{{-- AUXILIARY COUPON ACTION FORMS --}}
+<form id="applyCouponForm" action="{{ route('coupon.apply') }}" method="POST" class="d-none">
+    @csrf
+</form>
+<form id="removeCouponForm" action="{{ route('coupon.remove') }}" method="POST" class="d-none">
+    @csrf
+</form>
 
 @endsection
 

@@ -77,12 +77,15 @@
     </div>
 </div>
 
-<!-- ================= ORDER MODAL ================= -->
-<div class="modal fade" id="showOrderModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header bg-light">
-                <h5 class="modal-title fw-bold">Order Details</h5>
+<!-- ================= ORDER MODAL (EXPANDED XL WIDTH) ================= -->
+<div class="modal fade" id="showOrderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-receipt text-primary me-2"></i>
+                    Order & Invoice Details
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-0" id="orderDetails">

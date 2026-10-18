@@ -5,20 +5,9 @@
 @section('content')
 @push('styles')
     <style>
-        .shopify-modal {
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .shopify-header {
-            background: #000032;
-            color: #fff;
-            padding: 15px 20px;
-        }
-
         .shopify-box {
             background: #fff;
-            border: 1px solid #eee;
+            border: 1px solid #edf2f7;
             border-radius: 12px;
             padding: 15px;
         }
@@ -48,7 +37,7 @@
             
             <div class="card modern-card">
                 <div class="modern-card-header">
-                    <h4 class="card-title"><i class="fa-solid fa-list-ul text-muted me-2"></i> All Adjustments</h4>
+                    <h4 class="card-title"><i class="fa-solid fa-boxes-stacked text-muted me-2"></i> All Adjustments</h4>
                     <a href="{{ route('stock-adjustments.create') }}" class="btn btn-dark rounded-pill px-4 fw-bold shadow-sm">
                         <i class="fa-solid fa-plus me-1"></i> Add Adjustment
                     </a>
@@ -56,7 +45,7 @@
                 
                 <div class="card-body p-0">
                     <div class="table-responsive p-4">
-                        <table class="table table-striped table-bordered" id="adjustmentTable" style="width:100%">
+                        <table class="table table-modern table-hover w-100" id="adjustmentTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -80,11 +69,14 @@
     <!-- ================= MODAL ================= -->
     <div class="modal fade" id="adjustmentModal" tabindex="-1">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content shopify-modal">
+            <div class="modal-content">
 
-                <div class="modal-header shopify-header">
-                    <h5 class="modal-title">Adjustment Details</h5>
-                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-boxes-stacked text-primary"></i>
+                        <span>Adjustment Details</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body" id="adjustmentModalBody"></div>

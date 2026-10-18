@@ -25,7 +25,7 @@
 <!--end::Head-->
 <!--begin::Body-->
 
-<body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+<body class="layout-fixed sidebar-expand-lg {{ request()->routeIs('sales.create') ? 'sidebar-collapse' : 'sidebar-open' }} bg-body-tertiary">
     <audio id="order-sound" src="{{ asset('backend/sounds/notification.wav') }}" preload="auto"></audio>
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
@@ -41,6 +41,7 @@
             @yield('content')
         </main>
         <!--end::App Main-->
+        @unless(request()->routeIs('sales.create'))
         <!--begin::Footer-->
         <footer class="app-footer">
             <!--begin::To the end-->
@@ -55,6 +56,7 @@
             <!--end::Copyright-->
         </footer>
         <!--end::Footer-->
+        @endunless
     </div>
 
     @include('backend.partials.js')

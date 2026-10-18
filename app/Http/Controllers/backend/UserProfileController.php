@@ -96,10 +96,11 @@ class UserProfileController extends Controller
             'postal_code' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:100',
 
-            'division_id' => 'nullable|exists:divisions,id',
-            'district_id' => 'nullable|exists:districts,id',
-            'upazila_id' => 'nullable|exists:upazilas,id',
+            'division_id' => 'nullable|exists:locations,id',
+            'district_id' => 'nullable|exists:locations,id',
+            'upazila_id' => 'nullable|exists:locations,id',
 
+            'password' => 'nullable|string|min:6|confirmed',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
@@ -123,6 +124,10 @@ class UserProfileController extends Controller
 
         $user->postal_code = $request->postal_code;
         $user->country = $request->country;
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
 
         if ($request->hasFile('image')) {
 

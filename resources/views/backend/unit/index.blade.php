@@ -68,39 +68,37 @@
     {{-- MODAL --}}
 
     <div class="modal fade" id="unitModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="unitForm">
                     @csrf
                     <input type="hidden" id="unit_id" name="unit_id">
-                    <div class="modern-card-header d-flex justify-content-between align-items-center"
-                        style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 class="card-title mb-0" style="color:#fff;">
-                            <i class="fa-solid fa-ruler me-2" style="color:#fff;"></i>
-                            <span id="modalTitle" style="color:#fff;">
-                                Add Unit
-                            </span>
-                        </h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <div>
+                            <h5 class="modal-title">
+                                <i class="bi bi-rulers text-primary"></i>
+                                <span id="modalTitle">Add Unit</span>
+                            </h5>
+                            <p class="text-muted mb-0 mt-1" style="font-size: 12px; font-weight: 500;">Configure product measurement units</p>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Unit Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
+                            <label class="form-label">Unit Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required placeholder="e.g. Piece, Kilogram, Box">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Short Name</label>
-                            <input type="text" class="form-control" id="short_name" name="short_name">
+                        <div class="mb-2">
+                            <label class="form-label">Short Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="short_name" name="short_name" required placeholder="e.g. pc, kg, bx">
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            Save
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveUnitBtn">
+                            <i class="bi bi-check2 me-1"></i> Save Unit
                         </button>
                     </div>
                 </form>

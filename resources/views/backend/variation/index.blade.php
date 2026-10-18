@@ -64,7 +64,7 @@
     .select2-container--default
         .select2-results__option--highlighted[aria-selected] {
 
-        background: #000032 !important;
+        background: #4361ee !important;
         color: #fff;
     }
 
@@ -92,9 +92,9 @@
     }
 
     .variation-tag:hover{
-        background:#000032;
+        background:#4361ee;
         color:#fff;
-        border-color:#000032;
+        border-color:#4361ee;
     }
 </style>
     <div class="app-content-header mb-4 mt-3">
@@ -153,60 +153,77 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="variationModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+    <!-- Compact & Luxury Variation Modal -->
+    <div class="modal fade" id="variationModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 560px;">
             <div class="modal-content">
                 <form id="variationForm">
                     @csrf
                     <input type="hidden" id="variation_id">
-                    <div class="modern-card-header d-flex justify-content-between align-items-center"
-                        style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 id="modalTitle" style="color:#fff; margin-bottom:0;">
-                            Add Variation
-                        </h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-layer-group text-primary"></i>
+                            <span id="modalTitle">Add Variation</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="modal-body p-4">
+                        {{-- 1. Variation Name --}}
                         <div class="mb-3">
-                            <label class="form-label">
-                                Variation Name
+                            <label class="form-label fw-bold text-dark small text-uppercase mb-1">
+                                Variation Name <span class="text-danger">*</span>
                             </label>
-                            <input type="text" id="name" class="form-control" placeholder="Variation Name">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-primary border-end-0">
+                                    <i class="bi bi-tag-fill"></i>
+                                </span>
+                                <input type="text" id="name" class="form-control border-start-0 ps-0 fw-semibold" placeholder="e.g. Size, Material, Capacity, Pack" required>
+                            </div>
+                            <div class="d-flex align-items-center gap-1 mt-2 flex-wrap" style="font-size: 11px;">
+                                <span class="text-muted">Suggestions:</span>
+                                <span class="badge bg-light text-primary border cursor-pointer quick-variation-suggest" data-name="Size">Size</span>
+                                <span class="badge bg-light text-primary border cursor-pointer quick-variation-suggest" data-name="Material">Material</span>
+                                <span class="badge bg-light text-primary border cursor-pointer quick-variation-suggest" data-name="Weight">Weight</span>
+                                <span class="badge bg-light text-primary border cursor-pointer quick-variation-suggest" data-name="Pack Size">Pack Size</span>
+                            </div>
                         </div>
+
+                        {{-- 2. Select Values / Sizes --}}
                         <div class="mb-3">
-                            <label class="form-label">
-                                Select Sizes
+                            <label class="form-label fw-bold text-dark small text-uppercase mb-1">
+                                Variation Options / Values <span class="text-danger">*</span>
                             </label>
-                            <select id="sizes" class="form-select" multiple>
+                            <select id="sizes" class="form-select" multiple required>
                                 @foreach ($sizes as $size)
                                     <option value="{{ $size->id }}">
                                         {{ $size->name }}
                                     </option>
                                 @endforeach
                             </select>
+                            <small class="text-muted d-block mt-1" style="font-size: 11px;">
+                                <i class="bi bi-info-circle me-1"></i> Choose all available sizes or values that belong to this variation group.
+                            </small>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">
+
+                        {{-- 3. Status --}}
+                        <div class="mb-0">
+                            <label class="form-label fw-bold text-dark small text-uppercase mb-1">
                                 Status
                             </label>
                             <select id="status" class="form-select">
-                                <option value="1">
-                                    Active
-                                </option>
-                                <option value="0">
-                                    Inactive
-                                </option>
+                                <option value="1">Active (Available in Product Form)</option>
+                                <option value="0">Inactive (Hidden)</option>
                             </select>
                         </div>
                     </div>
+
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                            Cancel
                         </button>
-                        <button class="btn btn-primary">
-                            Save
+                        <button type="submit" class="btn btn-primary" id="saveVariationBtn">
+                            <i class="bi bi-check2-circle me-1"></i> Save Variation
                         </button>
                     </div>
                 </form>
@@ -297,6 +314,11 @@
                         next: '<i class="fa-solid fa-angle-right"></i>'
                     }
                 }
+            });
+
+            // SUGGESTION PILLS
+            $(document).on('click', '.quick-variation-suggest', function() {
+                $('#name').val($(this).data('name')).focus();
             });
 
             // ADD

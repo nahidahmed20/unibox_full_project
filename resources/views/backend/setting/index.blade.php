@@ -222,14 +222,111 @@
                                     value="{{ $settings['copyright_text'] ?? '' }}">
                             </div>
 
-                            {{-- MAP --}}
+                            {{-- DIGITAL MARKETING & TRACKING PIXELS --}}
                             <div class="col-12 mt-4 mb-3">
-                                <h5 class="fw-bold text-muted">Google Map</h5>
+                                <h5 class="fw-bold text-muted"><i class="fa-solid fa-chart-line text-primary me-2"></i> Digital Marketing & Tracking Pixels</h5>
                                 <hr>
                             </div>
 
-                            <div class="col-md-12 mb-3">
-                                <textarea name="google_map" class="form-control" rows="3">{{ $settings['google_map'] ?? '' }}</textarea>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Facebook Pixel ID</label>
+                                <input type="text" name="fb_pixel_id" class="form-control" placeholder="e.g. 123456789012345"
+                                    value="{{ $settings['fb_pixel_id'] ?? '' }}">
+                                <small class="text-muted">Enter your Meta Pixel ID to track page views and purchases.</small>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Facebook CAPI Access Token</label>
+                                <input type="text" name="fb_capi_token" class="form-control" placeholder="Optional Conversions API Token"
+                                    value="{{ $settings['fb_capi_token'] ?? '' }}">
+                                <small class="text-muted">For server-side tracking (Conversions API).</small>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Google Analytics (GA4) Measurement ID</label>
+                                <input type="text" name="ga_measurement_id" class="form-control" placeholder="e.g. G-XXXXXXXXXX"
+                                    value="{{ $settings['ga_measurement_id'] ?? '' }}">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Google Tag Manager (GTM) Container ID</label>
+                                <input type="text" name="gtm_id" class="form-control" placeholder="e.g. GTM-XXXXXXX"
+                                    value="{{ $settings['gtm_id'] ?? '' }}">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Custom Header Scripts (&lt;head&gt;)</label>
+                                <textarea name="custom_header_scripts" class="form-control font-monospace" rows="3" placeholder="Additional meta tags or scripts to inject into header">{{ $settings['custom_header_scripts'] ?? '' }}</textarea>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Custom Footer Scripts (&lt;/body&gt;)</label>
+                                <textarea name="custom_footer_scripts" class="form-control font-monospace" rows="3" placeholder="Chat widget scripts, live support, or tracking tags">{{ $settings['custom_footer_scripts'] ?? '' }}</textarea>
+                            </div>
+
+                            {{-- COURIER API CONFIGURATION --}}
+                            <div class="col-12 mt-4 mb-3">
+                                <h5 class="fw-bold text-muted"><i class="fa-solid fa-truck-fast text-success me-2"></i> Courier API Integrations</h5>
+                                <hr>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Steadfast API Key</label>
+                                <input type="text" name="steadfast_api_key" class="form-control" placeholder="Steadfast API Key"
+                                    value="{{ $settings['steadfast_api_key'] ?? '' }}">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Steadfast Secret Key</label>
+                                <input type="text" name="steadfast_secret_key" class="form-control" placeholder="Steadfast Secret Key"
+                                    value="{{ $settings['steadfast_secret_key'] ?? '' }}">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="fw-bold">Pathao Client ID</label>
+                                <input type="text" name="pathao_client_id" class="form-control" placeholder="Pathao Client ID"
+                                    value="{{ $settings['pathao_client_id'] ?? '' }}">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="fw-bold">Pathao Client Secret</label>
+                                <input type="text" name="pathao_client_secret" class="form-control" placeholder="Pathao Client Secret"
+                                    value="{{ $settings['pathao_client_secret'] ?? '' }}">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="fw-bold">Pathao Store ID</label>
+                                <input type="text" name="pathao_store_id" class="form-control" placeholder="Pathao Store ID"
+                                    value="{{ $settings['pathao_store_id'] ?? '' }}">
+                            </div>
+
+                            {{-- AUTOMATED SMS & ECOMMERCE RULES --}}
+                            <div class="col-12 mt-4 mb-3">
+                                <h5 class="fw-bold text-muted"><i class="fa-solid fa-bell text-warning me-2"></i> Automated SMS & E-Commerce Rules</h5>
+                                <hr>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="fw-bold">Order Confirmation SMS</label>
+                                <select name="order_sms_enabled" class="form-select">
+                                    <option value="1" {{ ($settings['order_sms_enabled'] ?? '') == '1' ? 'selected' : '' }}>Enabled (Send SMS on new order)</option>
+                                    <option value="0" {{ ($settings['order_sms_enabled'] ?? '') == '0' ? 'selected' : '' }}>Disabled</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="fw-bold">Order Status Update SMS</label>
+                                <select name="status_sms_enabled" class="form-select">
+                                    <option value="1" {{ ($settings['status_sms_enabled'] ?? '') == '1' ? 'selected' : '' }}>Enabled (Send SMS on status change)</option>
+                                    <option value="0" {{ ($settings['status_sms_enabled'] ?? '') == '0' ? 'selected' : '' }}>Disabled</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="fw-bold">Free Shipping Minimum Threshold (৳)</label>
+                                <input type="number" step="0.01" name="free_shipping_threshold" class="form-control" placeholder="0 = Disabled"
+                                    value="{{ $settings['free_shipping_threshold'] ?? '' }}">
+                                <small class="text-muted">Auto free delivery if subtotal exceeds this amount.</small>
                             </div>
                         </div>
                     </form>

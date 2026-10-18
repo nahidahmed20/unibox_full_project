@@ -36,17 +36,22 @@ class CategoryController extends Controller implements HasMiddleware
         return datatables()->of($categories)
             ->addIndexColumn()
             ->addColumn('parent', function ($row) {
-                return $row->parent ? $row->parent->name : '<span class="badge bg-secondary">None</span>';
+                return $row->parent ? e($row->parent->name) : '<span class="badge bg-secondary-subtle text-secondary border px-2 py-1">None</span>';
             })
             ->addColumn('image', function ($row) {
-                return $row->image
-                    ? '<img src="'.asset($row->image).'" width="70" height="70">'
-                    : 'No Image';
+                if ($row->image && file_exists(public_path($row->image))) {
+                    return '<img src="'.asset($row->image).'" class="rounded-3 border shadow-sm object-fit-cover" width="48" height="48" alt="'.e($row->name).'">';
+                }
+                return '<div class="d-inline-flex align-items-center justify-content-center rounded-3 bg-light border text-muted" style="width: 48px; height: 48px;" title="No Image"><i class="bi bi-image" style="font-size: 1.25rem;"></i></div>';
+            })
+            ->addColumn('description', function ($row) {
+                return $row->description ? Str::limit(e($row->description), 50) : '<span class="text-muted fst-italic" style="font-size: 12px;">No description</span>';
             })
             ->addColumn('status', function ($row) {
-                return $row->status
-                    ? '<span class="badge bg-success">Active</span>'
-                    : '<span class="badge bg-danger">Inactive</span>';
+                $isActive = in_array((string)$row->status, ['1', 'active', 'true'], true);
+                return $isActive
+                    ? '<span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><i class="bi bi-check-circle me-1"></i>Active</span>'
+                    : '<span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1"><i class="bi bi-x-circle me-1"></i>Inactive</span>';
             })
             ->addColumn('action', function ($row) {
                 $buttons = '';
@@ -75,8 +80,7 @@ class CategoryController extends Controller implements HasMiddleware
                     <div class="d-flex align-items-center justify-content-center gap-2">'.$buttons.' </div>
                 ';
             })
-
-            ->rawColumns(['parent', 'image', 'status', 'action'])
+            ->rawColumns(['parent', 'image', 'description', 'status', 'action'])
             ->make(true);
     }
 
@@ -108,6 +112,7 @@ class CategoryController extends Controller implements HasMiddleware
         ]);
 
         $data['slug'] = Str::slug($request->name);
+        $data['status'] = in_array((string)$request->status, ['1', 'active', 'true'], true) ? '1' : '0';
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -155,6 +160,7 @@ class CategoryController extends Controller implements HasMiddleware
         if ($category->image) {
             $category->image = asset($category->image);
         }
+        $category->status = in_array((string)$category->status, ['1', 'active', 'true'], true) ? '1' : '0';
 
         return response()->json($category);
     }
@@ -172,8 +178,9 @@ class CategoryController extends Controller implements HasMiddleware
             'status' => 'required',
         ]);
 
-        $data = $request->only(['parent_id', 'name', 'description']);
+        $data = $request->only(['parent_id', 'name', 'description', 'status']);
         $data['slug'] = Str::slug($request->name);
+        $data['status'] = in_array((string)$request->status, ['1', 'active', 'true'], true) ? '1' : '0';
 
         if ($request->hasFile('image')) {
             if ($category->image && file_exists(public_path($category->image))) {
@@ -195,7 +202,7 @@ class CategoryController extends Controller implements HasMiddleware
                 'id' => $category->id,
                 'name' => $category->name,
                 'description' => $category->description,
-                'image' => $category->image ? asset('storage/'.$category->image) : null,
+                'image' => $category->image ? asset($category->image) : null,
                 'status' => $category->status,
             ],
         ]);

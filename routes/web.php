@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\backend\AboutUsController;
 use App\Http\Controllers\backend\AttributeController;
+use App\Http\Controllers\backend\BackupController;
 use App\Http\Controllers\backend\BlockedPhoneController;
 use App\Http\Controllers\backend\BlogCategoryController;
 use App\Http\Controllers\backend\BlogController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\ShippingController;
 use App\Http\Controllers\backend\SizeController;
 use App\Http\Controllers\backend\SliderController;
+use App\Http\Controllers\backend\SpecificationController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\SupplierController;
 use App\Http\Controllers\backend\TeamController;
@@ -83,6 +85,8 @@ Route::get('/get-districts/{division_id}', [FontOrderController::class, 'getDist
 Route::get('/get-upazilas/{district_id}', [FontOrderController::class, 'getUpazilas']);
 Route::post('/checkout/place-order', [FontOrderController::class, 'placeOrder'])->block(10, 10)->middleware('throttle:10,1')->name('checkout.placeOrder');
 Route::get('/order-success/{order_number}', [FontOrderController::class, 'orderSuccess'])->name('order.success');
+Route::post('/coupon/apply', [FontOrderController::class, 'applyCoupon'])->name('coupon.apply');
+Route::post('/coupon/remove', [FontOrderController::class, 'removeCoupon'])->name('coupon.remove');
 
 Route::get('/get-districts', [CartController::class, 'getDistricts'])->name('get.districts');
 Route::get('/get-upazilas', [CartController::class, 'getUpazilas'])->name('get.upazilas');
@@ -174,6 +178,7 @@ Route::middleware(['auth', 'staff'])->prefix('admin')->group(function () {
     Route::get('/order/pending-count', [OrderController::class, 'getPendingCount']);
 
     Route::resource('attributes', AttributeController::class)->except(['create', 'show']);
+    Route::resource('specifications', SpecificationController::class)->except(['create', 'show']);
 
     Route::resource('teams', TeamController::class)->except(['create', 'show']);
     Route::resource('testimonials', TestimonialController::class)->except(['create', 'show']);
@@ -219,10 +224,25 @@ Route::middleware(['auth', 'staff'])->prefix('admin')->group(function () {
     Route::get('order/return', [SaleController::class, 'orderReturn'])->name('order.return');
     Route::get('order/cancelled', [SaleController::class, 'orderCancelled'])->name('order.cancelled');
 
+    // Coupons
+    Route::resource('coupons', \App\Http\Controllers\backend\CouponController::class);
+    Route::post('coupons/{id}/toggle-status', [\App\Http\Controllers\backend\CouponController::class, 'toggleStatus'])->name('coupons.toggle-status');
+
+    // Customer Reviews Moderation
+    Route::get('reviews', [\App\Http\Controllers\backend\ReviewController::class, 'index'])->name('admin.reviews.index');
+    Route::post('reviews/{id}/toggle-status', [\App\Http\Controllers\backend\ReviewController::class, 'toggleStatus'])->name('admin.reviews.toggle-status');
+    Route::delete('reviews/{id}', [\App\Http\Controllers\backend\ReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+
+    // Courier Dispatch
+    Route::post('orders/{id}/send-to-steadfast', [OrderController::class, 'sendToSteadfast'])->name('orders.send-to-steadfast');
+
     // Reports
     Route::get('reports/total-income', [ReportController::class, 'totalIncome'])->name('reports.total-income');
     Route::get('reports/sales', [ReportController::class, 'salesReport'])->name('reports.sales');
     Route::get('reports/purchase', [ReportController::class, 'purchaseReport'])->name('reports.purchase');
+    Route::get('reports/low-stock', [ReportController::class, 'lowStock'])->name('reports.low-stock');
+    Route::get('reports/orders', [ReportController::class, 'orderReport'])->name('reports.orders');
+    Route::get('reports/top-products', [ReportController::class, 'topProducts'])->name('reports.top-products');
 
     Route::get('/divisions', [LocationController::class, 'divisions'])->name('locations.divisions');
     Route::post('/divisions', [LocationController::class, 'storeDivision'])->name('locations.divisions.store');
@@ -241,6 +261,12 @@ Route::middleware(['auth', 'staff'])->prefix('admin')->group(function () {
 
     Route::get('product/barcode', [ProductController::class, 'barcodeIndex'])->name('products.barcode.index');
     Route::post('product/barcode/print', [ProductController::class, 'barcodePrint'])->name('products.barcode.print');
+
+    // Database Backup Routes
+    Route::get('/backups', [BackupController::class, 'index'])->name('backups.index');
+    Route::post('/backups/create', [BackupController::class, 'create'])->name('backups.create');
+    Route::get('/backups/download/{file}', [BackupController::class, 'download'])->name('backups.download');
+    Route::delete('/backups/delete/{file}', [BackupController::class, 'destroy'])->name('backups.destroy');
 });
 
 // Canonical customer URLs. Existing customer/user URLs below remain compatible.

@@ -81,35 +81,26 @@
                 <input type="hidden" id="permission_id">
 
                 {{-- HEADER --}}
-                <div class="modern-card-header d-flex justify-content-between align-items-center"
-                    style="background:#000032;color:#fff;padding:15px 20px;">
-
-                    <h4 class="card-title mb-0 text-white">
-                        <i class="fa-solid fa-key me-2"></i>
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-key text-primary"></i>
                         <span id="modalTitle">Add Permission</span>
-                    </h4>
-
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 {{-- BODY --}}
-                <div class="card-body p-4">
-
+                <div class="modal-body p-4">
                     <div class="mb-3">
-                        <label class="form-label">Permission Name</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <label class="form-label fw-bold">Permission Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="e.g. create-product, manage-orders">
                     </div>
-
                 </div>
 
                 {{-- FOOTER --}}
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        Save
-                    </button>
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4 shadow-sm">Save Permission</button>
                 </div>
 
             </form>

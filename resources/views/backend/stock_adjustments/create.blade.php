@@ -5,71 +5,54 @@
         <style>
             .shopify-card {
                 background: #fff;
-                border: 1px solid #e1e3e5;
-                border-radius: 12px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+                border: 1px solid #e2e8f0;
+                border-radius: 14px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
                 overflow: hidden;
             }
 
             .shopify-input {
-                border: 1px solid #c9cccf;
-                border-radius: 8px;
-                padding: 12px;
+                border: 1px solid #cbd5e1;
+                border-radius: 10px;
+                padding: 10px 14px;
                 transition: all 0.2s;
             }
 
             .shopify-input:focus {
-                border-color: #000032;
-                box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.15);
+                border-color: #4361ee;
+                box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
                 outline: none;
             }
 
             .table-container {
-                border: 1px solid #e1e3e5;
+                border: 1px solid #e2e8f0;
                 border-radius: 12px;
+                overflow: hidden;
             }
 
             .table thead {
-                background: #fbfbfb;
-                border-bottom: 1px solid #e1e3e5;
+                background: #f8fafc;
+                border-bottom: 1px solid #e2e8f0;
             }
 
             .table thead th {
-                color: #5c5f62;
+                color: #64748b;
                 font-size: 13px;
                 font-weight: 600;
                 text-transform: uppercase;
-                padding: 16px;
-            }
-
-            .btn-shopify {
-                background: #000032;
-                color: #fff;
-                border-radius: 8px;
-                padding: 10px 24px;
-                font-weight: 500;
-            }
-
-            .btn-shopify:hover {
-                background: #000032;
-                color: #fff;
-            }
-
-            .search-dropdown {
-                border-radius: 12px;
-                border: 1px solid #e1e3e5;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 14px;
             }
 
             #searchResults {
                 position: absolute;
                 width: 100%;
                 background: #fff;
-                border: 1px solid #ddd;
+                border: 1px solid #e2e8f0;
                 border-radius: 10px;
                 max-height: 300px;
                 overflow-y: auto;
                 z-index: 999;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.08);
             }
 
             .search-item {
@@ -78,12 +61,12 @@
                 justify-content: space-between;
                 align-items: center;
                 cursor: pointer;
-                border-bottom: 1px solid #f1f1f1;
-                transition: .3s;
+                border-bottom: 1px solid #f1f5f9;
+                transition: .2s;
             }
 
             .search-item:hover {
-                background: #f8f9fa;
+                background: #f8fafc;
             }
 
             .product-info {
@@ -92,27 +75,32 @@
             }
 
             .product-title {
-                font-size: 15px;
+                font-size: 14px;
                 font-weight: 700;
-                color: #222;
+                color: #1e293b;
             }
 
             .product-meta {
                 font-size: 12px;
-                color: #777;
+                color: #64748b;
             }
 
             .product-add {
-                font-size: 22px;
-                color: #000032;
+                font-size: 20px;
+                color: #4361ee;
             }
         </style>
     @endpush
 
-    <div class="container-fluid py-5">
+    <div class="container-fluid py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">Create Stock Adjustment</h2>
-            <button type="submit" form="adjustmentForm" class="btn btn-shopify">Save Adjustment</button>
+            <div>
+                <h3 class="fw-bold mb-1" style="color: #212b36;">Create Stock Adjustment</h3>
+                <p class="text-muted small mb-0">Record inventory addition or reduction with audit tracking</p>
+            </div>
+            <button type="submit" form="adjustmentForm" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
+                <i class="fa-solid fa-check me-1"></i> Save Adjustment
+            </button>
         </div>
 
         <form id="adjustmentForm">

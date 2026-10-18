@@ -82,25 +82,28 @@
     <!-- Modal -->
 
     <div class="modal fade" id="sizeModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="sizeForm">
                     @csrf
                     <input type="hidden" id="size_id">
-                    <div class="modern-card-header d-flex justify-content-between align-items-center"
-                        style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 id="modalTitle" style="color:#fff; margin-bottom:0;">
-                            Add Size
-                        </h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label>Size Name</label>
-                            <input type="text" id="name" class="form-control">
+                    <div class="modal-header">
+                        <div>
+                            <h5 class="modal-title" id="modalTitle">
+                                <i class="bi bi-arrows-fullscreen text-primary me-2"></i> Add Size
+                            </h5>
+                            <p class="text-muted mb-0 mt-1" style="font-size: 12px; font-weight: 500;">Set up product size and dimension labels</p>
                         </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
                         <div class="mb-3">
-                            <label>Status</label>
+                            <label class="form-label">Size Name / Label <span class="text-danger">*</span></label>
+                            <input type="text" id="name" class="form-control" required placeholder="e.g. S, M, L, XL, 32, 34">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Status</label>
                             <select id="status" class="form-select">
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
@@ -108,11 +111,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button class="btn btn-primary">
-                            Save
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveSizeBtn">
+                            <i class="bi bi-check2 me-1"></i> Save Size
                         </button>
                     </div>
                 </form>

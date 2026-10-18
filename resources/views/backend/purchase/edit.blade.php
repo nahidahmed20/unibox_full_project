@@ -6,10 +6,15 @@
     @include('backend.purchase.purchase_css')
 @endpush
 
-    <div class="container-fluid py-5">
+    <div class="container-fluid py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">Edit Purchase: {{ $purchase->invoice_no }}</h2>
-            <button type="submit" form="purchaseForm" class="btn btn-shopify">Update Purchase</button>
+            <div>
+                <h3 class="fw-bold mb-1" style="color: #212b36;">Edit Purchase: {{ $purchase->invoice_no }}</h3>
+                <p class="text-muted small mb-0">Update supplier invoice details and stock lines</p>
+            </div>
+            <button type="submit" form="purchaseForm" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
+                <i class="fa-solid fa-check me-1"></i> Update Purchase
+            </button>
         </div>
 
         <form id="purchaseForm">

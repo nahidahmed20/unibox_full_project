@@ -5,14 +5,14 @@
 @section('content')
 @push('styles')
     <style>
-        .shopify-card { background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
+        .shopify-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); }
         .form-label { font-weight: 600; color: #212b36; font-size: 14px; }
-        .form-control, .form-select { border-radius: 8px; border: 1px solid #cccccc; padding: 10px 14px; }
-        .form-control:focus, .form-select:focus { border-color: #000032; box-shadow: none; }
-        .table-custom thead { background: #f6f6f7; }
-        .table-custom th { color: #5c5f62; font-weight: 600; font-size: 13px; text-transform: uppercase; padding: 12px; }
-        .btn-shopify { background: #000032; color: #fff; border-radius: 8px; font-weight: 500; padding: 10px 24px; }
-        .btn-shopify:hover { background: #000050; color: #fff; }
+        .form-control, .form-select { border-radius: 10px; border: 1px solid #cbd5e1; padding: 10px 14px; }
+        .form-control:focus, .form-select:focus { border-color: #4361ee; box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15); }
+        .table-custom thead { background: #f8fafc; }
+        .table-custom th { color: #64748b; font-weight: 600; font-size: 13px; text-transform: uppercase; padding: 12px; }
+        .btn-shopify { background: #4361ee; color: #fff; border-radius: 8px; font-weight: 500; padding: 10px 24px; }
+        .btn-shopify:hover { background: #3751d6; color: #fff; }
     </style>
 @endpush
 

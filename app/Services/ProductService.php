@@ -67,6 +67,9 @@ class ProductService
                 'is_trending' => $data['is_trending'] ?? 0,
                 'product_type' => $data['product_type'] ?? 'single',
                 'status' => $data['status'] ?? 1,
+                'meta_title' => $data['meta_title'] ?? null,
+                'meta_description' => $data['meta_description'] ?? null,
+                'meta_keywords' => $data['meta_keywords'] ?? null,
             ]);
 
             // Assign Attributes for Calculator/Product
@@ -259,7 +262,9 @@ class ProductService
                 'is_trending' => $data['is_trending'] ?? 0,
                 'product_type' => $data['product_type'] ?? 'single',
                 'status' => $data['status'] ?? 1,
-
+                'meta_title' => $data['meta_title'] ?? null,
+                'meta_description' => $data['meta_description'] ?? null,
+                'meta_keywords' => $data['meta_keywords'] ?? null,
             ]);
 
             // 🟢 Sync Attributes (The Laravel Way) 🟢

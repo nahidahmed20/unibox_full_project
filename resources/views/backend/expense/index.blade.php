@@ -57,54 +57,59 @@
         </div>
     </div>
 
-    {{-- ================= MODAL ================= --}}
-    <div class="modal fade" id="expenseModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modern-card">
-                <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title" id="modalTitle">Add Expense</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+    {{-- ================= EXPANDED EXPENSE MODAL ================= --}}
+    <div class="modal fade" id="expenseModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">
+                        <i class="bi bi-receipt-cutoff text-danger me-2"></i>
+                        Record Expense
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form id="expenseForm">
                         @csrf
                         <input type="hidden" id="expense_id" name="expense_id">
-                        <div class="mb-3">
-                            <label class="form-label">Expense Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
-                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Expense Title / Item <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" required placeholder="e.g. Office Rent, Electricity Bill">
+                            </div>
 
-                        {{-- CATEGORY ADDED --}}
-                        <div class="mb-3">
-                            <label class="form-label">Category</label>
-                            <select class="form-control" id="expense_category_id" name="expense_category_id">
-                                <option value="">Select Category</option>
-                                @foreach ($categories ?? [] as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Expense Category <span class="text-danger">*</span></label>
+                                <select class="form-select select2" id="expense_category_id" name="expense_category_id" required>
+                                    <option value="">Select Category</option>
+                                    @foreach ($categories ?? [] as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description"></textarea>
-                        </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Amount (৳) <span class="text-danger">*</span></label>
+                                <input type="number" step="0.01" class="form-control" id="amount" name="amount" required placeholder="0.00">
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Amount</label>
-                            <input type="number" class="form-control" id="amount" name="amount">
-                        </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Expense Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="date" name="date" value="{{ date('Y-m-d') }}" required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date" name="date">
+                            <div class="col-12">
+                                <label class="form-label">Description / Note</label>
+                                <textarea class="form-control" id="description" name="description" rows="2" placeholder="Optional notes..."></textarea>
+                            </div>
                         </div>
                     </form>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark px-4" id="saveBtn">
-                        Save
+                    <button type="button" class="btn btn-light border px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary px-4 fw-bold" id="saveBtn">
+                        <i class="bi bi-check2-circle me-1"></i> Save Expense
                     </button>
                 </div>
             </div>

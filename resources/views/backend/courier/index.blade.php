@@ -67,28 +67,28 @@
                     @csrf
                     <input type="hidden" id="courier_id">
 
-                    <div class="modern-card-header d-flex justify-content-between align-items-center"
-                        style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 id="modalTitle" style="color:#fff; margin-bottom:0;">
-                            Add Courier
-                        </h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title d-flex align-items-center gap-2" id="modalTitle">
+                            <i class="fa-solid fa-truck-fast text-primary"></i>
+                            <span>Add Courier</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="modal-body p-4">
                         <div class="mb-3">
-                            <label>Courier Name <span class="text-danger">*</span></label>
+                            <label class="form-label fw-bold">Courier Name <span class="text-danger">*</span></label>
                             <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Pathao, Steadfast">
                         </div>
 
                         <div class="mb-3">
-                            <label>Contact Number</label>
+                            <label class="form-label fw-bold">Contact Number</label>
                             <input type="text" id="contact_number" name="contact_number" class="form-control" placeholder="Helpline Number">
                         </div>
 
                         <div class="mb-3">
-                            <label>Status</label>
-                            <select id="is_active" name="is_active" class="form-control">
+                            <label class="form-label fw-bold">Status</label>
+                            <select id="is_active" name="is_active" class="form-select">
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
@@ -96,8 +96,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm">Save Courier</button>
                     </div>
                 </form>
             </div>

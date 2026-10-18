@@ -2,28 +2,22 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
                 <!-- Header -->
-                <div class="px-4 py-3 d-flex justify-content-between align-items-center"
-                    style="background:#000032; color:white;">
+                <div class="modal-header">
                     <div>
-                        <h4 class="mb-1 fw-bold text-white">
-                            <i class="fa-solid fa-user me-2"></i>
-                            Member Details
-                        </h4>
-                        <small class="text-white-50">
-                            Customer profile information
-                        </small>
+                        <h5 class="modal-title fw-bold d-flex align-items-center gap-2 mb-1">
+                            <i class="fa-solid fa-user-tag text-primary"></i>
+                            Member Profile Details
+                        </h5>
+                        <small class="text-muted">Customer account and personal information</small>
                     </div>
-                    <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!-- Body -->
-                <div class="p-4">
+                <div class="modal-body p-4">
                     <div class="row g-4">
                         <!-- Left Profile -->
                         <div class="col-md-4">
-                            <div class="card border-0 shadow-sm rounded-4 text-center p-4">
+                            <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100">
                                 <img id="show_image" src="" class="rounded-circle mx-auto mb-3"
                                     width="120" height="120" style="object-fit:cover;">
                                 <h5 id="show_name"
@@ -49,7 +43,7 @@
                         </div>
                         <!-- Right Details -->
                         <div class="col-md-8">
-                            <div class="card border-0 shadow-sm rounded-4 p-4">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
                                 <h6 class="fw-bold mb-4">
                                     Personal Information
                                 </h6>
@@ -96,6 +90,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

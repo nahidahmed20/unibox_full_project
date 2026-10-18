@@ -21,36 +21,38 @@ class SpecificationController extends Controller
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
                     if ($row->status == 1) {
-                        return '<span class="badge bg-success">Active</span>';
+                        return '<span class="badge bg-success-subtle text-success border px-2 py-1"><i class="bi bi-check-circle me-1"></i>Active</span>';
                     }
 
-                    return '<span class="badge bg-secondary">Inactive</span>';
+                    return '<span class="badge bg-secondary-subtle text-secondary border px-2 py-1"><i class="bi bi-x-circle me-1"></i>Inactive</span>';
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = '';
-                    if (auth()->user()->can('specification-edit')) {
+                    $canEdit = auth()->user()->hasRole('Super Admin') || auth()->user()->can('specification-edit') || auth()->user()->can('product.create');
+                    $canDelete = auth()->user()->hasRole('Super Admin') || auth()->user()->can('specification-delete') || auth()->user()->can('product.create');
+
+                    $btn = '<div class="d-inline-flex gap-1">';
+                    if ($canEdit) {
                         $btn .= '
                             <button type="button"
-                                class="btn btn-icon btn-soft-primary btn-edit"
+                                class="btn btn-sm btn-outline-primary btn-edit"
                                 data-id="'.$row->id.'"
                                 title="Edit Specification">
-                                <i class="fa-regular fa-pen-to-square"></i>
+                                <i class="fa-regular fa-pen-to-square me-1"></i> Edit
                             </button>
                         ';
                     }
 
-                    if (auth()->user()->can('specification-delete')) {
-
+                    if ($canDelete) {
                         $btn .= '
                             <form class="delete-form d-inline" action="'.route('specifications.destroy', $row->id).'" method="POST">
                                 '.csrf_field().method_field('DELETE').'
-                                <button
-                                    type="button" class="btn btn-icon btn-soft-danger btn-delete" title="Delete Specification">
+                                <button type="button" class="btn btn-sm btn-outline-danger btn-delete" title="Delete Specification">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </form>
                         ';
                     }
+                    $btn .= '</div>';
 
                     return $btn;
                 })

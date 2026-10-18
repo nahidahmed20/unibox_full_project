@@ -59,12 +59,15 @@
             <div class="modal-content">
                 <form id="aboutForm" action="{{ route('about-us.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="modern-card-header d-flex justify-content-between align-items-center" style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 style="color:#fff; margin-bottom:0;">Manage About Content</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-primary"></i>
+                            <span>Manage About Content</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="modal-body p-4">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="fw-semibold">Main Title *</label>
@@ -106,8 +109,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="saveAboutBtn">Save Settings</button>
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm" id="saveAboutBtn">Save Settings</button>
                     </div>
                 </form>
             </div>

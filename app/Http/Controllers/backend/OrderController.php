@@ -201,6 +201,25 @@ class OrderController extends Controller
             $order->save();
             DB::commit();
 
+            // Automated Status Change SMS
+            if (setting('status_sms_enabled', '1') == '1' && !empty($order->phone) && $oldStatus !== $newStatus) {
+                try {
+                    $storeName = setting('company_name') ?: 'Unibox';
+                    $statusMsg = match($newStatus) {
+                        'accepted' => "Dear {$order->full_name}, your order #{$order->order_number} has been ACCEPTED and is being prepared.",
+                        'on-the-way' => "Dear {$order->full_name}, your order #{$order->order_number} is ON THE WAY for delivery" . ($order->tracking_number ? " (Tracking: {$order->tracking_number})" : "") . ".",
+                        'completed' => "Dear {$order->full_name}, your order #{$order->order_number} has been DELIVERED. Thank you for shopping with {$storeName}!",
+                        'cancelled' => "Dear {$order->full_name}, your order #{$order->order_number} has been CANCELLED.",
+                        default => null
+                    };
+                    if ($statusMsg) {
+                        \App\Services\SmsService::send($order->phone, $statusMsg);
+                    }
+                } catch (\Throwable $t) {
+                    \Illuminate\Support\Facades\Log::error('Order status SMS error: ' . $t->getMessage());
+                }
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Order status updated successfully',
@@ -283,9 +302,44 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with(['items.product', 'items.color', 'items.size'])->findOrFail($id);
+        $order = Order::with(['items.product', 'items.color', 'items.size', 'courier'])->findOrFail($id);
 
         return view('backend.order.show', compact('order'));
+    }
+
+    public function sendToSteadfast($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $steadfastService = new \App\Services\SteadfastService();
+        $result = $steadfastService->createOrder($order);
+
+        if ($result['success']) {
+            $courier = \App\Models\Courier::firstOrCreate(
+                ['name' => 'Steadfast'],
+                ['is_active' => true]
+            );
+
+            $order->courier_id = $courier->id;
+            $order->tracking_number = $result['tracking_code'];
+            $order->status = 'on-the-way';
+            $order->save();
+
+            // Trigger SMS if enabled
+            if (setting('status_sms_enabled', '1') == '1' && !empty($order->phone)) {
+                try {
+                    $storeName = setting('company_name') ?: 'Unibox';
+                    $msg = "Dear {$order->full_name}, your order #{$order->order_number} has been dispatched via Steadfast Courier (Tracking: {$order->tracking_number}). Thank you for shopping with {$storeName}!";
+                    \App\Services\SmsService::send($order->phone, $msg);
+                } catch (\Throwable $t) {
+                    \Illuminate\Support\Facades\Log::error('Courier dispatch SMS error: ' . $t->getMessage());
+                }
+            }
+
+            return back()->with('success', $result['message'] . " (Tracking Code: {$result['tracking_code']})");
+        }
+
+        return back()->with('error', $result['message']);
     }
 
     public function edit($id)

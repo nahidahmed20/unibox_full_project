@@ -61,29 +61,35 @@
     }
 
     .nav-treeview .nav-link {
+        position: relative !important;
         padding: 6px 14px 6px 36px !important;
         font-size: 0.85rem;
-        color: #6b7280 !important;
+        color: #9ca3af !important;
         border-left: none !important;
         background: transparent !important;
     }
 
     .nav-treeview .nav-link:hover {
-        color: #d1d5db !important;
+        color: #f3f4f6 !important;
     }
 
     .nav-treeview .nav-link.active {
-        color: #ffffff !important;
+        color: #60a5fa !important;
         font-weight: 600;
+        background: rgba(59, 130, 246, 0.08) !important;
     }
 
     .nav-treeview .nav-link.active::before {
-        content: '�';
+        content: "" !important;
         position: absolute;
         left: 20px;
-        color: #3b82f6;
-        font-size: 1.2rem;
-        line-height: 0.9;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        background-color: #3b82f6;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.9);
     }
 
     /* Headers */
@@ -149,15 +155,15 @@
 
 
                 @canany(['sale.all', 'sale.view', 'order-sale.view', 'order-return.view', 'order-cancel.view', 'pos.view', 'pos-create'])
-                    <li class="nav-item {{ request()->routeIs('sales.*', 'orders.*', 'order.*','orders.sales-list') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ request()->routeIs('sales.*', 'orders.*', 'order.*') ? 'active' : '' }}">
+                    <li class="nav-item {{ request()->routeIs('sales.*', 'orders.*', 'order.*', 'coupons.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ request()->routeIs('sales.*', 'orders.*', 'order.*', 'coupons.*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-cart-check-fill"></i>
                             <p>
                                 Sales & Orders
                                 <i class="nav-arrow bi bi-chevron-right ms-auto"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview" style="{{ request()->routeIs('sales.*', 'orders.*', 'order.*') ? 'display: block;' : 'display: none;' }}">
+                        <ul class="nav nav-treeview" style="{{ request()->routeIs('sales.*', 'orders.*', 'order.*', 'coupons.*') ? 'display: block;' : 'display: none;' }}">
                             @can('pos-create')
                                 <li class="nav-item">
                                     <a href="{{ route('sales.create') }}" class="nav-link {{ request()->routeIs('sales.create') ? 'active' : '' }}">
@@ -206,23 +212,28 @@
                                     </a>
                                 </li>
                             @endcan
+                            <li class="nav-item">
+                                <a href="{{ route('coupons.index') }}" class="nav-link {{ request()->routeIs('coupons.*') ? 'active' : '' }}">
+                                    <i class="bi bi-ticket-perforated-fill text-warning"></i>
+                                    <p>Coupons & Vouchers</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-                $newMenu
 
                 @endcanany
 
 
                 @canany(['products.all', 'product.view', 'product.create', 'product.bulk-product', 'category.view', 'sub-category.view', 'brand.view', 'unit.view', 'color.view', 'size.view', 'variation.view', 'attribute.view', 'view product'])
-                    <li class="nav-item {{ request()->routeIs('products.*', 'categories.*', 'sub-categories.*', 'brands.*', 'units.*', 'colors.*', 'sizes.*', 'variations.*', 'attributes.*') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ request()->routeIs('products.*', 'categories.*', 'sub-categories.*', 'brands.*', 'units.*', 'colors.*', 'sizes.*', 'variations.*', 'attributes.*') ? 'active' : '' }}">
+                    <li class="nav-item {{ request()->routeIs('products.*', 'categories.*', 'sub-categories.*', 'brands.*', 'units.*', 'colors.*', 'sizes.*', 'variations.*', 'attributes.*', 'specifications.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ request()->routeIs('products.*', 'categories.*', 'sub-categories.*', 'brands.*', 'units.*', 'colors.*', 'sizes.*', 'variations.*', 'attributes.*', 'specifications.*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-box-seam-fill"></i>
                             <p>
                                 Catalog Setup
                                 <i class="nav-arrow bi bi-chevron-right ms-auto"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview" style="{{ request()->routeIs('products.*', 'categories.*', 'sub-categories.*', 'brands.*', 'units.*', 'colors.*', 'sizes.*', 'variations.*', 'attributes.*') ? 'display: block;' : 'display: none;' }}">
+                        <ul class="nav nav-treeview" style="{{ request()->routeIs('products.*', 'categories.*', 'sub-categories.*', 'brands.*', 'units.*', 'colors.*', 'sizes.*', 'variations.*', 'attributes.*', 'specifications.*') ? 'display: block;' : 'display: none;' }}">
                             @can('product.view')
                                 <li class="nav-item"><a href="{{ route('products.index') }}" class="nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}"><i class="bi bi-list-ul"></i><p>Product List</p></a></li>
                             @endcan
@@ -235,7 +246,7 @@
                             @can('category.view')
                                 <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link {{ request()->routeIs('categories.index') ? 'active' : '' }}"><i class="bi bi-grid-fill"></i><p>Category List</p></a></li>
                             @endcan
-                            
+
                             @can('brand.view')
                                 <li class="nav-item"><a href="{{ route('brands.index') }}" class="nav-link {{ request()->routeIs('brands.index') ? 'active' : '' }}"><i class="bi bi-patch-check"></i><p>Brand List</p></a></li>
                             @endcan
@@ -251,6 +262,7 @@
                             @can('attribute.view')
                                 <li class="nav-item"><a href="{{ route('attributes.index') }}" class="nav-link {{ request()->routeIs('attributes.index') ? 'active' : '' }}"><i class="bi bi-list-check"></i><p>Attribute List</p></a></li>
                             @endcan
+                            <li class="nav-item"><a href="{{ route('specifications.index') }}" class="nav-link {{ request()->routeIs('specifications.*') ? 'active' : '' }}"><i class="bi bi-card-list"></i><p>Specification List</p></a></li>
 
                             @can('variation.view')
                                 <li class="nav-item"><a href="{{ route('variations.index') }}" class="nav-link {{ request()->routeIs('variations.index') ? 'active' : '' }}"><i class="bi bi-sliders"></i><p>Variation List</p></a></li>
@@ -313,6 +325,9 @@
                                 <li class="nav-item"><a href="{{ route('reports.total-income') }}" class="nav-link {{ request()->routeIs('reports.total-income') ? 'active' : '' }}"><i class="bi bi-cash-coin"></i><p>Total Income</p></a></li>
                                 <li class="nav-item"><a href="{{ route('reports.sales') }}" class="nav-link {{ request()->routeIs('reports.sales') ? 'active' : '' }}"><i class="bi bi-cart-check-fill"></i><p>Sales Report</p></a></li>
                                 <li class="nav-item"><a href="{{ route('reports.purchase') }}" class="nav-link {{ request()->routeIs('reports.purchase') ? 'active' : '' }}"><i class="bi bi-bag-check-fill"></i><p>Purchase Report</p></a></li>
+                                <li class="nav-item"><a href="{{ route('reports.low-stock') }}" class="nav-link {{ request()->routeIs('reports.low-stock') ? 'active' : '' }}"><i class="bi bi-exclamation-triangle-fill text-warning"></i><p>Stock Alert Report</p></a></li>
+                                <li class="nav-item"><a href="{{ route('reports.orders') }}" class="nav-link {{ request()->routeIs('reports.orders') ? 'active' : '' }}"><i class="bi bi-cart-check"></i><p>Online Orders Report</p></a></li>
+                                <li class="nav-item"><a href="{{ route('reports.top-products') }}" class="nav-link {{ request()->routeIs('reports.top-products') ? 'active' : '' }}"><i class="bi bi-award-fill text-primary"></i><p>Top Products Report</p></a></li>
                             @endcan
                         </ul>
                     </li>
@@ -334,24 +349,30 @@
 
 
                 @canany(['customer.view', 'member.view'])
-                    <li class="nav-item {{ request()->routeIs('customers.*', 'members.*') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ request()->routeIs('customers.*', 'members.*') ? 'active' : '' }}">
+                    <li class="nav-item {{ request()->routeIs('customers.*', 'members.*', 'admin.reviews.*', 'blocked-phones.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ request()->routeIs('customers.*', 'members.*', 'admin.reviews.*', 'blocked-phones.*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-people-fill"></i>
                             <p>
                                 CRM & People
                                 <i class="nav-arrow bi bi-chevron-right ms-auto"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview" style="{{ request()->routeIs('customers.*', 'members.*') ? 'display: block;' : 'display: none;' }}">
+                        <ul class="nav nav-treeview" style="{{ request()->routeIs('customers.*', 'members.*', 'admin.reviews.*', 'blocked-phones.*') ? 'display: block;' : 'display: none;' }}">
                             @can('customer.view')
                                 <li class="nav-item"><a href="{{ route('customers.index') }}" class="nav-link {{ request()->routeIs('customers.index') ? 'active' : '' }}"><i class="bi bi-person-bounding-box"></i><p>Customers List</p></a></li>
                             @endcan
                             @can('member.view')
                                 <li class="nav-item"><a href="{{ route('members.index') }}" class="nav-link {{ request()->routeIs('members.index') ? 'active' : '' }}"><i class="bi bi-person-lines-fill"></i><p>Members List</p></a></li>
                             @endcan
+                            <li class="nav-item">
+                                <a href="{{ route('admin.reviews.index') }}" class="nav-link {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
+                                    <i class="bi bi-star-half text-warning"></i>
+                                    <p>Customer Reviews</p>
+                                </a>
+                            </li>
                             @can('customer.view')
                                 <li class="nav-item">
-                                    <a href="{{ route('blocked-phones.index') }}" class="nav-link {{ request()->routeIs('blocked-phones.index') ? 'active' : '' }}">
+                                    <a href="{{ route('blocked-phones.index') }}" class="nav-link {{ request()->routeIs('blocked-phones.*') ? 'active' : '' }}">
                                         <i class="bi bi-person-x-fill text-danger"></i>
                                         <p>Return & Block List</p>
                                     </a>
@@ -459,15 +480,15 @@
 
 
                 @canany(['user.all', 'user.view', 'user.create', 'role.all', 'role.view', 'role.create', 'permission.all', 'permission.view', 'setting.view'])
-                    <li class="nav-item {{ request()->routeIs('users.*', 'roles.*', 'permissions.*', 'settings.*') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ request()->routeIs('users.*', 'roles.*', 'permissions.*', 'settings.*') ? 'active' : '' }}">
+                    <li class="nav-item {{ request()->routeIs('users.*', 'roles.*', 'permissions.*', 'settings.*', 'backups.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ request()->routeIs('users.*', 'roles.*', 'permissions.*', 'settings.*', 'backups.*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-shield-lock-fill"></i>
                             <p>
                                 Administration
                                 <i class="nav-arrow bi bi-chevron-right ms-auto"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview" style="{{ request()->routeIs('users.*', 'roles.*', 'permissions.*', 'settings.*') ? 'display: block;' : 'display: none;' }}">
+                        <ul class="nav nav-treeview" style="{{ request()->routeIs('users.*', 'roles.*', 'permissions.*', 'settings.*', 'backups.*') ? 'display: block;' : 'display: none;' }}">
                             @can('user.view')
                                 <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"><i class="bi bi-person-lines-fill"></i><p>System Users</p></a></li>
                             @endcan
@@ -480,13 +501,19 @@
                             @can('setting.view')
                                 <li class="nav-item"><a href="{{ route('settings.index') }}" class="nav-link {{ request()->routeIs('settings.index') ? 'active' : '' }}"><i class="bi bi-gear-wide-connected"></i><p>Global Settings</p></a></li>
                             @endcan
+                            <li class="nav-item">
+                                <a href="{{ route('backups.index') }}" class="nav-link {{ request()->routeIs('backups.*') ? 'active' : '' }}">
+                                    <i class="bi bi-database-fill-gear text-info"></i>
+                                    <p>Database Backups</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endcanany
 
 
                 <li class="nav-item">
-                    <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+                    <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.*', 'user-profiles.*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-person-circle"></i>
                         <p>My Profile</p>
                     </a>
@@ -508,12 +535,21 @@
 
 <script>
     $(document).ready(function() {
+        // Auto-expand any parent menu containing an active link
+        $('.nav-treeview .nav-link.active').each(function() {
+            var $treeview = $(this).closest('.nav-treeview');
+            var $parentItem = $(this).closest('.nav-item');
+            $parentItem.addClass('menu-open');
+            $parentItem.children('.nav-link').addClass('active');
+            $treeview.css('display', 'block');
+        });
+
         $('.nav-item > a').on('click', function(e) {
             var $submenu = $(this).next('.nav-treeview');
             if ($submenu.length > 0) {
                 e.preventDefault();
                 $(this).parent().toggleClass('menu-open');
-                $submenu.slideToggle(300);
+                $submenu.slideToggle(200);
             }
         });
     });

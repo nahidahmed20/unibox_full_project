@@ -7,7 +7,7 @@
 <style>
     /* Modern E-commerce Dashboard UI */
     .app-content {
-        background-color: #f4f6f8; 
+        background-color: #f4f6f8;
         padding-bottom: 50px;
     }
 
@@ -49,19 +49,20 @@
 
     /* Modern Input Fields */
     .form-control, .form-select {
-        border-radius: 8px;
-        border: 1px solid transparent;
-        background-color: #f4f6f8;
-        padding: 10px 16px;
-        font-size: 14px;
-        color: #212b36;
+        border-radius: 10px;
+        border: 1px solid #cbd5e1;
+        background-color: #ffffff;
+        padding: 9px 14px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #0f172a;
         transition: all 0.2s ease-in-out;
     }
 
     .form-control:focus, .form-select:focus {
         background-color: #ffffff;
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
     .form-control::placeholder {
@@ -109,7 +110,7 @@
         border: 1px dashed #ced4da;
         transition: all 0.3s;
     }
-    
+
     .color-image-group:hover {
         border-color: #adb5bd;
         background: #f8f9fa;
@@ -129,19 +130,26 @@
         justify-content: flex-end;
         gap: 12px;
     }
-    
+
     .btn-modern-primary {
-        background-color: #212b36;
+        background-color: #0f172a;
         color: #fff;
-        border-radius: 8px;
-        padding: 10px 24px;
-        font-weight: 600;
+        border-radius: 10px;
+        padding: 11px 26px;
+        font-weight: 700;
+        font-size: 14px;
         border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
     }
-    
+
     .btn-modern-primary:hover {
-        background-color: #000;
+        background-color: #1e293b;
         color: #fff;
+        transform: translateY(-1px);
     }
 
     .premium-variation-wrapper {
@@ -150,7 +158,7 @@
         padding: 24px;
         border: 1px solid #f0f0f0;
     }
-    
+
     .premium-variation-label {
         font-size: 0.85rem;
         font-weight: 700;
@@ -173,7 +181,7 @@
         color: #495057;
         font-weight: 600;
         font-size: 14px;
-        border-radius: 8px; 
+        border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         user-select: none;
@@ -189,7 +197,7 @@
         border-color: #111827;
         color: #ffffff;
         box-shadow: 0 8px 16px rgba(17, 24, 39, 0.2);
-        transform: scale(1.05); 
+        transform: scale(1.05);
     }
 </style>
 @endpush
@@ -225,7 +233,7 @@
 
         <form id="productForm" enctype="multipart/form-data" action="{{route('products.store')}}" method="POST" class="row">
             @csrf
-            
+
             <div class="col-lg-8">
                 <div class="card modern-card">
                     <div class="modern-card-header">
@@ -357,7 +365,7 @@
 
                             <div class="col-md-12 product-options" style="display: none;">
                                 <hr class="text-muted mb-4">
-                                
+
                                 <div class="row">
                                     <div class="col-md-4 mb-4">
                                         <label class="form-label">Variation Group (e.g., Sizes)</label>
@@ -400,7 +408,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mt-4" id="variantCombinationsWrapper" style="display: none;">
                                     <label class="form-label text-dark fw-bold mb-3">Variant Price & Stock Setup</label>
                                     <div class="table-responsive border rounded-3">
@@ -442,7 +450,7 @@
                                 <input type="number" step="0.01" class="form-control fs-5 fw-bold text-primary" name="max_price" id="max_price" value="{{ old('max_price', 0) }}">
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <label class="form-label">Cost Price</label>
@@ -497,24 +505,24 @@
         @endforeach
     </select>
 </div>
-  
+
                           <div class="mb-3" id="sub_category_div" style="display:none;">
                               <label class="form-label">Sub Category</label>
                               <select id="sub_category" class="form-select">
                                   <option value="">Select Sub Category</option>
                               </select>
                           </div>
-  
+
                           <div class="mb-3" id="child_category_div" style="display:none;">
                               <label class="form-label">Child Category</label>
                               <select id="child_category" class="form-select">
                                   <option value="">Select Child Category</option>
                               </select>
                           </div>
-                          
+
                           <input type="hidden" name="category_id" id="final_category_id" value="">
 
-                        
+
 
                         <div class="mb-3">
                             <label class="form-label">Brand</label>
@@ -534,6 +542,27 @@
                                     <option value="{{ $unit->id }}" {{ old('unit_id') == $unit->id ? 'selected' : '' }}>{{ $unit->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- SEO OPTIMIZATION CARD --}}
+                <div class="card modern-card mb-4">
+                    <div class="modern-card-header">
+                        <h5><i class="fa-solid fa-magnifying-glass-chart text-muted"></i> Search Engine Optimization (SEO)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" name="meta_title" class="form-control" placeholder="Targeted SEO title for Google search" value="{{ old('meta_title') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Meta Keywords</label>
+                            <input type="text" name="meta_keywords" class="form-control" placeholder="e.g. custom packaging, rigid box, gift box" value="{{ old('meta_keywords') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Meta Description</label>
+                            <textarea name="meta_description" class="form-control" rows="3" placeholder="Brief search snippet shown on Google results...">{{ old('meta_description') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -585,14 +614,14 @@
                 $('.product-options').slideUp(300);
                 $('#variantCombinationsWrapper').slideUp(300);
                 $('#singleProductStockWrapper').slideDown(300);
-                
+
                 $('#variation_select').prop('disabled', true).val('');
                 $('.color-select').prop('disabled', true).val('');
                 $('.size-check-input').prop('disabled', true).prop('checked', false);
             } else {
                 $('.product-options').slideDown(300);
                 $('#singleProductStockWrapper').slideUp(300);
-                
+
                 $('#variation_select').prop('disabled', false);
                 $('.color-select').prop('disabled', false);
                 $('.size-check-input').prop('disabled', false);
@@ -628,9 +657,9 @@
         });
 
         $(document).on('click', '.removeColorImage', function () {
-            $(this).closest('.color-image-group').slideUp(300, function(){ 
-                $(this).remove(); 
-                generateVariantMatrix(); 
+            $(this).closest('.color-image-group').slideUp(300, function(){
+                $(this).remove();
+                generateVariantMatrix();
             });
         });
 
@@ -642,7 +671,7 @@
 
             if(category_id){
                 $.ajax({
-                    url: '/admin/get-subcategories/' + category_id, 
+                    url: '/admin/get-subcategories/' + category_id,
                     type: "GET",
                     dataType: "json",
                     success:function(data){
@@ -666,7 +695,7 @@
             let values = option.data('values') || option.attr('data-values');
             let wrapper = $('#variationSizes');
             let mainWrapper = $('#variationSizesWrapper');
-            
+
             wrapper.empty();
 
             if (!values || values === "") {
@@ -682,7 +711,7 @@
             if (Array.isArray(values) && values.length > 0) {
                 mainWrapper.fadeIn();
                 let html = ``;
-                
+
                 values.forEach(function (item, index) {
                     let displayValue = item.value || item.name || item.text || item;
                     let sizeId = item.id || item;
@@ -755,7 +784,7 @@
                     let variantName = '';
                     let colorVal = variant.color ? variant.color.id : '';
                     let sizeVal = variant.size ? variant.size.id : '';
-                    
+
                     if (variant.color) variantName += variant.color.name;
                     if (variant.color && variant.size) variantName += ' - ';
                     if (variant.size) variantName += variant.size.name;
@@ -787,14 +816,14 @@
         $('#productForm').on('submit', function() {
             let $btn = $('#submitBtn');
             $btn.html('<i class="fa-solid fa-spinner fa-spin me-2"></i> Saving...');
-            $btn.prop('disabled', true); 
+            $btn.prop('disabled', true);
         });
             // Update Final Category ID logic
         function updateFinalCategoryId() {
             let mainId = $('#main_category').val();
             let subId = $('#sub_category').val();
             let childId = $('#child_category').val();
-            
+
             let finalId = childId || subId || mainId;
             $('#final_category_id').val(finalId);
         }
@@ -806,12 +835,12 @@
             $('#child_category').empty().append('<option value="">Select Child Category</option>');
             $('#sub_category_div').hide();
             $('#child_category_div').hide();
-            
+
             updateFinalCategoryId();
 
             if(id){
                 $.ajax({
-                    url: '/admin/get-child-categories/' + id, 
+                    url: '/admin/get-child-categories/' + id,
                     type: "GET",
                     success: function(data){
                         if(data.length > 0) {
@@ -829,12 +858,12 @@
             let id = $(this).val();
             $('#child_category').empty().append('<option value="">Select Child Category</option>');
             $('#child_category_div').hide();
-            
+
             updateFinalCategoryId();
 
             if(id){
                 $.ajax({
-                    url: '/admin/get-child-categories/' + id, 
+                    url: '/admin/get-child-categories/' + id,
                     type: "GET",
                     success: function(data){
                         if(data.length > 0) {

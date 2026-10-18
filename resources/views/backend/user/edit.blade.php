@@ -4,25 +4,25 @@
 @section('content')
     @push('styles')
         <style>
-            /* Shopify Polaris Design Variables */
+            /* Modern Design Variables */
             :root {
                 --p-surface: #ffffff;
-                --p-background: #f4f6f8;
-                --p-text: #202223;
-                --p-text-subdued: #6d7175;
-                --p-border: #c9cccf;
-                --p-border-hover: #8c9196;
-                --p-border-focus: #008060;
-                --p-focused-shadow: 0 0 0 2px rgba(0, 128, 96, 0.2);
-                --p-card-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15);
-                --p-border-radius: 8px;
-                --p-border-radius-input: 4px;
+                --p-background: #f8fafc;
+                --p-text: #1e293b;
+                --p-text-subdued: #64748b;
+                --p-border: #cbd5e1;
+                --p-border-hover: #94a3b8;
+                --p-border-focus: #4361ee;
+                --p-focused-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+                --p-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+                --p-border-radius: 14px;
+                --p-border-radius-input: 8px;
             }
 
             /* Page Header Typography */
             .page-title {
                 font-size: 20px;
-                font-weight: 600;
+                font-weight: 700;
                 color: var(--p-text);
                 margin: 0 0 4px 0;
                 line-height: 1.2;
@@ -34,13 +34,13 @@
                 margin: 0;
             }
 
-            /* Shopify Secondary Button (For 'Back') */
+            /* Secondary Button */
             .btn-shopify-secondary {
                 background-color: #ffffff;
                 color: #202223;
                 border: 1px solid var(--p-border);
-                border-radius: 4px;
-                padding: 6px 12px;
+                border-radius: 8px;
+                padding: 6px 14px;
                 font-size: 14px;
                 font-weight: 500;
                 box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
@@ -52,7 +52,7 @@
             }
 
             .btn-shopify-secondary:hover {
-                background-color: #f4f6f8;
+                background-color: #f8fafc;
                 border-color: var(--p-border-hover);
                 color: #202223;
             }
@@ -68,13 +68,13 @@
                 background-color: var(--p-surface);
                 border-radius: var(--p-border-radius);
                 box-shadow: var(--p-card-shadow);
-                border: none;
+                border: 1px solid #e2e8f0;
                 overflow: hidden;
             }
 
             .shopify-card-header {
                 padding: 16px 20px;
-                border-bottom: 1px solid var(--p-border);
+                border-bottom: 1px solid #f1f5f9;
             }
 
             .shopify-card-header h6 {
@@ -91,9 +91,9 @@
             /* Typography & Labels */
             .form-label {
                 font-size: 13px;
-                font-weight: 500;
+                font-weight: 600;
                 color: var(--p-text);
-                margin-bottom: 4px;
+                margin-bottom: 6px;
                 display: block;
             }
 
@@ -102,7 +102,7 @@
             .form-select {
                 border: 1px solid var(--p-border);
                 border-radius: var(--p-border-radius-input);
-                min-height: 36px;
+                min-height: 42px;
                 padding: 6px 12px;
                 font-size: 14px;
                 color: var(--p-text);
@@ -154,7 +154,7 @@
             }
 
             .select2-container--default .select2-selection--single {
-                height: 36px !important;
+                height: 42px !important;
                 border: 1px solid var(--p-border) !important;
                 border-radius: var(--p-border-radius-input) !important;
                 background: var(--p-surface) !important;
@@ -167,7 +167,7 @@
             .select2-container--default .select2-selection--single .select2-selection__rendered {
                 color: var(--p-text) !important;
                 font-size: 14px !important;
-                line-height: 34px !important;
+                line-height: 40px !important;
                 padding-left: 0 !important;
             }
 

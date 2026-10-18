@@ -77,36 +77,32 @@
 
     <!--Sub Category Modal -->
     <div class="modal fade" id="brandModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="brandForm">
                     @csrf
                     <input type="hidden" id="brand_id" name="brand_id">
-                    <div class="modern-card-header d-flex justify-content-between align-items-center"
-                        style="background:#000032; color:#fff; padding:15px 20px;">
-
-                        <h4 class="card-title mb-0" style="color:#fff;">
-                            <i class="fa-solid fa-tags me-2" style="color:#fff;"></i>
-                            <span id="modalTitle" style="color:#fff;">
-                                Add Brand
-                            </span>
-                        </h4>
-
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <div>
+                            <h5 class="modal-title">
+                                <i class="bi bi-tag-fill text-primary"></i>
+                                <span id="modalTitle">Add Brand</span>
+                            </h5>
+                            <p class="text-muted mb-0 mt-1" style="font-size: 12px; font-weight: 500;">Create or modify brand records</p>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label class="form-label">Brand Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Brand Name">
+                    <div class="modal-body">
+                        <div class="mb-2">
+                            <label class="form-label">Brand Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required
+                                placeholder="e.g. Apple, Samsung, Sony">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            Save
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveBrandBtn">
+                            <i class="bi bi-check2 me-1"></i> Save Brand
                         </button>
                     </div>
                 </form>

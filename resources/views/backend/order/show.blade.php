@@ -4,7 +4,19 @@
             <div class="header-left">
                 <h4>Sales Detail</h4>
             </div>
-            <div class="header-right">
+            <div class="header-right d-flex align-items-center gap-2">
+                @if(empty($order->tracking_number))
+                    <form action="{{ route('orders.send-to-steadfast', $order->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Dispatch this order to Steadfast Courier?');">
+                        @csrf
+                        <button type="submit" class="btn btn-success btn-sm" style="padding: 7px 14px; font-weight: 600; border-radius: 6px;">
+                            <i class="fas fa-truck-fast me-1"></i> Send to Steadfast
+                        </button>
+                    </form>
+                @else
+                    <span class="badge bg-success" style="font-size: 13px; padding: 7px 12px;">
+                        <i class="fas fa-check-circle me-1"></i> Steadfast: {{ $order->tracking_number }}
+                    </span>
+                @endif
                 <a href="{{ route('orders.invoice', $order->id) }}" target="_blank" class="print-btn">
                     <i class="fas fa-print"></i>
                 </a>
@@ -170,6 +182,14 @@
                                 ৳{{ number_format($order->shipping, 2) }}
                             </td>
                         </tr>
+                        @if($order->discount > 0)
+                        <tr>
+                            <td>Coupon Discount ({{ $order->coupon_code }})</td>
+                            <td class="currency text-success">
+                                -৳{{ number_format($order->discount, 2) }}
+                            </td>
+                        </tr>
+                        @endif
                         @if($order->return_charge > 0)
                         <tr>
                             <td>Return Charge</td>

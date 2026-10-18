@@ -4,10 +4,15 @@
 @push('styles')
     @include('backend.purchase.purchase_css')
 @endpush
-    <div class="container-fluid py-5">
+    <div class="container-fluid py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">Create Purchase</h2>
-            <button type="submit" form="purchaseForm" class="btn btn-shopify">Save Purchase</button>
+            <div>
+                <h3 class="fw-bold mb-1" style="color: #212b36;">Create Purchase</h3>
+                <p class="text-muted small mb-0">Record new stock replenishment from suppliers</p>
+            </div>
+            <button type="submit" form="purchaseForm" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
+                <i class="fa-solid fa-check me-1"></i> Save Purchase
+            </button>
         </div>
 
         <form id="purchaseForm">

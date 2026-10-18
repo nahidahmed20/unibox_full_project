@@ -107,11 +107,15 @@ class ReportController extends Controller
 
     public function salesReport(Request $request)
     {
-        $query = Sale::query();
-        if ($request->start_date && $request->end_date) {
-            $query->whereBetween('sale_date', [$request->start_date, $request->end_date]);
+        $query = Sale::query()->with('customer');
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('sale_date', [$request->start_date . ' 00:00:00', $request->end_date . ' 23:59:59']);
+        } elseif ($request->filled('start_date')) {
+            $query->where('sale_date', '>=', $request->start_date . ' 00:00:00');
+        } elseif ($request->filled('end_date')) {
+            $query->where('sale_date', '<=', $request->end_date . ' 23:59:59');
         }
-        $sales = $query->latest()->get();
+        $sales = $query->latest('sale_date')->get();
 
         return view('backend.reports.sales', compact('sales'));
     }
@@ -119,12 +123,92 @@ class ReportController extends Controller
     // Purchase Report
     public function purchaseReport(Request $request)
     {
-        $query = Purchase::query();
-        if ($request->start_date && $request->end_date) {
-            $query->whereBetween('purchase_date', [$request->start_date, $request->end_date]);
+        $query = Purchase::query()->with('supplier');
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('purchase_date', [$request->start_date . ' 00:00:00', $request->end_date . ' 23:59:59']);
+        } elseif ($request->filled('start_date')) {
+            $query->where('purchase_date', '>=', $request->start_date . ' 00:00:00');
+        } elseif ($request->filled('end_date')) {
+            $query->where('purchase_date', '<=', $request->end_date . ' 23:59:59');
         }
-        $purchases = $query->latest()->get();
+        $purchases = $query->latest('purchase_date')->get();
 
         return view('backend.reports.purchase', compact('purchases'));
     }
+
+    // Low Stock Alert Report
+    public function lowStock(Request $request)
+    {
+        $products = \App\Models\Product::where('status', 1)
+            ->where(function ($q) {
+                $q->whereRaw('stock <= COALESCE(alert_quantity, 5)');
+            })
+            ->with(['category', 'brand'])
+            ->orderBy('stock', 'asc')
+            ->get();
+
+        $outOfStockCount = $products->where('stock', '<=', 0)->count();
+        $lowStockCount = $products->where('stock', '>', 0)->count();
+        $totalItems = $products->count();
+
+        return view('backend.reports.low_stock', compact('products', 'outOfStockCount', 'lowStockCount', 'totalItems'));
+    }
+
+    // E-commerce Online Orders Report
+    public function orderReport(Request $request)
+    {
+        $query = Order::query()->with(['items', 'customer']);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('created_at', [$request->start_date . ' 00:00:00', $request->end_date . ' 23:59:59']);
+        } elseif ($request->filled('start_date')) {
+            $query->where('created_at', '>=', $request->start_date . ' 00:00:00');
+        } elseif ($request->filled('end_date')) {
+            $query->where('created_at', '<=', $request->end_date . ' 23:59:59');
+        }
+
+        $orders = $query->latest()->paginate(25)->withQueryString();
+
+        $baseQuery = Order::query();
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $baseQuery->whereBetween('created_at', [$request->start_date . ' 00:00:00', $request->end_date . ' 23:59:59']);
+        } elseif ($request->filled('start_date')) {
+            $baseQuery->where('created_at', '>=', $request->start_date . ' 00:00:00');
+        } elseif ($request->filled('end_date')) {
+            $baseQuery->where('created_at', '<=', $request->end_date . ' 23:59:59');
+        }
+        $totalOrders = (clone $baseQuery)->count();
+        $totalCompleted = (clone $baseQuery)->where('status', 'completed')->count();
+        $totalReturned = (clone $baseQuery)->where('status', 'return')->count();
+        $totalRevenue = (clone $baseQuery)->where('status', 'completed')->sum('total');
+
+        return view('backend.reports.order_report', compact(
+            'orders', 'totalOrders', 'totalCompleted', 'totalReturned', 'totalRevenue'
+        ));
+    }
+
+    // Top Selling Products Report
+    public function topProducts(Request $request)
+    {
+        $topProducts = \App\Models\OrderItem::select(
+                'order_items.product_id',
+                'order_items.product_name',
+                \Illuminate\Support\Facades\DB::raw('SUM(order_items.quantity) as total_sold'),
+                \Illuminate\Support\Facades\DB::raw('SUM(order_items.total) as total_revenue')
+            )
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->whereNotIn('orders.status', ['cancelled'])
+            ->groupBy('order_items.product_id', 'order_items.product_name')
+            ->orderByDesc('total_sold')
+            ->take(20)
+            ->with(['product.category'])
+            ->get();
+
+        return view('backend.reports.top_products', compact('topProducts'));
+    }
 }
+

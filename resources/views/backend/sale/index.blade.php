@@ -165,7 +165,7 @@
 
 {{-- SALE DETAILS MODAL --}}
 <div class="modal fade" id="saleModal" tabindex="-1" aria-labelledby="saleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header modal-header-modern d-flex justify-content-between align-items-center">
                 <h5 class="modal-title modal-title-modern" id="saleModalLabel">

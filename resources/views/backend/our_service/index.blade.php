@@ -51,12 +51,15 @@
                     @csrf
                     <input type="hidden" id="service_id" name="service_id">
 
-                    <div class="modern-card-header d-flex justify-content-between align-items-center" style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 id="modalTitle" style="color:#fff; margin-bottom:0;">Add Service</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold d-flex align-items-center gap-2" id="modalTitle">
+                            <i class="fa-solid fa-briefcase text-primary"></i>
+                            <span>Add Service</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="modal-body p-4">
                         <div class="row">
                             <div class="col-md-8 mb-3">
                                 <label class="fw-semibold">Service Title <span class="text-danger">*</span></label>
@@ -97,8 +100,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="saveBtn">Save Service</button>
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm" id="saveBtn">Save Service</button>
                     </div>
                 </form>
             </div>

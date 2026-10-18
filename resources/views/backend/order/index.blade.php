@@ -39,7 +39,7 @@
         .form-select-lg{
             font-size: 1rem !important;
         }
-       
+
     </style>
 @endpush
 
@@ -146,12 +146,15 @@
 </div>
 
 
-<!-- ================= ORDER MODAL ================= -->
-<div class="modal fade" id="showOrderModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header bg-light">
-                <h5 class="modal-title fw-bold">Order Details</h5>
+<!-- ================= ORDER MODAL (EXPANDED XL WIDTH) ================= -->
+<div class="modal fade" id="showOrderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-receipt text-primary me-2"></i>
+                    Order & Invoice Details
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-0" id="orderDetails">
@@ -189,7 +192,7 @@
             buttons: [
                 {
                     extend: 'copy', text: '<i class="fa-regular fa-copy"></i> Copy',
-                    exportOptions: { columns: ':not(:last-child)' } 
+                    exportOptions: { columns: ':not(:last-child)' }
                 },
                 {
                     extend: 'excel', text: '<i class="fa-regular fa-file-excel"></i> Excel',
@@ -240,8 +243,8 @@
             btn.html('<i class="fa-solid fa-spinner fa-spin"></i>').prop('disabled', true);
             $.get("{{ url('/admin/orders') }}/" + id, function (html) {
                 $('#orderDetails').html(html);
-                $('#showOrderModal').modal('show'); 
-                
+                $('#showOrderModal').modal('show');
+
             }).always(function() {
                 btn.html(originalHtml).prop('disabled', false);
             });
@@ -256,8 +259,8 @@
             btn.html('<i class="fa-solid fa-spinner fa-spin"></i>').prop('disabled', true);
             $.get("{{ url('/admin/orders/status-modal') }}/" + id, function (html) {
                 $('#statusModalBody').html(html);
-                $('#statusModal').modal('show'); 
-                
+                $('#statusModal').modal('show');
+
             }).always(function() {
                 btn.html(originalText).prop('disabled', false);
             });
@@ -272,9 +275,9 @@
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function (res) {
-                    $('#statusModal').modal('hide'); 
+                    $('#statusModal').modal('hide');
                     toastr.success(res.message);
-                    table.ajax.reload(null, false); 
+                    table.ajax.reload(null, false);
                 },
                 error: function(xhr){
                     showErrors(xhr);
@@ -308,14 +311,14 @@
 
     setInterval(function () {
         $.get("{{ route('orders.checkNew') }}", function (res) {
-            
+
             if (lastOrderId !== null && res.last_order_id > lastOrderId) {
-                lastOrderId = res.last_order_id; 
-                
+                lastOrderId = res.last_order_id;
+
                 window.location.reload();
-                
+
                 toastr.info('New Order Received!');
-            
+
             }
         });
     }, 10000);

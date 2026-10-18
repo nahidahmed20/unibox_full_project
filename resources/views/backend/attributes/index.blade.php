@@ -51,26 +51,29 @@
                 <form id="attributeForm">
                     @csrf
                     <input type="hidden" id="attribute_id">
-                    <div class="modern-card-header d-flex justify-content-between align-items-center" style="background:#000032; color:#fff; padding:15px 20px;">
-                        <h4 id="modalTitle" style="color:#fff; margin-bottom:0;">Add Attribute</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold d-flex align-items-center gap-2" id="modalTitle">
+                            <i class="fa-solid fa-tags text-primary"></i>
+                            <span>Add Attribute</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     
-                    <div class="card-body p-4">
+                    <div class="modal-body p-4">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Attribute Name</label>
+                                <label class="form-label fw-bold">Attribute Name <span class="text-danger">*</span></label>
                                 <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Acrylic Quality, Thickness">
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label class="form-label">Input Type</label>
+                                <label class="form-label fw-bold">Input Type</label>
                                 <select id="type" name="type" class="form-select">
                                     <option value="select">Dropdown (Select)</option>
                                     <option value="text">Manual Text (Input)</option>
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label class="form-label">Status</label>
+                                <label class="form-label fw-bold">Status</label>
                                 <select id="status" name="status" class="form-select">
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
@@ -79,13 +82,13 @@
                         </div>
 
                         <!-- Dynamic Options Builder -->
-                        <div id="optionsBuilder" class="mt-3 p-3 bg-light rounded border">
-                            <label class="fw-bold mb-2 d-block">Attribute Options & Extra Price</label>
+                        <div id="optionsBuilder" class="mt-3 p-3 bg-light rounded-3 border">
+                            <label class="fw-bold mb-2 d-block text-dark">Attribute Options & Extra Price</label>
                             <div id="dynamicOptionsWrapper">
                                 <div class="input-group mb-2 option-row">
                                     <input type="text" name="options[0][value]" class="form-control" placeholder="Option Value (e.g. PK Acrylic)">
                                     <input type="number" step="0.01" name="options[0][extra_price]" class="form-control" placeholder="Extra Price (৳)">
-                                    <button type="button" class="btn btn-danger remove-option"><i class="fa-solid fa-xmark"></i></button>
+                                    <button type="button" class="btn btn-outline-danger remove-option"><i class="fa-solid fa-xmark"></i></button>
                                 </div>
                             </div>
                             <button type="button" class="btn btn-sm btn-dark mt-2" id="addOptionBtn">
@@ -95,8 +98,8 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="saveBtn">Save Attribute</button>
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm" id="saveBtn">Save Attribute</button>
                     </div>
                 </form>
             </div>

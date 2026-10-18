@@ -66,7 +66,7 @@
     }
 
     .toggle:checked {
-        background: #111827;
+        background: #4361ee;
     }
 
     .toggle::before {
