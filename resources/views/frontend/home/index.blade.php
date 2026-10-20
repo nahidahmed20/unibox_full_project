@@ -12,25 +12,111 @@
         <div><i class="fa-regular fa-comments" aria-hidden="true"></i><span><strong>A real helping hand</strong>Talk to us
                 about your order</span></div>
     </section>
-    <section class="container ub-section ub-collections" id="collections" aria-labelledby="collections-title">
-        <div class="ub-section-heading">
-            <div><span class="ub-eyebrow">CURATED FOR YOUR NEXT IDEA</span><h2 id="collections-title">Discover your kind of collection.</h2><p>Thoughtful details for your business, your everyday, and the moments worth celebrating.</p></div>
-            <div class="ub-collection-controls" data-collection-controls hidden><button type="button" data-collection-prev aria-label="Previous collections"><i class="fa-regular fa-arrow-left" aria-hidden="true"></i></button><button type="button" data-collection-next aria-label="Next collections"><i class="fa-regular fa-arrow-right" aria-hidden="true"></i></button></div>
+    {{-- FEATURED CATEGORIES & COLLECTIONS --}}
+    <section class="container ub-section ub-collections-premium" id="collections" aria-labelledby="collections-title">
+        <div class="ub-section-header-modern d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+            <div>
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-10 text-primary fw-bold text-uppercase mb-2" style="font-size: 11px; letter-spacing: 0.08em;">
+                    <i class="fa-solid fa-shapes"></i> TOP COLLECTIONS & CATEGORIES
+                </div>
+                <h2 id="collections-title" class="fw-bolder text-dark mb-1" style="font-size: 30px; letter-spacing: -0.02em;">
+                    জনপ্রিয় ক্যাটাগরি ও কালেকশন
+                </h2>
+                <p class="text-muted mb-0" style="font-size: 14.5px; max-width: 580px;">
+                    কাস্টমাইজড উপহার, ক্রেস্ট, অ্যাওয়ার্ড, অফিস ব্যাগ ও ব্র্যান্ডিং আইটেম—আপনার পছন্দের ক্যাটাগরি এক্সপ্লোর করুন।
+                </p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <div class="ub-collection-controls" data-collection-controls hidden>
+                    <button type="button" class="btn-rail-ctrl" data-collection-prev aria-label="Previous collections">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button type="button" class="btn-rail-ctrl" data-collection-next aria-label="Next collections">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <a class="btn btn-sm btn-outline-dark rounded-pill px-3 py-2 fw-semibold d-none d-sm-inline-flex align-items-center gap-1" href="{{ route('search') }}" style="font-size: 13px;">
+                    <span>সবগুলো দেখুন</span>
+                    <i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
+            </div>
         </div>
+
         <div class="ub-collection-rail" tabindex="0" aria-label="Browse all collections">
             @forelse($categories as $category)
-                <a class="ub-collection-link ub-category-tile" href="{{ route('category.show', $category->slug) }}">
-                    <div class="ub-collection-image">
-                        <span class="ub-collection-number" aria-hidden="true">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-                        @if($category->image)<img src="{{ asset($category->image) }}" alt="" width="200" height="200" loading="lazy" decoding="async">@else<i class="fa-regular fa-shapes" aria-hidden="true"></i>@endif
+                <a class="ub-collection-card" href="{{ route('category.show', $category->slug) }}">
+                    <div class="ub-card-thumb-wrap">
+                        @if($category->image)
+                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="ub-card-img" loading="lazy" decoding="async">
+                        @else
+                            <div class="ub-card-img-placeholder">
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+                        @endif
+
+                        {{-- Floating badge --}}
+                        <div class="ub-card-badge-top">
+                            <span class="ub-card-badge">
+                                @if(isset($category->products_count) && $category->products_count > 0)
+                                    {{ $category->products_count }} {{ Str::plural('Product', $category->products_count) }}
+                                @elseif($category->children && count($category->children) > 0)
+                                    {{ count($category->children) }} Types
+                                @else
+                                    Exclusive
+                                @endif
+                            </span>
+                        </div>
+
+                        {{-- Hover Action Circle --}}
+                        <div class="ub-card-hover-action">
+                            <span class="ub-action-circle">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </span>
+                        </div>
                     </div>
-                    <div class="ub-collection-caption"><h3>{{ $category->name }}</h3><span>Explore collection <i class="fa-regular fa-arrow-up-right" aria-hidden="true"></i></span></div>
+
+                    <div class="ub-card-content">
+                        <h3 class="ub-card-title">{{ $category->name }}</h3>
+
+                        @if($category->children && count($category->children) > 0)
+                            <div class="ub-card-pills">
+                                @foreach($category->children->take(2) as $sub)
+                                    <span class="ub-sub-pill">{{ $sub->name }}</span>
+                                @endforeach
+                                @if(count($category->children) > 2)
+                                    <span class="ub-sub-pill ub-sub-more">+{{ count($category->children) - 2 }} more</span>
+                                @endif
+                            </div>
+                        @endif
+
+                        <div class="ub-card-footer">
+                            <span class="ub-explore-text">
+                                Explore Collection <i class="fa-solid fa-arrow-right ms-1 ub-arrow-slide"></i>
+                            </span>
+                        </div>
+                    </div>
                 </a>
             @empty
-                <div class="ub-empty"><p>New collections are on their way.</p><a href="{{ route('contact.us') }}">Tell us what you have in mind</a></div>
+                <div class="ub-empty p-4 text-center w-100 bg-white rounded-4 border">
+                    <i class="fa-solid fa-box-open text-muted fs-1 mb-2"></i>
+                    <p class="text-muted mb-2">শীঘ্রই নতুন কালেকশন যুক্ত হচ্ছে।</p>
+                    <a href="{{ route('contact.us') }}" class="btn btn-sm btn-primary rounded-pill px-4">যোগাযোগ করুন</a>
+                </div>
             @endforelse
         </div>
-        <div class="ub-collection-bottom"><span>A collection for every possibility.</span><a class="ub-text-link" href="{{ route('search') }}">View all products <i class="fa-regular fa-arrow-right" aria-hidden="true"></i></a></div>
+
+        <div class="ub-collections-bottom-bar mt-4 p-3 rounded-4 bg-white border d-flex justify-content-between align-items-center flex-wrap gap-2 shadow-sm">
+            <div class="d-flex align-items-center gap-2">
+                <span class="rounded-circle bg-success bg-opacity-10 text-success p-2 d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px;">
+                    <i class="fa-solid fa-shield-halved" style="font-size: 14px;"></i>
+                </span>
+                <span class="fw-semibold text-dark" style="font-size: 13.5px;">কর্পোরেট গিফট ও বাল্ক অর্ডারের জন্য বিশেষ ডিসকাউন্ট এবং দ্রুত ডেলিভারি সুবিধা।</span>
+            </div>
+            <a class="btn btn-sm btn-dark rounded-pill px-3 py-1.5 fw-bold d-inline-flex align-items-center gap-1" href="{{ route('contact.us') }}" style="font-size: 12.5px;">
+                <span>Get Bulk Quote</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
     </section>
     @if ($bestsellers->isNotEmpty())
         <section class="ub-bestseller-section">

@@ -23,7 +23,9 @@
                         </span>
                         <input type="text" name="order_id" value="{{ request('order_id') }}" class="form-control border-0 shadow-none bg-transparent" placeholder="Order ID (e.g. #ORD-12345)" required>
                         <input type="tel" name="phone" class="form-control" placeholder="Checkout phone number" aria-label="Checkout phone number" pattern="01[3-9][0-9]{8}" required>
-                        <button type="submit" class="btn rounded-pill px-4 fw-bold" style="background-color: #008a7a; color: white;">Track Order</button>
+                        <button type="submit" class="btn btn-dark rounded-pill px-4 fw-bold shadow-sm">
+                            <i class="fa-solid fa-magnifying-glass me-1"></i> Track Order
+                        </button>
                     </div>
                 </form>
             </div>

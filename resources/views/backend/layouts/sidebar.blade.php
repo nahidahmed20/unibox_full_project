@@ -24,6 +24,8 @@
         align-items: center;
         font-weight: 500;
         font-size: 0.9rem;
+        cursor: pointer;
+        user-select: none;
     }
 
     /* Active & Hover States */
@@ -49,6 +51,15 @@
     .sidebar-wrapper .nav-link.active .nav-icon {
         color: #3b82f6 !important;
         transform: scale(1.1);
+    }
+
+    /* Chevrons & Arrow Rotation */
+    .sidebar-wrapper .nav-arrow {
+        display: inline-block !important;
+        transition: transform 0.22s ease !important;
+    }
+    .sidebar-wrapper .nav-item.menu-open > .nav-link .nav-arrow {
+        transform: rotate(90deg) !important;
     }
 
     /* Submenus */
@@ -139,10 +150,9 @@
             <img src="{{ asset(setting('footer_logo')) }}" alt="Logo" class="brand-image opacity-75 shadow" />
         </a>
     </div>
-
     <div class="sidebar-wrapper">
         <nav class="mt-2">
-            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview">
+            <ul class="nav sidebar-menu flex-column">
 
                 <li class="nav-header">DASHBOARD & ANALYTICS</li>
                 <li class="nav-item">
@@ -244,28 +254,28 @@
                                 <li class="nav-item"><a href="{{ route('products.bulk_upload_view') }}" class="nav-link {{ request()->routeIs('products.bulk_upload_view') ? 'active' : '' }}"><i class="bi bi-cloud-arrow-up"></i><p>Bulk Product</p></a></li>
                             @endcan
                             @can('category.view')
-                                <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link {{ request()->routeIs('categories.index') ? 'active' : '' }}"><i class="bi bi-grid-fill"></i><p>Category List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}"><i class="bi bi-grid-fill"></i><p>Category List</p></a></li>
                             @endcan
 
                             @can('brand.view')
-                                <li class="nav-item"><a href="{{ route('brands.index') }}" class="nav-link {{ request()->routeIs('brands.index') ? 'active' : '' }}"><i class="bi bi-patch-check"></i><p>Brand List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('brands.index') }}" class="nav-link {{ request()->routeIs('brands.*') ? 'active' : '' }}"><i class="bi bi-patch-check"></i><p>Brand List</p></a></li>
                             @endcan
                             @can('unit.view')
-                                <li class="nav-item"><a href="{{ route('units.index') }}" class="nav-link {{ request()->routeIs('units.index') ? 'active' : '' }}"><i class="bi bi-hash"></i><p>Unit List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('units.index') }}" class="nav-link {{ request()->routeIs('units.*') ? 'active' : '' }}"><i class="bi bi-hash"></i><p>Unit List</p></a></li>
                             @endcan
                             @can('color.view')
-                                <li class="nav-item"><a href="{{ route('colors.index') }}" class="nav-link {{ request()->routeIs('colors.index') ? 'active' : '' }}"><i class="bi bi-palette"></i><p>Color List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('colors.index') }}" class="nav-link {{ request()->routeIs('colors.*') ? 'active' : '' }}"><i class="bi bi-palette"></i><p>Color List</p></a></li>
                             @endcan
                             @can('size.view')
-                                <li class="nav-item"><a href="{{ route('sizes.index') }}" class="nav-link {{ request()->routeIs('sizes.index') ? 'active' : '' }}"><i class="bi bi-rulers"></i><p>Size List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('sizes.index') }}" class="nav-link {{ request()->routeIs('sizes.*') ? 'active' : '' }}"><i class="bi bi-rulers"></i><p>Size List</p></a></li>
                             @endcan
                             @can('attribute.view')
-                                <li class="nav-item"><a href="{{ route('attributes.index') }}" class="nav-link {{ request()->routeIs('attributes.index') ? 'active' : '' }}"><i class="bi bi-list-check"></i><p>Attribute List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('attributes.index') }}" class="nav-link {{ request()->routeIs('attributes.*') ? 'active' : '' }}"><i class="bi bi-list-check"></i><p>Attribute List</p></a></li>
                             @endcan
                             <li class="nav-item"><a href="{{ route('specifications.index') }}" class="nav-link {{ request()->routeIs('specifications.*') ? 'active' : '' }}"><i class="bi bi-card-list"></i><p>Specification List</p></a></li>
 
                             @can('variation.view')
-                                <li class="nav-item"><a href="{{ route('variations.index') }}" class="nav-link {{ request()->routeIs('variations.index') ? 'active' : '' }}"><i class="bi bi-sliders"></i><p>Variation List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('variations.index') }}" class="nav-link {{ request()->routeIs('variations.*') ? 'active' : '' }}"><i class="bi bi-sliders"></i><p>Variation List</p></a></li>
                             @endcan
                             @can('view product')
                                 <li class="nav-item"><a href="{{ route('products.barcode.index') }}" class="nav-link {{ request()->routeIs('products.barcode.index') || request()->routeIs('products.barcode.print') ? 'active' : '' }}"><i class="bi bi-upc-scan"></i><p>Print Barcode</p></a></li>
@@ -298,7 +308,7 @@
                                 <li class="nav-item"><a href="{{ route('stock-adjustments.create') }}" class="nav-link {{ request()->routeIs('stock-adjustments.create') ? 'active' : '' }}"><i class="bi bi-plus-circle-dotted"></i><p>Adjustment Create</p></a></li>
                             @endcan
                             @can('supplier-view')
-                                <li class="nav-item"><a href="{{ route('suppliers.index') }}" class="nav-link {{ request()->routeIs('suppliers.index') ? 'active' : '' }}"><i class="bi bi-person-badge-fill"></i><p>Supplier List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('suppliers.index') }}" class="nav-link {{ request()->routeIs('suppliers.*') ? 'active' : '' }}"><i class="bi bi-person-badge-fill"></i><p>Supplier List</p></a></li>
                             @endcan
                         </ul>
                     </li>
@@ -359,10 +369,10 @@
                         </a>
                         <ul class="nav nav-treeview" style="{{ request()->routeIs('customers.*', 'members.*', 'admin.reviews.*', 'blocked-phones.*') ? 'display: block;' : 'display: none;' }}">
                             @can('customer.view')
-                                <li class="nav-item"><a href="{{ route('customers.index') }}" class="nav-link {{ request()->routeIs('customers.index') ? 'active' : '' }}"><i class="bi bi-person-bounding-box"></i><p>Customers List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('customers.index') }}" class="nav-link {{ request()->routeIs('customers.*') ? 'active' : '' }}"><i class="bi bi-person-bounding-box"></i><p>Customers List</p></a></li>
                             @endcan
                             @can('member.view')
-                                <li class="nav-item"><a href="{{ route('members.index') }}" class="nav-link {{ request()->routeIs('members.index') ? 'active' : '' }}"><i class="bi bi-person-lines-fill"></i><p>Members List</p></a></li>
+                                <li class="nav-item"><a href="{{ route('members.index') }}" class="nav-link {{ request()->routeIs('members.*') ? 'active' : '' }}"><i class="bi bi-person-lines-fill"></i><p>Members List</p></a></li>
                             @endcan
                             <li class="nav-item">
                                 <a href="{{ route('admin.reviews.index') }}" class="nav-link {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
@@ -490,16 +500,16 @@
                         </a>
                         <ul class="nav nav-treeview" style="{{ request()->routeIs('users.*', 'roles.*', 'permissions.*', 'settings.*', 'backups.*') ? 'display: block;' : 'display: none;' }}">
                             @can('user.view')
-                                <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"><i class="bi bi-person-lines-fill"></i><p>System Users</p></a></li>
+                                <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"><i class="bi bi-person-lines-fill"></i><p>System Users</p></a></li>
                             @endcan
                             @can('role.view')
-                                <li class="nav-item"><a href="{{ route('roles.index') }}" class="nav-link {{ request()->routeIs('roles.index') ? 'active' : '' }}"><i class="bi bi-person-workspace"></i><p>Roles & Rights</p></a></li>
+                                <li class="nav-item"><a href="{{ route('roles.index') }}" class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}"><i class="bi bi-person-workspace"></i><p>Roles & Rights</p></a></li>
                             @endcan
                             @can('permission.view')
-                                <li class="nav-item"><a href="{{ route('permissions.index') }}" class="nav-link {{ request()->routeIs('permissions.index') ? 'active' : '' }}"><i class="bi bi-key-fill"></i><p>Permissions Setup</p></a></li>
+                                <li class="nav-item"><a href="{{ route('permissions.index') }}" class="nav-link {{ request()->routeIs('permissions.*') ? 'active' : '' }}"><i class="bi bi-key-fill"></i><p>Permissions Setup</p></a></li>
                             @endcan
                             @can('setting.view')
-                                <li class="nav-item"><a href="{{ route('settings.index') }}" class="nav-link {{ request()->routeIs('settings.index') ? 'active' : '' }}"><i class="bi bi-gear-wide-connected"></i><p>Global Settings</p></a></li>
+                                <li class="nav-item"><a href="{{ route('settings.index') }}" class="nav-link {{ request()->routeIs('settings.*') ? 'active' : '' }}"><i class="bi bi-gear-wide-connected"></i><p>Global Settings</p></a></li>
                             @endcan
                             <li class="nav-item">
                                 <a href="{{ route('backups.index') }}" class="nav-link {{ request()->routeIs('backups.*') ? 'active' : '' }}">
@@ -533,26 +543,96 @@
     </div>
 </aside>
 
+@push('scripts')
 <script>
-    $(document).ready(function() {
-        // Auto-expand any parent menu containing an active link
-        $('.nav-treeview .nav-link.active').each(function() {
-            var $treeview = $(this).closest('.nav-treeview');
-            var $parentItem = $(this).closest('.nav-item');
-            $parentItem.addClass('menu-open');
-            $parentItem.children('.nav-link').addClass('active');
-            $treeview.css('display', 'block');
-        });
+    (function() {
+        'use strict';
 
-        $('.nav-item > a').on('click', function(e) {
-            var $submenu = $(this).next('.nav-treeview');
-            if ($submenu.length > 0) {
+        function setupAdminSidebar() {
+            var $ = window.jQuery;
+
+            // 1. Auto-expand active parent menu on page load
+            document.querySelectorAll('.sidebar-wrapper .nav-treeview').forEach(function(tree) {
+                if (tree.querySelector('.nav-link.active')) {
+                    var parent = tree.closest('.nav-item');
+                    if (parent) {
+                        parent.classList.add('menu-open');
+                        var parentLink = parent.querySelector(':scope > .nav-link');
+                        if (parentLink) {
+                            parentLink.classList.add('active');
+                        }
+                        tree.style.display = 'block';
+                    }
+                }
+            });
+
+            // 2. Prevent duplicate global event binding
+            if (window._adminSidebarInitialized) return;
+            window._adminSidebarInitialized = true;
+
+            // 3. Robust Event Delegation for Parent Menu Toggles
+            document.addEventListener('click', function(e) {
+                var link = e.target.closest('.sidebar-wrapper .nav-item > a');
+                if (!link) return;
+
+                var parent = link.closest('.nav-item');
+                if (!parent) return;
+
+                var submenu = parent.querySelector(':scope > .nav-treeview');
+                if (!submenu) {
+                    // Regular menu item (e.g., Dashboard, Profile) - normal navigation
+                    return;
+                }
+
+                // Prevent jumping to '#' or page reload
                 e.preventDefault();
-                $(this).parent().toggleClass('menu-open');
-                $submenu.slideToggle(200);
-            }
-        });
-    });
+                e.stopPropagation();
+
+                var $ = window.jQuery;
+                var isOpen = parent.classList.contains('menu-open');
+
+                // Accordion behavior: close other open menus in the same level
+                var siblingOpenItems = parent.parentElement.querySelectorAll(':scope > .nav-item.menu-open');
+                siblingOpenItems.forEach(function(sib) {
+                    if (sib !== parent) {
+                        sib.classList.remove('menu-open');
+                        var sibSub = sib.querySelector(':scope > .nav-treeview');
+                        if (sibSub) {
+                            if ($) {
+                                $(sibSub).stop(true, true).slideUp(200);
+                            } else {
+                                sibSub.style.display = 'none';
+                            }
+                        }
+                    }
+                });
+
+                // Toggle target submenu
+                if (isOpen) {
+                    parent.classList.remove('menu-open');
+                    if ($) {
+                        $(submenu).stop(true, true).slideUp(200);
+                    } else {
+                        submenu.style.display = 'none';
+                    }
+                } else {
+                    parent.classList.add('menu-open');
+                    if ($) {
+                        $(submenu).stop(true, true).slideDown(200);
+                    } else {
+                        submenu.style.display = 'block';
+                    }
+                }
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupAdminSidebar);
+        } else {
+            setupAdminSidebar();
+        }
+    })();
 </script>
+@endpush
 
 

@@ -12,9 +12,15 @@
                             <i class="fas fa-truck-fast me-1"></i> Send to Steadfast
                         </button>
                     </form>
+                    <form action="{{ route('orders.send-to-pathao', $order->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Dispatch this order to Pathao Courier?');">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm" style="padding: 7px 14px; font-weight: 600; border-radius: 6px;">
+                            <i class="fas fa-motorcycle me-1"></i> Send to Pathao
+                        </button>
+                    </form>
                 @else
-                    <span class="badge bg-success" style="font-size: 13px; padding: 7px 12px;">
-                        <i class="fas fa-check-circle me-1"></i> Steadfast: {{ $order->tracking_number }}
+                    <span class="badge bg-primary text-white" style="font-size: 13px; padding: 7px 12px;">
+                        <i class="fas fa-check-circle me-1"></i> {{ $order->courier?->name ?: 'Courier' }}: {{ $order->tracking_number }}
                     </span>
                 @endif
                 <a href="{{ route('orders.invoice', $order->id) }}" target="_blank" class="print-btn">

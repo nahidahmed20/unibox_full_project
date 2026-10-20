@@ -17,7 +17,13 @@ class SettingController extends Controller
 
     public function save(Request $request)
     {
+        $fileKeys = ['header_logo', 'footer_logo', 'favicon', 'nav_icon'];
+
         foreach ($request->except('_token') as $key => $input) {
+
+            if (in_array($key, $fileKeys) && !$request->hasFile($key)) {
+                continue;
+            }
 
             $value = $input;
 
@@ -45,6 +51,19 @@ class SettingController extends Controller
                 ['key' => $key],
                 ['value' => $value]
             );
+
+            // Synchronize legacy aliases so old views never break
+            if ($key === 'header_logo') {
+                Setting::updateOrCreate(['key' => 'logo'], ['value' => $value]);
+            }
+            if ($key === 'favicon') {
+                Setting::updateOrCreate(['key' => 'nav_icon'], ['value' => $value]);
+            }
+        }
+
+        // Clear settings cache if any
+        if (function_exists('cache')) {
+            cache()->forget('unibox_global_settings');
         }
 
         return back()->with('success', 'Settings updated successfully!');

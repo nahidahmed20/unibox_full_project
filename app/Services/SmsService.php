@@ -14,12 +14,18 @@ class SmsService
                 $number = '88'.$number;
             }
 
-            if (! config('services.sms.url') || ! config('services.sms.key')) {
+            $url = setting('sms_url') ?: config('services.sms.url');
+            $apiKey = setting('sms_api_key') ?: config('services.sms.key');
+            $senderId = setting('sms_sender_id') ?: config('services.sms.sender');
+
+            if (! $url || ! $apiKey) {
+                Log::info('SMS gateway skipped: Missing SMS API URL or API Key in settings/config.');
                 return false;
             }
-            $response = Http::timeout(15)->get(config('services.sms.url'), [
-                'api_key' => config('services.sms.key'),
-                'senderid' => config('services.sms.sender'),
+
+            $response = Http::timeout(15)->get($url, [
+                'api_key' => $apiKey,
+                'senderid' => $senderId,
                 'type' => 'text',
                 'number' => $number,
                 'message' => $message,
@@ -29,12 +35,12 @@ class SmsService
                 return true;
             }
 
-            Log::error('SMS gateway request failed.', ['status' => $response->status()]);
+            Log::error('SMS gateway request failed.', ['status' => $response->status(), 'body' => $response->body()]);
 
             return false;
 
         } catch (\Exception $e) {
-            Log::error('SMS gateway connection failed.');
+            Log::error('SMS gateway connection failed: ' . $e->getMessage());
 
             return false;
         }

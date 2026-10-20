@@ -23,7 +23,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('status', 1)->whereNull('parent_id')->orderBy('name')->get();
+        $categories = Category::where('status', 1)->whereNull('parent_id')->with('children')->withCount('products')->orderBy('name')->get();
         $catalog = Product::where('status', 1)->whereNull('deleted_at')->with(['category', 'variants']);
         $products = (clone $catalog)->latest()->take(8)->get();
         $bestsellers = (clone $catalog)->where('is_bestseller', 1)->latest()->take(4)->get();
@@ -213,7 +213,7 @@ class HomeController extends Controller
                 // Category Search
         if ($request->filled('category_id')) {
             $catId = $request->category_id;
-            
+
             // Get all nested IDs
             $categoryIds = [$catId];
             $children = Category::where('parent_id', $catId)->pluck('id')->toArray();

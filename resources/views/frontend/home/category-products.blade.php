@@ -1,14 +1,56 @@
 @extends('frontend.layouts.app')
-@section('title', 'Home')
-@section('content')
-<section class="shop-grid pt-60 pb-100 single-category-page">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 ">
-                        <div class="shop-grid-left">
+@section('title', isset($category) ? $category->name . ' | Unibox' : (request('search') ? 'Search: ' . request('search') . ' | Unibox' : 'Shop All Products | Unibox'))
 
-                            {{-- TOP BAR --}}
-                            <div class="top-grid-content">
+@section('content')
+<section class="shop-grid pt-4 pb-80 single-category-page">
+    <div class="container">
+        {{-- CATEGORY / SEARCH HERO BANNER --}}
+        <div class="p-4 p-md-5 mb-4 rounded-4 border bg-light position-relative overflow-hidden" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div>
+                    <nav aria-label="breadcrumb" class="mb-2">
+                        <ol class="breadcrumb mb-0 small">
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-muted text-decoration-none"><i class="fa-solid fa-house me-1"></i> Home</a></li>
+                            @if(isset($category))
+                                <li class="breadcrumb-item"><a href="{{ route('search') }}" class="text-muted text-decoration-none">Categories</a></li>
+                                <li class="breadcrumb-item active fw-bold text-dark">{{ $category->name }}</li>
+                            @elseif(request('search'))
+                                <li class="breadcrumb-item active fw-bold text-dark">Search Results</li>
+                            @else
+                                <li class="breadcrumb-item active fw-bold text-dark">Shop All</li>
+                            @endif
+                        </ol>
+                    </nav>
+
+                    <h1 class="fw-bold text-dark mb-1" style="font-size: clamp(24px, 3.5vw, 36px);">
+                        @if(isset($category))
+                            {{ $category->name }}
+                        @elseif(request('search'))
+                            Search: "{{ request('search') }}"
+                        @else
+                            All Collections & Products
+                        @endif
+                    </h1>
+
+                    <p class="text-muted mb-0 small">
+                        Showing {{ $products->total() }} curated products ready for fast delivery.
+                    </p>
+                </div>
+
+                @if(isset($category) && $category->image)
+                    <div class="d-none d-md-block">
+                        <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="rounded-4 shadow-sm border" style="width: 80px; height: 80px; object-fit: cover;">
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop-grid-left">
+
+                    {{-- TOP BAR --}}
+                    <div class="top-grid-content d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
                                 <div class="shop-tab-nav">
 
                                     <nav>

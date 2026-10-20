@@ -342,6 +342,41 @@ class OrderController extends Controller
         return back()->with('error', $result['message']);
     }
 
+    public function sendToPathao($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $pathaoService = new \App\Services\PathaoService();
+        $result = $pathaoService->createOrder($order);
+
+        if ($result['success']) {
+            $courier = \App\Models\Courier::firstOrCreate(
+                ['name' => 'Pathao'],
+                ['is_active' => true]
+            );
+
+            $order->courier_id = $courier->id;
+            $order->tracking_number = $result['tracking_code'];
+            $order->status = 'on-the-way';
+            $order->save();
+
+            // Trigger SMS if enabled
+            if (setting('status_sms_enabled', '1') == '1' && !empty($order->phone)) {
+                try {
+                    $storeName = setting('company_name') ?: 'Unibox';
+                    $msg = "Dear {$order->full_name}, your order #{$order->order_number} has been dispatched via Pathao Courier (Consignment: {$order->tracking_number}). Thank you for shopping with {$storeName}!";
+                    \App\Services\SmsService::send($order->phone, $msg);
+                } catch (\Throwable $t) {
+                    \Illuminate\Support\Facades\Log::error('Pathao dispatch SMS error: ' . $t->getMessage());
+                }
+            }
+
+            return back()->with('success', $result['message']);
+        }
+
+        return back()->with('error', $result['message']);
+    }
+
     public function edit($id)
     {
         $order = Order::with('items')->findOrFail($id);

@@ -24,6 +24,11 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
+# Block hidden files and sensitive extensions
+<FilesMatch "^\.|\.(env|json|lock|xml|yml|yaml|md|sql|log|sh|bak)$">
+    Require all denied
+</FilesMatch>
+
 # Compress text assets; keep personalized HTML outside shared caches.
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json image/svg+xml

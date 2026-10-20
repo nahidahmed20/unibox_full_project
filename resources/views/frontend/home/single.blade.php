@@ -196,15 +196,35 @@
                                 </button>
                             </div>
                         </div>
-                        <a href="#" class="shop-details-btn rr-primary-btn mt-2 d-inline-block text-center" id="buyNowBtn" data-id="{{ $product->id }}">
-                            Buy Now
+                        <a href="#" class="shop-details-btn rr-primary-btn mt-2 d-inline-block text-center w-100" id="buyNowBtn" data-id="{{ $product->id }}" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important; border-radius: 9999px !important; font-weight: 800; font-size: 16px; padding: 14px 20px;">
+                            <i class="fa-solid fa-bolt text-warning me-2"></i> অর্ডার করুন (Buy Now)
                         </a>
 
                         @if($product->extra_note)
-                        <div class="product-extra-note mt-3">
-                            <i class="fa-solid fa-circle-info me-1"></i> {{ $product->extra_note }}
+                        <div class="product-extra-note mt-3 p-2 bg-light border rounded-3 small">
+                            <i class="fa-solid fa-circle-info me-1 text-primary"></i> {{ $product->extra_note }}
                         </div>
                         @endif
+
+                        {{-- TRUST & DELIVERY GUARANTEE BOX --}}
+                        <div class="single-guarantee-box">
+                            <div class="single-guarantee-item">
+                                <i class="fa-solid fa-truck-fast"></i>
+                                <span>সারা দেশে ক্যাশ অন ডেলিভারি সুবিধা (পণ্য হাতে পেয়ে মূল্য পরিশোধ)</span>
+                            </div>
+                            <div class="single-guarantee-item">
+                                <i class="fa-solid fa-clock"></i>
+                                <span>দ্রুত ডেলিভারি: ঢাকা সিটিতে ২৪-৪৮ ঘণ্টা, ঢাকার বাইরে ২-৪ দিন</span>
+                            </div>
+                            <div class="single-guarantee-item">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span>৭ দিনের সহজ রিটার্ন এবং মানিব্যাক গ্যারান্টি</span>
+                            </div>
+                            <div class="single-guarantee-item">
+                                <i class="fa-solid fa-shield-check"></i>
+                                <span>১০০% অরিজিনাল ও অথেনটিক পণ্য নিশ্চিয়তা</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

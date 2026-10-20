@@ -5,22 +5,34 @@
     </IfModule>
 
     RewriteEngine On
+
+    # Block access to hidden files and directories (like .env, .git, etc.)
     RewriteRule (^|/)\. - [F,L]
-    RewriteRule ^(composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|artisan|server\.php)$ - [F,L,NC]
-    
-    RewriteRule ^(app|bootstrap|config|database|resources|storage|tests|vendor|routes|tools|node_modules|ninetyspoint\.com)(/.*)?$ - [F,L,NC]
+
+    # Block access to sensitive system files
+    RewriteRule ^(composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|artisan|server\.php|\.env.*)$ - [F,L,NC]
+
+    # Block direct web access to internal Laravel directories
+    RewriteRule ^(app|bootstrap|config|database|resources|storage|tests|vendor|routes|tools|node_modules)(/.*)?$ - [F,L,NC]
+
+    # Prevent loop if already under public/
     RewriteRule ^public/ - [L]
 
+    # Route all requests to public/ folder
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php84___lsphp .php .php8 .phtml
-</IfModule>
+# Prevent directory browsing
+Options -Indexes
+
+# Block sensitive extensions in root
+<FilesMatch "\.(env|json|lock|xml|yml|yaml|md|sql|log|sh|bak)$">
+    Require all denied
+</FilesMatch>
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php84” package as the default “PHP” programming language.
 <IfModule mime_module>
-  AddHandler application/x-httpd-ea-php84 .php .php8 .phtml
+  AddHandler application/x-httpd-ea-php84 .php .php8
 </IfModule>
 # php -- END cPanel-generated handler, do not edit

@@ -4,21 +4,25 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Unibox | Admin | @yield('title')</title>
+    <title>{{ setting('website_title') ?: setting('company_name', 'Unibox') }} | Admin | @yield('title')</title>
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
-    <meta name="title" content="AdminLTE v4 | Dashboard" />
-    <meta name="author" content="ColorlibHQ" />
-    <meta name="description"
-        content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS. Fully accessible with WCAG 2.1 AA compliance." />
-    <meta name="keywords"
-        content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard, accessible admin panel, WCAG compliant" />
+    <meta name="title" content="{{ setting('website_title', 'Unibox Admin') }}" />
+    <meta name="author" content="{{ setting('company_name', 'Unibox') }}" />
+    <meta name="description" content="{{ setting('meta_description', 'Unibox Management System') }}" />
     <meta name="supported-color-schemes" content="light dark" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-     <link rel="shortcut icon" href="{{ asset(setting('nav_icon')) }}" type="image/x-icon">
+    @php
+        $backendFav = setting('favicon') ?: setting('nav_icon');
+    @endphp
+    @if($backendFav && file_exists(public_path($backendFav)))
+        <link rel="shortcut icon" href="{{ asset($backendFav) }}" type="image/x-icon">
+    @elseif(file_exists(public_path('favicon.ico')))
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    @endif
     @include('backend.partials.style')
  
 </head>
@@ -47,13 +51,11 @@
             <!--begin::To the end-->
             <div class="float-end d-none d-sm-inline">Anything you want</div>
             <!--end::To the end-->
-            <!--begin::Copyright-->
             <strong>
-                Copyright &copy; 2025&nbsp;
-                <a href="#" class="text-decoration-none">POS System</a>.
+                Copyright &copy; {{ date('Y') }}&nbsp;
+                <a href="{{ route('dashboard') }}" class="text-decoration-none">{{ setting('company_name', 'Unibox') }}</a>.
             </strong>
-            All rights reserved.
-            <!--end::Copyright-->
+            {{ setting('copyright_text', 'All rights reserved.') }}
         </footer>
         <!--end::Footer-->
         @endunless

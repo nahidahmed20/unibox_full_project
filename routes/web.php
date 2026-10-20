@@ -235,6 +235,7 @@ Route::middleware(['auth', 'staff'])->prefix('admin')->group(function () {
 
     // Courier Dispatch
     Route::post('orders/{id}/send-to-steadfast', [OrderController::class, 'sendToSteadfast'])->name('orders.send-to-steadfast');
+    Route::post('orders/{id}/send-to-pathao', [OrderController::class, 'sendToPathao'])->name('orders.send-to-pathao');
 
     // Reports
     Route::get('reports/total-income', [ReportController::class, 'totalIncome'])->name('reports.total-income');
