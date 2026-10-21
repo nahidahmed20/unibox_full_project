@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', isset($category) ? $category->name . ' | Unibox' : (request('search') ? 'Search: ' . request('search') . ' | Unibox' : 'Shop All Products | Unibox'))
+@section('title', isset($category) ? $category->name : (request('search') ? 'Search: ' . request('search') : 'All Products'))
 
 @section('content')
 <section class="shop-grid pt-4 pb-80 single-category-page">
@@ -7,17 +7,21 @@
         {{-- CATEGORY / SEARCH HERO BANNER --}}
         <div class="p-4 p-md-5 mb-4 rounded-4 border bg-light position-relative overflow-hidden" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);">
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                <div>
+                <div class="flex-grow-1">
                     <nav aria-label="breadcrumb" class="mb-2">
                         <ol class="breadcrumb mb-0 small">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-muted text-decoration-none"><i class="fa-solid fa-house me-1"></i> Home</a></li>
                             @if(isset($category))
-                                <li class="breadcrumb-item"><a href="{{ route('search') }}" class="text-muted text-decoration-none">Categories</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('search') }}" class="text-muted text-decoration-none">All Products</a></li>
+                                @if($category->parent)
+                                    <li class="breadcrumb-item"><a href="{{ route('category.show', $category->parent->slug) }}" class="text-muted text-decoration-none">{{ $category->parent->name }}</a></li>
+                                @endif
                                 <li class="breadcrumb-item active fw-bold text-dark">{{ $category->name }}</li>
                             @elseif(request('search'))
+                                <li class="breadcrumb-item"><a href="{{ route('search') }}" class="text-muted text-decoration-none">All Products</a></li>
                                 <li class="breadcrumb-item active fw-bold text-dark">Search Results</li>
                             @else
-                                <li class="breadcrumb-item active fw-bold text-dark">Shop All</li>
+                                <li class="breadcrumb-item active fw-bold text-dark">All Products</li>
                             @endif
                         </ol>
                     </nav>
@@ -28,13 +32,30 @@
                         @elseif(request('search'))
                             Search: "{{ request('search') }}"
                         @else
-                            All Collections & Products
+                            All Products
                         @endif
                     </h1>
 
                     <p class="text-muted mb-0 small">
-                        Showing {{ $products->total() }} curated products ready for fast delivery.
+                        @if(isset($category))
+                            Showing {{ $products->total() }} curated products in {{ $category->name }}.
+                        @elseif(request('search'))
+                            Found {{ $products->total() }} results for "{{ request('search') }}".
+                        @else
+                            Showing all {{ $products->total() }} products ready for fast delivery.
+                        @endif
                     </p>
+
+                    @if(isset($category) && $category->children && $category->children->count() > 0)
+                        <div class="d-flex align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
+                            <span class="small text-muted fw-semibold me-1"><i class="fa-solid fa-layer-group me-1"></i> Subcategories:</span>
+                            @foreach($category->children as $child)
+                                <a href="{{ route('category.show', $child->slug) }}" class="badge bg-white text-dark border px-3 py-2 rounded-pill text-decoration-none shadow-xs" style="font-size: 13px; font-weight: 500;">
+                                    {{ $child->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
 
                 @if(isset($category) && $category->image)
@@ -62,7 +83,8 @@
                                                     data-bs-toggle="tab"
                                                     data-bs-target="#nav-home"
                                                     type="button"
-                                                    role="tab">
+                                                    role="tab"
+                                                    aria-label="Grid view">
 
                                                 <svg width="20" height="17" viewBox="0 0 20 17">
                                                     <rect x="15" width="5" height="3" fill="currentColor"/>
@@ -84,7 +106,8 @@
                                                     data-bs-toggle="tab"
                                                     data-bs-target="#nav-profile"
                                                     type="button"
-                                                    role="tab">
+                                                    role="tab"
+                                                    aria-label="List view">
 
                                                 <svg width="20" height="17" viewBox="0 0 20 17">
                                                     <rect x="5.71875" width="14.2857" height="3" fill="currentColor"/>
@@ -107,6 +130,12 @@
 
                                 </div>
                                 <form method="GET">
+                                    @if(request('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
+                                    @if(request('category_id'))
+                                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                                    @endif
                                     <select name="sort" class="form-select" onchange="this.form.submit()">
                                         <option value="">Default Sorting</option>
                                         <option value="latest"
@@ -138,9 +167,9 @@
                     <ul class="pagination-wrap mt-50">
                         {{-- Previous --}}
                         @if ($products->onFirstPage())
-                            <li> <span class="disabled"> <i class="fa-regular fa-chevrons-left"></i> </span> </li>
+                            <li> <span class="disabled"> <i class="fa-solid fa-chevron-left"></i> </span> </li>
                         @else
-                            <li> <a href="{{ $products->previousPageUrl() }}"> <i class="fa-regular fa-chevrons-left"></i> </a> </li>
+                            <li> <a href="{{ $products->previousPageUrl() }}"> <i class="fa-solid fa-chevron-left"></i> </a> </li>
                         @endif
                         {{-- Page Numbers --}}
                         @foreach ($products->links()->elements[0] ?? [] as $page => $url)
@@ -152,9 +181,9 @@
                         @endforeach
                         {{-- Next --}}
                         @if ($products->hasMorePages())
-                            <li> <a href="{{ $products->nextPageUrl() }}"><i class="fa-regular fa-chevrons-right"></i> </a> </li>
+                            <li> <a href="{{ $products->nextPageUrl() }}"><i class="fa-solid fa-chevron-right"></i> </a> </li>
                         @else
-                            <li> <span class="disabled"> <i class="fa-regular fa-chevrons-right"></i> </span> </li>
+                            <li> <span class="disabled"> <i class="fa-solid fa-chevron-right"></i> </span> </li>
                         @endif
                     </ul>
                 @endif

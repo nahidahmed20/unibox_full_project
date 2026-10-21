@@ -161,6 +161,84 @@
         transform: translateY(-2px) !important;
         box-shadow: 0 12px 28px rgba(15, 23, 42, 0.28) !important;
     }
+
+    @media (max-width: 991px) {
+        .checkout-section {
+            padding: 30px 0 60px 0;
+        }
+        .checkout-card {
+            padding: 24px 20px;
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .checkout-section {
+            padding: 16px 0 50px 0 !important;
+        }
+        .checkout-card {
+            padding: 18px 14px !important;
+            border-radius: 16px !important;
+            margin-bottom: 16px !important;
+        }
+        .form-header {
+            font-size: 17px !important;
+            margin-bottom: 16px !important;
+            padding-bottom: 10px !important;
+        }
+        .modern-input {
+            padding: 12px 14px !important;
+            font-size: 16px !important;
+            border-radius: 10px !important;
+        }
+        .select2-container {
+            width: 100% !important;
+        }
+        .select2-container--default .select2-selection--single {
+            height: 48px !important;
+            border-radius: 10px !important;
+            font-size: 15px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 48px !important;
+        }
+        .order-summary-wrapper {
+            padding: 14px 12px !important;
+            border-radius: 12px !important;
+        }
+        .order-img img {
+            width: 46px !important;
+            height: 46px !important;
+        }
+        .totals-row {
+            font-size: 14px !important;
+            padding: 6px 0 !important;
+        }
+        .totals-row.grand-total {
+            font-size: 17px !important;
+            padding-top: 10px !important;
+        }
+        .order-btn {
+            padding: 15px 20px !important;
+            font-size: 15.5px !important;
+            border-radius: 12px !important;
+            margin-top: 18px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .checkout-card {
+            padding: 15px 12px !important;
+        }
+        .address-type-box {
+            gap: 8px !important;
+        }
+        .radio-card label {
+            padding: 10px 6px !important;
+            font-size: 12.5px !important;
+            gap: 5px !important;
+        }
+    }
 </style>
 @endpush
 

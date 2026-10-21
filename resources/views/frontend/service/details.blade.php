@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', $service->title . ' | Unibox')
+@section('title', $service->title)
 
 @section('content')
 

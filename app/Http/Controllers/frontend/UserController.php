@@ -75,17 +75,27 @@ class UserController extends Controller
         session()->put('otp_expires_at', now()->addMinutes(2)->timestamp);
 
         $message = "Your OTP code is: {$otp}. Valid for 2 minutes.";
+        Log::info("Customer OTP request: Phone: {$login}, OTP: {$otp}");
 
-        $isSent = SmsService::send($login, $message);
+        $smsError = null;
+        $isSent = SmsService::send($login, $message, $smsError);
 
         if (! $isSent) {
-            session()->forget(['otp_login', 'otp_code', 'otp_field', 'otp_expires_at']);
-            Log::error("Failed to send OTP SMS to: {$login}");
+            Log::warning("Failed to send OTP SMS to {$login}: " . ($smsError ?? 'Unknown error'));
 
-            return back()->withErrors(['name' => 'এসএমএস পাঠাতে ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন।']);
+            // If developing on local machine or debug mode, do NOT trap the user in a broken loop:
+            if (app()->environment('local') || config('app.debug')) {
+                session()->flash('dev_otp_notice', "টেস্টিং মোড: SMS গেটওয়েতে আপনার বর্তমান IP Whitelist করা নেই ({$smsError})। টেস্টিং ওটিপি কোড: {$otp}");
+                return back()->with('info', 'ভেরিফিকেশন কোড তৈরি হয়েছে।');
+            }
+
+            session()->forget(['otp_login', 'otp_code', 'otp_field', 'otp_expires_at']);
+            $errDetail = $smsError ? " ({$smsError})" : "";
+
+            return back()->withErrors(['name' => 'এসএমএস পাঠাতে ব্যর্থ হয়েছে' . $errDetail . '। দয়া করে কিছুক্ষণ পর চেষ্টা করুন।']);
         }
 
-        return back()->with('success', 'আপনার প্রদত্ত নাম্বারে ওটিপি পাঠানো হয়েছে।');
+        return back()->with('success', 'আপনার প্রদত্ত নম্বরে ৪ ডিজিটের ওটিপি পাঠানো হয়েছে।');
     }
 
     public function verifyOtp(Request $request)
@@ -229,12 +239,14 @@ class UserController extends Controller
         $totalOrders = Order::where('user_id', $userId)->count();
         $processingOrders = Order::where('user_id', $userId)->whereIn('status', ['pending', 'processing'])->count();
         $completedOrders = Order::where('user_id', $userId)->where('status', 'delivered')->count();
+        $totalSpent = Order::where('user_id', $userId)->whereNotIn('status', ['cancelled', 'return'])->sum('total');
 
         return view('frontend.customer.dashboard', compact(
             'orders',
             'totalOrders',
             'processingOrders',
-            'completedOrders'
+            'completedOrders',
+            'totalSpent'
         ));
     }
 

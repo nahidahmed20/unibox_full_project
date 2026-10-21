@@ -104,20 +104,51 @@
     .kpi-card {
         background: var(--dash-card);
         border: 1px solid var(--dash-border);
-        border-radius: 14px;
-        padding: 20px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-        transition: all 0.25s ease;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        position: relative;
+        overflow: hidden;
     }
 
+    .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3.5px;
+        background: #e2e8f0;
+    }
+
+    .kpi-card.kpi-emerald::before { background: linear-gradient(90deg, #10b981, #059669); }
+    .kpi-card.kpi-blue::before { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
+    .kpi-card.kpi-amber::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+    .kpi-card.kpi-purple::before { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+
     .kpi-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.06);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.08);
         border-color: #cbd5e1;
+    }
+
+    .pulse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+        display: inline-block;
+        animation: pulseAnimation 2s infinite;
+    }
+    @keyframes pulseAnimation {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
     .kpi-header {
@@ -336,6 +367,14 @@
         {{-- ================= HERO BANNER ================= --}}
         <div class="exec-hero">
             <div>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 rounded-pill px-2.5 py-1 small fw-bold d-inline-flex align-items-center gap-1.5" style="font-size: 11px;">
+                        <span class="pulse-dot"></span> LIVE STOREFRONT SYNCED
+                    </span>
+                    <span class="badge bg-white bg-opacity-10 text-white-50 rounded-pill px-2.5 py-1 small" style="font-size: 11px;">
+                        <i class="bi bi-clock me-1"></i> {{ now()->format('h:i A') }}
+                    </span>
+                </div>
                 <div class="exec-hero-title">
                     Welcome back, {{ auth()->user()->name ?? 'Admin' }}! 👋
                 </div>
@@ -349,11 +388,11 @@
                     <i class="bi bi-pc-display-horizontal fs-5"></i>
                     <span>Open POS Terminal</span>
                 </a>
-                <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-light rounded-3 px-3 py-2 fw-semibold">
+                <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-light rounded-pill px-3 py-2 fw-semibold">
                     <i class="bi bi-plus-lg me-1"></i> Add Product
                 </a>
-                <a href="{{ route('home') }}" target="_blank" class="btn btn-sm btn-light rounded-3 px-3 py-2 fw-semibold text-dark">
-                    <i class="bi bi-box-arrow-up-right me-1"></i> Visit Store
+                <a href="{{ route('home') }}" target="_blank" class="btn btn-sm btn-light rounded-pill px-3 py-2 fw-semibold text-dark shadow-xs">
+                    <i class="bi bi-box-arrow-up-right me-1 text-primary"></i> Visit Store
                 </a>
             </div>
         </div>
@@ -363,7 +402,7 @@
 
             {{-- 1: Today's Revenue --}}
             <div class="col-xl-3 col-sm-6">
-                <div class="kpi-card">
+                <div class="kpi-card kpi-emerald">
                     <div class="kpi-header">
                         <span class="kpi-label">Today's Total Sales</span>
                         <div class="kpi-icon-wrap kpi-icon-emerald">
@@ -382,7 +421,7 @@
 
             {{-- 2: This Month's Revenue --}}
             <div class="col-xl-3 col-sm-6">
-                <div class="kpi-card">
+                <div class="kpi-card kpi-blue">
                     <div class="kpi-header">
                         <span class="kpi-label">This Month's Sales</span>
                         <div class="kpi-icon-wrap kpi-icon-blue">
@@ -401,7 +440,7 @@
 
             {{-- 3: Orders Pending Action --}}
             <div class="col-xl-3 col-sm-6">
-                <div class="kpi-card">
+                <div class="kpi-card kpi-amber">
                     <div class="kpi-header">
                         <span class="kpi-label">Pending Orders</span>
                         <div class="kpi-icon-wrap kpi-icon-amber">
@@ -425,7 +464,7 @@
 
             {{-- 4: Inventory & Stock Status --}}
             <div class="col-xl-3 col-sm-6">
-                <div class="kpi-card">
+                <div class="kpi-card kpi-purple">
                     <div class="kpi-header">
                         <span class="kpi-label">Total Stock Quantity</span>
                         <div class="kpi-icon-wrap kpi-icon-purple">

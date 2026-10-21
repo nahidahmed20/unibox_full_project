@@ -5,7 +5,7 @@
                 @forelse($products as $product)
                     @include('frontend.components.product-card', ['product' => $product])
                 @empty
-                    <div class="ub-empty"><i class="fa-regular fa-box-open" aria-hidden="true"></i>
+                    <div class="ub-empty"><i class="fa-solid fa-box-open" aria-hidden="true"></i>
                         <h3>No products found</h3>
                         <p>Try another search or explore a different category.</p><a class="ub-button ub-button-outline"
                             href="{{ route('search') }}">Explore all products</a>

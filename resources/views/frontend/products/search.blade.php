@@ -80,9 +80,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-1.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -109,9 +109,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-2.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -138,9 +138,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-3.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -167,9 +167,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-7.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -196,9 +196,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-8.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -225,9 +225,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-9.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -254,9 +254,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-10.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -283,9 +283,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-11.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -312,9 +312,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-12.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -341,9 +341,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-13.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -370,9 +370,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-14.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -399,9 +399,9 @@
                                             <img src="{{ asset('frontend/assets/img/shop/shop-15.png') }}" alt="shop">
                                             <span class="sale">New</span>
                                             <ul class="shop-list">
-                                                <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                                <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="shop-content">
@@ -431,9 +431,9 @@
                                         <img src="{{ asset('frontend/assets/img/shop/shop-1.png') }}" alt="shop">
                                         <span class="sale">New</span>
                                         <ul class="shop-list">
-                                            <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                            <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="shop-content">
@@ -459,9 +459,9 @@
                                         <img src="{{ asset('frontend/assets/img/shop/shop-2.png') }}" alt="shop">
                                         <span class="sale">New</span>
                                         <ul class="shop-list">
-                                            <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                            <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="shop-content">
@@ -487,9 +487,9 @@
                                         <img src="{{ asset('frontend/assets/img/shop/shop-3.png') }}" alt="shop">
                                         <span class="sale">New</span>
                                         <ul class="shop-list">
-                                            <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                            <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="shop-content">
@@ -515,9 +515,9 @@
                                         <img src="{{ asset('frontend/assets/img/shop/shop-4.png') }}" alt="shop">
                                         <span class="sale">New</span>
                                         <ul class="shop-list">
-                                            <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                            <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="shop-content">
@@ -543,9 +543,9 @@
                                         <img src="{{ asset('frontend/assets/img/shop/shop-1.png') }}" alt="shop">
                                         <span class="sale">New</span>
                                         <ul class="shop-list">
-                                            <li><a href="#"><i class="fa-regular fa-cart-shopping"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="fa-light fa-eye"></i></a></li>
+                                            <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa-regular fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="shop-content">
@@ -767,7 +767,7 @@
             <li><a href="#">1</a></li>
             <li><a href="#" class="active">2</a></li>
             <li><a href="#">3</a></li>
-            <li><a href="#"><i class="fa-regular fa-chevrons-right"></i></a></li>
+            <li><a href="#"><i class="fa-solid fa-chevron-right"></i></a></li>
         </ul>
     </div>
 </section>

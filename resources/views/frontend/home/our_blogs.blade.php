@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Our Blogs | Unibox')
+@section('title', 'Our Blogs')
 
 @section('content')
 
@@ -19,11 +19,11 @@
                             <div class="post-content">
                                 <ul class="post-meta">
                                     <li>
-                                        <i class="fa-sharp fa-solid fa-calendar-days"></i>
+                                        <i class="fa-solid fa-calendar-days"></i>
                                         {{ \Carbon\Carbon::parse($blog->date ?? $blog->created_at)->format('d M, Y') }}
                                     </li>
                                     <li>
-                                        <i class="fa-regular fa-folder-open"></i>
+                                        <i class="fa-solid fa-folder-open"></i>
                                         {{ $blog->category->name ?? 'Uncategorized' }}
                                     </li>
                                 </ul>
@@ -34,7 +34,7 @@
                                 </h3>
                             </div>
                             <div class="post-bottom">
-                                <a href="{{ route('blog.details', $blog->slug ?? '#') }}" class="read-more">Read More<i class="fa-regular fa-arrow-right"></i></a>
+                                <a href="{{ route('blog.details', $blog->slug ?? '#') }}" class="read-more">Read More<i class="fa-solid fa-arrow-right ms-1"></i></a>
                             </div>
                         </div>
                     </div>

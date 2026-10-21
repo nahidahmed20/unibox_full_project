@@ -228,3 +228,126 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 138, 122, 0.3);
 }
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVENESS (CHECKOUT)
+   ========================================================================== */
+@media (max-width: 991px) {
+    .checkout-section {
+        padding: 35px 0 70px 0;
+    }
+    .checkout-card {
+        padding: 28px 22px;
+        margin-bottom: 22px;
+    }
+}
+
+@media (max-width: 767px) {
+    .checkout-section {
+        padding: 20px 0 60px 0 !important;
+    }
+    
+    .checkout-card {
+        padding: 20px 16px !important;
+        border-radius: 16px !important;
+        margin-bottom: 18px !important;
+    }
+    
+    .form-header {
+        font-size: 17px !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 12px !important;
+    }
+    
+    .form-label {
+        font-size: 13.5px !important;
+        margin-bottom: 6px !important;
+    }
+    
+    /* Input font size 16px prevents iOS Safari auto-zoom on focus */
+    .modern-input {
+        padding: 12px 14px !important;
+        font-size: 16px !important;
+        border-radius: 10px !important;
+    }
+    
+    /* Ensure Select2 inputs match 100% width and touch height on mobile */
+    .select2-container {
+        width: 100% !important;
+    }
+    .select2-container--default .select2-selection--single {
+        height: 48px !important;
+        border-radius: 10px !important;
+        font-size: 15px !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 48px !important;
+    }
+    
+    /* Order summary mobile polish */
+    .order-summary-wrapper {
+        padding: 16px 14px !important;
+        border-radius: 14px !important;
+    }
+    
+    .order-item {
+        padding-bottom: 12px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .order-img {
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 8px !important;
+    }
+    
+    .order-right .title {
+        font-size: 13.5px !important;
+    }
+    
+    .order-right small {
+        font-size: 12px !important;
+    }
+    
+    .totals-row {
+        font-size: 14px !important;
+        padding: 8px 0 !important;
+    }
+    
+    .totals-row.grand-total {
+        font-size: 17px !important;
+        padding-top: 12px !important;
+        margin-top: 8px !important;
+    }
+    
+    .payment-option-wrap {
+        padding: 14px !important;
+        border-radius: 10px !important;
+    }
+    
+    .order-btn {
+        padding: 15px 20px !important;
+        font-size: 15.5px !important;
+        border-radius: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-card {
+        padding: 16px 12px !important;
+    }
+    
+    .address-type-box {
+        gap: 8px !important;
+    }
+    
+    .address-type-box label {
+        padding: 10px 6px !important;
+        font-size: 12.5px !important;
+        gap: 4px !important;
+    }
+    
+    .order-summary-wrapper {
+        padding: 12px 10px !important;
+    }
+}

@@ -9,8 +9,8 @@
                     Math.floor(Date.now() / 1000),
             );
             countdown.textContent = remaining
-                ? `Code expires in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}`
-                : "Code expired. Request a new one.";
+                ? `পুনরায় কোড পাঠানোর সময়: ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}`
+                : "কোডের মেয়াদ শেষ হয়েছে।";
             document.getElementById("otp-resend").hidden = remaining > 0;
             return remaining;
         };

@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Privacy Policy | Unibox') 
+@section('title', 'Privacy Policy') 
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/pages/home-privacy-policy-1.css') }}">

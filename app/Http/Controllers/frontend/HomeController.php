@@ -107,7 +107,7 @@ class HomeController extends Controller
 
         public function categoryProducts(Request $request, $slug)
     {
-        $category = Category::where('slug', $slug)->firstOrFail();
+        $category = Category::with(['parent', 'children'])->where('slug', $slug)->firstOrFail();
         $categoryIds = [$category->id];
         $children = Category::where('parent_id', $category->id)->pluck('id')->toArray();
         if(count($children) > 0) {
@@ -189,9 +189,28 @@ class HomeController extends Controller
         return view('frontend.home.single', compact('product'));
     }
 
-    public function bestsellers()
+    public function bestsellers(Request $request)
     {
-        $bestsellers = Product::where('status', 1)->where('is_bestseller', 1)->with(['variants', 'category'])->paginate(24);
+        $query = Product::where('status', 1)
+            ->where('is_bestseller', 1)
+            ->with(['variants', 'category']);
+
+        switch ($request->sort) {
+            case 'price_low':
+                $query->orderBy('selling_price', 'asc');
+                break;
+            case 'price_high':
+                $query->orderBy('selling_price', 'desc');
+                break;
+            case 'oldest':
+                $query->oldest();
+                break;
+            default:
+                $query->latest();
+                break;
+        }
+
+        $bestsellers = $query->paginate(24)->appends($request->all());
 
         return view('frontend.bestsellers', compact('bestsellers'));
     }
@@ -227,7 +246,8 @@ class HomeController extends Controller
 
             $query->whereIn('category_id', $categoryIds);
 
-            $category = Category::where('id', $catId)
+            $category = Category::with(['parent', 'children'])
+                ->where('id', $catId)
                 ->where('status', 1)
                 ->first();
         }
@@ -235,10 +255,6 @@ class HomeController extends Controller
         $products = $query->latest()
             ->paginate(12)
             ->appends($request->all());
-
-        if (! $category && $products->count() > 0) {
-            $category = $products->first()->category;
-        }
 
         // Ajax Filter URL
         if ($category) {
@@ -352,7 +368,8 @@ class HomeController extends Controller
             'email' => $request->email,
         ]);
 
-        return back()->with('success', 'Thanks for subscribing to Unibox!');
+        $storeName = setting('website_title') ?: setting('company_name', 'our store');
+        return back()->with('success', "Thanks for subscribing to {$storeName}!");
     }
 
     public function thankYou($order)

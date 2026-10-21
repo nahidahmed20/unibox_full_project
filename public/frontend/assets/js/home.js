@@ -63,26 +63,39 @@
     const show = (index, manual = false) => {
         current = (index + slides.length) % slides.length;
         slides.forEach((slide, i) => {
-            slide.hidden = i !== current;
-            slide.classList.toggle("is-current", i === current);
+            if (i === current) {
+                slide.hidden = false;
+                void slide.offsetWidth;
+                slide.classList.add("is-current");
+            } else {
+                slide.classList.remove("is-current");
+                setTimeout(() => {
+                    if (!slide.classList.contains("is-current")) {
+                        slide.hidden = true;
+                    }
+                }, 650);
+            }
         });
         dots.forEach((dot, i) =>
             dot.setAttribute("aria-pressed", String(i === current)),
         );
-        root.querySelector("[data-slide-counter]").textContent =
-            `${current + 1} / ${slides.length}`;
+        root.querySelectorAll("[data-slide-counter]").forEach(counter => {
+            counter.textContent = `${current + 1} / ${slides.length}`;
+        });
         if (manual) {
-            root.querySelector("[data-slide-status]").textContent =
-                `Slide ${current + 1} of ${slides.length}`;
+            const status = root.querySelector("[data-slide-status]");
+            if (status) {
+                status.textContent = `Slide ${current + 1} of ${slides.length}`;
+            }
         }
         schedule();
     };
-    root.querySelector("[data-slide-prev]").addEventListener("click", () =>
-        show(current - 1, true),
-    );
-    root.querySelector("[data-slide-next]").addEventListener("click", () =>
-        show(current + 1, true),
-    );
+    root.querySelectorAll("[data-slide-prev]").forEach(btn => {
+        btn.addEventListener("click", () => show(current - 1, true));
+    });
+    root.querySelectorAll("[data-slide-next]").forEach(btn => {
+        btn.addEventListener("click", () => show(current + 1, true));
+    });
     dots.forEach((dot) =>
         dot.addEventListener("click", () =>
             show(Number(dot.dataset.slideTo), true),

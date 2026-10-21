@@ -147,7 +147,14 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <div class="sidebar-brand">
         <a href="{{ route('dashboard') }}" class="brand-link">
-            <img src="{{ asset(setting('footer_logo')) }}" alt="Logo" class="brand-image opacity-75 shadow" />
+            @php
+                $adminLogo = setting('footer_logo', setting('header_logo', setting('logo')));
+            @endphp
+            @if($adminLogo && file_exists(public_path($adminLogo)))
+                <img src="{{ asset($adminLogo) }}" alt="{{ setting('company_name', 'Logo') }}" class="brand-image opacity-75 shadow" />
+            @else
+                <span class="brand-text fw-bold text-white px-2">{{ setting('company_name', setting('website_title', 'Admin Panel')) }}</span>
+            @endif
         </a>
     </div>
     <div class="sidebar-wrapper">

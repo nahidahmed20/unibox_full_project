@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Return & Refund Policy | Unibox') 
+@section('title', 'Return & Refund Policy')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/pages/home-return-policy-1.css') }}">
@@ -17,7 +17,7 @@
 
                     <h5 class="policy-section-title text-danger">পার্সেল চেকিং পলিসি (Instant Check Policy)</h5>
                     <p class="policy-text">
-                        Unibox-এ আমরা স্বচ্ছতায় বিশ্বাস করি। তাই আমাদের পলিসি অনুযায়ী, পার্সেল রিসিভ করার সময় <strong>অবশ্যই ডেলিভারি ম্যানের উপস্থিতিতে পার্সেল খুলে পণ্য চেক করে নিতে হবে।</strong>
+                        {{ setting('company_name', 'Unibox') }}-এ আমরা স্বচ্ছতায় বিশ্বাস করি। তাই আমাদের পলিসি অনুযায়ী, পার্সেল রিসিভ করার সময় <strong>অবশ্যই ডেলিভারি ম্যানের উপস্থিতিতে পার্সেল খুলে পণ্য চেক করে নিতে হবে।</strong>
                     </p>
                     <ul class="policy-list">
                         <li>পণ্যটি আপনার অর্ডারের সাথে মিলেছে কিনা এবং ঠিক আছে কিনা, তা ডেলিভারি ম্যান সামনে থাকা অবস্থায়ই নিশ্চিত করুন।</li>

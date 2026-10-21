@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'OTP | Unibox')
+@section('title', 'OTP Verification')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/pages/checkout-otp-1.css') }}">
@@ -8,12 +8,12 @@
 
 @section('content')
 
-    <div class="container pt-50 pb-50">
+    <div class="container pt-4 pt-md-5 pb-5">
         <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
+            <div class="col-lg-5 col-md-7 col-sm-10">
 
-                <div class="card border-0 shadow-lg">
-                    <div class="card-body p-5">
+                <div class="card border-0 shadow-lg" style="border-radius: 20px;">
+                    <div class="card-body p-4 p-md-5">
 
                         <div class="text-center mb-4">
 

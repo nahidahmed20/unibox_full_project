@@ -8,7 +8,7 @@
         <div class="row justify-content-center mb-5">
             <div class="col-lg-6 text-center">
                 <span class="badge rounded-pill mb-2 py-2 px-3" style="background-color: rgba(229, 62, 62, 0.1); color: #008a7a; font-weight: 600;">
-                    <i class="fa-regular fa-circle-question me-1"></i> Support Center
+                    <i class="fa-solid fa-circle-question me-1"></i> Support Center
                 </span>
                 <h2 class="fw-bold mb-3" style="color: #2b3445; font-size: 38px;">How can we help you?</h2>
                 <p class="text-muted fs-6">Find the answers to the most common questions below.</p>

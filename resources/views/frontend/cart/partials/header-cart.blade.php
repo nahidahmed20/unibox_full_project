@@ -45,7 +45,7 @@
 
                     {{-- 🟢 CUSTOM ATTRIBUTES / SPECIFICATIONS 🟢 --}}
                     @if(!empty($item['attributes']))
-                        <p class="attribute" style="font-size: 16px; color: #6c757d; line-height: 1.4; margin-bottom: 5px;">
+                        <p class="attribute" style="font-size: 12.5px; color: #6c757d; line-height: 1.4; margin-bottom: 5px;">
                             <strong>Spec:</strong> {{ implode(', ', $item['attributes']) }}
                         </p>
                     @endif

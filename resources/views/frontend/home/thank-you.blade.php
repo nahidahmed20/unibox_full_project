@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Thank You | Unibox')
+@section('title', 'Thank You')
 
 @section('content')
 @push('css')

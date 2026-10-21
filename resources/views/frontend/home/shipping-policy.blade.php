@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Shipping & Delivery Policy | Unibox') 
+@section('title', 'Shipping & Delivery Policy')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/pages/home-return-policy-1.css') }}">
@@ -17,7 +17,7 @@
 
                     <h5 class="policy-section-title">অর্ডার প্রসেসিং (Order Processing)</h5>
                     <p class="policy-text">
-                        Unibox-এ প্লেস করা প্রতিটি অর্ডার কনফার্ম হওয়ার পর দ্রুততম সময়ের মধ্যে প্যাক করে কুরিয়ারে হ্যান্ডওভার করা হয়। 
+                        {{ setting('company_name', 'Unibox') }}-এ প্লেস করা প্রতিটি অর্ডার কনফার্ম হওয়ার পর দ্রুততম সময়ের মধ্যে প্যাক করে কুরিয়ারে হ্যান্ডওভার করা হয়। 
                     </p>
                     <ul class="policy-list">
                         <li>সাধারণত অর্ডার কনফার্মেশনের <strong>২৪ ঘণ্টার মধ্যে</strong> পণ্য কুরিয়ারে হস্তান্তর করা হয়।</li>
@@ -46,7 +46,7 @@
 
                     <h5 class="policy-section-title">অর্ডার ট্র্যাকিং (Order Tracking)</h5>
                     <p class="policy-text">
-                        আপনার পার্সেলটি কুরিয়ারে বুকিং হওয়ার পর আমরা আপনাকে একটি কনফার্মেশন SMS বা ইমেইল পাঠাবো। এছাড়া, আপনি আপনার Unibox অ্যাকাউন্টে লগইন করে অথবা কুরিয়ারের ট্র্যাকিং লিঙ্ক ব্যবহার করে সহজেই আপনার অর্ডারের বর্তমান অবস্থা জানতে পারবেন।
+                        আপনার পার্সেলটি কুরিয়ারে বুকিং হওয়ার পর আমরা আপনাকে একটি কনফার্মেশন SMS বা ইমেইল পাঠাবো। এছাড়া, আপনি আপনার {{ setting('company_name', 'Unibox') }} অ্যাকাউন্টে লগইন করে অথবা কুরিয়ারের ট্র্যাকিং লিঙ্ক ব্যবহার করে সহজেই আপনার অর্ডারের বর্তমান অবস্থা জানতে পারবেন।
                     </p>
 
                     <h5 class="policy-section-title">পার্সেল রিসিভ করার নিয়ম (Instant Check Policy)</h5>

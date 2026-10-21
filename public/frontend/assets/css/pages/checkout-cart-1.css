@@ -1,370 +1,277 @@
+/* ==========================================================================
+   UNIBOX LUXURY SHOPPING CART
+   ========================================================================== */
+
 .cart-page-wrapper {
     background-color: #f8fafc;
     min-height: 80vh;
-    padding: 60px 0;
 }
 
-/* Page Header */
-.cart-header {
-    margin-bottom: 40px;
-}
-.cart-header h2 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 8px;
-}
-.breadcrumb-custom {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #64748b;
-}
-.breadcrumb-custom a {
-    color: var(--ub-teal);
-    text-decoration: none;
-    font-weight: 500;
-}
-.breadcrumb-custom i {
-    font-size: 12px;
-}
-
-/* Cards */
 .modern-card {
-    background: #fff;
+    background: #ffffff;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    border: 1px solid #f1f5f9;
-    padding: 30px;
-    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+    border: 1px solid #e2e8f0;
 }
 
-/* Table */
+/* Modern Cart Table */
 .modern-cart-table {
     width: 100%;
     border-collapse: collapse;
 }
+
 .modern-cart-table thead th {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     color: #64748b;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding-bottom: 20px;
+    letter-spacing: 0.05em;
+    padding: 12px 14px;
     border-bottom: 1px solid #e2e8f0;
+    background: #f8fafc;
 }
+
 .modern-cart-table tbody td {
-    padding: 25px 0;
-    vertical-align: middle;
+    padding: 16px 14px;
     border-bottom: 1px solid #f1f5f9;
 }
+
 .modern-cart-table tbody tr:last-child td {
     border-bottom: none;
-    padding-bottom: 0;
 }
 
-/* Coupon Section */
-.coupon-wrapper {
-    display: flex;
-    gap: 15px;
+.cart-product-title {
+    color: #0f172a;
+    transition: color 0.2s ease;
+}
+
+.cart-product-title:hover {
+    color: #2563eb;
+}
+
+/* Luxury Stepper */
+.luxury-qty-stepper {
+    display: inline-flex;
     align-items: center;
     background: #f8fafc;
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 30px;
-}
-.coupon-input {
     border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 15px;
-    width: 250px;
+    border-radius: 9999px;
+    padding: 3px 4px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.luxury-qty-stepper .stepper-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #1e293b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.luxury-qty-stepper .stepper-btn:hover {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+.luxury-qty-stepper .qty-input {
+    width: 38px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #0f172a;
+    padding: 0;
     outline: none;
 }
-.coupon-input:focus {
-    border-color: var(--ub-teal);
-    box-shadow: 0 0 0 3px rgba(0, 138, 122, 0.1);
-}
 
-.btn-modern {
-    background: #0f172a;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
+/* Remove button */
+.btn-remove {
+    width: 34px;
+    height: 34px;
     border-radius: 8px;
-    font-weight: 600;
-    font-size: 15px;
-    transition: 0.3s;
-    text-decoration: none;
-}
-.btn-modern:hover {
-    background: #1e293b;
-    color: #fff;
-}
-
-.btn-outline-modern {
-    background: #fff;
-    color: #0f172a;
-    border: 1px solid #e2e8f0;
-}
-.btn-outline-modern:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
-}
-
-.btn-primary-custom {
-    background: var(--ub-teal);
-    width: 100%;
-    display: flex;
+    border: 1px solid #fee2e2;
+    background: #fef2f2;
+    color: #ef4444;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    padding: 16px;
-    font-size: 16px;
-    box-shadow: 0 10px 20px rgba(0, 138, 122, 0.15);
-}
-.btn-primary-custom:hover {
-    background: #007063;
-}
-
-/* Summary Card */
-.summary-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #f1f5f9;
-}
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 18px;
-    font-size: 15px;
-    color: #475569;
-}
-.summary-row.total {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 2px dashed #e2e8f0;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--ub-teal);
-}
-
-/* Shipping Options */
-.shipping-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #0f172a;
-    margin: 25px 0 15px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.shipping-box {
-    display: block;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 12px;
     cursor: pointer;
-    transition: 0.3s;
-    position: relative;
+    transition: all 0.2s ease;
+    font-size: 13px;
 }
-.shipping-box input[type="radio"] {
-    display: none;
+
+.btn-remove:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+    transform: scale(1.05);
 }
-.shipping-box .check-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--ub-teal);
-    opacity: 0;
-    transition: 0.2s;
+
+/* Shipping boxes */
+.shipping-box {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    background: #ffffff;
+    transition: all 0.2s ease;
 }
+
 .shipping-box:hover {
     border-color: #cbd5e1;
     background: #f8fafc;
 }
 
-/* Checked State */
-.shipping-box input[type="radio"]:checked + .shipping-content {
-    color: var(--ub-teal);
-}
-.shipping-box input[type="radio"]:checked ~ .check-icon {
-    opacity: 1;
-}
 .shipping-box.active-box {
-    border-color: var(--ub-teal);
-    background: #f0fdfa;
-    box-shadow: 0 4px 10px rgba(0, 138, 122, 0.05);
-}
-.shipping-label {
-    font-weight: 600;
-    font-size: 15px;
-    display: block;
-}
-.shipping-desc {
-    font-size: 16px;
-    color: #64748b;
-    margin-top: 4px;
-    display: block;
+    border-color: #2563eb;
+    background: #eff6ff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
 }
 
-/* Utilities */
-.currency {
-    font-family: "Noto Sans Bengali", sans-serif;
+.shipping-box .check-icon {
+    font-size: 18px;
+    color: #cbd5e1;
+    transition: all 0.2s ease;
 }
 
-.cart-product-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-align: left;
-}
-.cart-img-wrap {
-    width: 75px;
-    height: 75px;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    padding: 4px;
-    background: #f8fafc;
-    flex-shrink: 0;
-}
-.cart-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 6px;
+.shipping-box.active-box .check-icon {
+    color: #2563eb;
 }
 
-.cart-product-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #0f172a;
-    margin: 0 0 8px;
-    line-height: 1.4;
-}
-.var-badge {
-    background: #f1f5f9;
-    color: #475569;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    display: inline-block;
-}
-
-.qty-input-wrap {
-    width: 100px;
-    margin: 0 auto;
-}
-.qty-input {
-    width: 100%;
-    padding: 8px;
-    text-align: center;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    outline: none;
-    font-weight: 600;
-    color: #0f172a;
-}
-.qty-input:focus {
-    border-color: var(--ub-teal);
-}
-
-.btn-remove {
-    background: #fef2f2;
-    color: #ef4444;
-    border: none;
-    width: 35px;
-    height: 35px;
-    border-radius: 8px;
-    display: flex;
+.btn-modern {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: 0.2s;
-    margin: 0 auto;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-decoration: none;
 }
-.btn-remove:hover {
-    background: #fee2e2;
-    color: #dc2626;
-    transform: scale(1.05);
+
+.btn-outline-modern {
+    background: #ffffff;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-outline-modern:hover {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+.btn-primary-custom {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+}
+
+.btn-primary-custom:hover {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.25);
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 991px) {
+    .modern-card {
+        padding: 20px;
+    }
 }
 
 @media (max-width: 768px) {
+    .cart-page-wrapper {
+        padding: 15px 0 40px 0 !important;
+    }
+
+    .modern-card {
+        padding: 16px 14px !important;
+        border-radius: 14px !important;
+    }
+
     .modern-cart-table thead {
-        display: none;
+        display: none !important;
     }
 
     .modern-cart-table tbody tr {
-        display: block;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        padding: 15px;
-        background: #fff;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        display: block !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 14px !important;
+        padding: 12px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.02) !important;
     }
 
     .modern-cart-table tbody td {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 0;
-        border: none;
-        border-bottom: 1px dashed #f1f5f9;
-        text-align: right;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 8px 0 !important;
+        border: none !important;
     }
 
-    .modern-cart-table tbody td:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
+    .modern-cart-table tbody td.cart-td-product {
+        border-bottom: 1px solid #f1f5f9 !important;
+        padding-bottom: 10px !important;
+        padding-top: 0 !important;
     }
 
-    .modern-cart-table tbody td:nth-child(2)::before {
-        content: "Unit Price";
+    .modern-cart-table tbody td.cart-td-price {
+        display: none !important;
+    }
+
+    .modern-cart-table tbody td.cart-td-qty::before {
+        content: "পরিমাণ (Quantity)";
+        font-size: 13px;
         font-weight: 600;
         color: #64748b;
-        font-size: 14px;
-    }
-    .modern-cart-table tbody td:nth-child(3)::before {
-        content: "Quantity";
-        font-weight: 600;
-        color: #64748b;
-        font-size: 14px;
-    }
-    .modern-cart-table tbody td:nth-child(4)::before {
-        content: "Total Price";
-        font-weight: 600;
-        color: #64748b;
-        font-size: 14px;
-    }
-    .modern-cart-table tbody td:nth-child(5)::before {
-        content: "Action";
-        font-weight: 600;
-        color: #64748b;
-        font-size: 14px;
     }
 
-    .modern-cart-table tbody td:first-child {
-        display: flex;
-        justify-content: flex-start;
+    .modern-cart-table tbody td.cart-td-total {
+        padding-top: 8px !important;
+        border-top: 1px dashed #e2e8f0 !important;
     }
 
-    .qty-input-wrap {
-        margin: 0 !important;
-        width: 120px;
-    }
-    .btn-remove {
-        margin: 0 !important;
+    .modern-cart-table tbody td.cart-td-total::before {
+        content: "মোট (Total)";
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
     }
 
-    .coupon-wrapper {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        padding: 15px;
+    .modern-cart-table tbody td.cart-td-action {
+        justify-content: flex-end !important;
+        padding-top: 4px !important;
+    }
+
+    .shipping-box {
+        padding: 10px 12px !important;
+    }
+
+    .cart-actions {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .cart-actions .btn-modern {
+        width: 100% !important;
+        text-align: center !important;
     }
 }

@@ -12,15 +12,21 @@ if (! function_exists('setting')) {
      * @param  mixed  $default
      * @return mixed
      */
-    function setting($key, $default = null)
+    function setting($key, $default = null, $fresh = false)
     {
         static $settings = null;
 
-        if ($settings === null) {
+        if ($settings === null || $fresh) {
             $settings = Setting::pluck('value', 'key')->toArray();
         }
 
-        return $settings[$key] ?? $default;
+        $val = $settings[$key] ?? null;
+
+        if (($val === null || $val === '') && $default !== null) {
+            return $default;
+        }
+
+        return $val;
     }
 
     function getColorStock($productId, $colorId)

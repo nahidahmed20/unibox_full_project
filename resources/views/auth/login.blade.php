@@ -1,14 +1,21 @@
+@php
+    $companyName = setting('company_name', setting('website_title', 'Unibox'));
+    $adminLogo = setting('header_logo', setting('logo', setting('footer_logo')));
+    $navIcon = setting('favicon', setting('nav_icon'));
+@endphp
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>{{ $companyName }} | Admin Login</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset(setting('nav_icon')) }}" type="image/x-icon">
+    @if($navIcon)
+        <link rel="shortcut icon" href="{{ asset($navIcon) }}" type="image/x-icon">
+    @endif
 
     <style>
         :root {
@@ -335,7 +342,25 @@
             margin-top: 6px;
             font-size: 14.5px;
             color: var(--text-secondary);
-            margin-bottom: 30px;
+            margin-bottom: 24px;
+        }
+
+        .auth-alert {
+            padding: 11px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13.5px;
+            line-height: 1.45;
+            margin-bottom: 20px;
+        }
+        .auth-alert-danger {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            color: #991B1B;
+        }
+        .auth-alert-success {
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            color: #166534;
         }
 
         .field { width: 100%; margin-bottom: 16px; }
@@ -511,14 +536,20 @@
 
         <div class="showcase-top">
             <div class="brand-row">
-                <div class="mini-mark">
-                    <div class="mini-mark-ring"></div>
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <span class="brand-name">Storefront Admin</span>
+                @if($adminLogo && file_exists(public_path($adminLogo)))
+                    <a href="{{ url('/') }}" title="{{ $companyName }}" style="display: inline-block;">
+                        <img src="{{ asset($adminLogo) }}" alt="{{ $companyName }}" style="max-height: 40px; max-width: 160px; object-fit: contain;">
+                    </a>
+                @else
+                    <div class="mini-mark">
+                        <div class="mini-mark-ring"></div>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+                            <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="brand-name">{{ $companyName }} Admin</span>
+                @endif
             </div>
         </div>
 
@@ -530,7 +561,7 @@
         <div class="dashboard-stack">
             <div class="float-card card-stat">
                 <span class="stat-label">Total revenue</span>
-                <span class="stat-value" id="statValue">$0</span>
+                <span class="stat-value" id="statValue">৳ 0</span>
                 <span class="stat-delta">▲ 18.2%</span>
             </div>
 
@@ -559,7 +590,7 @@
                     <span class="order-title">New order received</span>
                     <span class="order-sub">#4821 · 2 items</span>
                 </div>
-                <span class="order-amount">$86.00</span>
+                <span class="order-amount">৳ 2,450</span>
             </div>
         </div>
     </aside>
@@ -567,18 +598,42 @@
     <!-- ============ RIGHT: LOGIN FORM ============ -->
     <main class="auth">
         <div class="mobile-banner">
-            <div class="mini-mark">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
-                    <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <span class="brand-name">Storefront Admin</span>
+            @if($adminLogo && file_exists(public_path($adminLogo)))
+                <a href="{{ url('/') }}" title="{{ $companyName }}" style="display: inline-block;">
+                    <img src="{{ asset($adminLogo) }}" alt="{{ $companyName }}" style="max-height: 36px; max-width: 140px; object-fit: contain;">
+                </a>
+            @else
+                <div class="mini-mark">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+                        <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="brand-name">{{ $companyName }}</span>
+            @endif
         </div>
 
         <div class="auth-card">
             <h1 class="heading">Welcome back</h1>
             <p class="subheading">Log in to continue to your store admin</p>
+
+            @if(session('error'))
+                <div class="auth-alert auth-alert-danger">
+                    <strong>Error:</strong> {{ session('error') }}
+                </div>
+            @endif
+
+            @if(isset($errors) && $errors->any() && !session('error'))
+                <div class="auth-alert auth-alert-danger">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
+            @if(session('status'))
+                <div class="auth-alert auth-alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -586,7 +641,7 @@
                 <div class="field">
                     <label for="email">Email address</label>
                     <div class="field-control">
-                        <input type="text" id="email" name="email" placeholder="you@yourstore.com" required autocomplete="username">
+                        <input type="text" id="email" name="email" value="{{ old('email') }}" placeholder="you@yourstore.com" required autocomplete="username" autofocus>
                     </div>
                 </div>
 
@@ -600,30 +655,26 @@
 
                 <div class="row-options">
                     <label class="remember">
-                        <input type="checkbox" name="remember">
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         Remember me
                     </label>
-                    <a href="{{ route('password.request') }}">Forgot password?</a>
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}">Forgot password?</a>
+                    @endif
                 </div>
 
-                <button type="submit" class="btn-primary">Log in</button>
+                <button type="submit" class="btn-primary">Log in to Dashboard</button>
 
-                <div class="divider">or</div>
-
-                <button type="button" class="btn-google">
-                    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z" fill="#4285F4"/>
-                        <path d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.83.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z" fill="#34A853"/>
-                        <path d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z" fill="#FBBC05"/>
-                        <path d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z" fill="#EA4335"/>
-                    </svg>
-                    Continue with Google
-                </button>
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="{{ url('/') }}" style="color: var(--text-secondary); font-size: 13.5px; text-decoration: none; font-weight: 500;">
+                        ← Return to Website (ওয়েবসাইটে যান)
+                    </a>
+                </div>
             </form>
         </div>
 
         <p class="page-footer">
-            Having trouble signing in? <a href="#">Contact your store owner</a>
+            Protected by {{ $companyName }} Administrative Shield
         </p>
     </main>
 
@@ -643,17 +694,17 @@
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         const statEl = document.getElementById("statValue");
-        const target = 128492;
+        const target = 148500;
 
         if (reduceMotion) {
-            statEl.textContent = "$" + target.toLocaleString();
+            statEl.textContent = "৳ " + target.toLocaleString('en-IN');
         } else {
             const duration = 1400;
             const start = performance.now();
             function tick(now) {
                 const progress = Math.min((now - start) / duration, 1);
                 const eased = 1 - Math.pow(1 - progress, 3);
-                statEl.textContent = "$" + Math.floor(eased * target).toLocaleString();
+                statEl.textContent = "৳ " + Math.floor(eased * target).toLocaleString('en-IN');
                 if (progress < 1) requestAnimationFrame(tick);
             }
             requestAnimationFrame(tick);

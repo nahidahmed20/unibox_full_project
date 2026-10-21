@@ -4,16 +4,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="@yield('description', setting('meta_description', 'Explore premium products for your business, your everyday, and your next idea. Shop the Unibox collection and discover custom options.'))">
-    <meta name="keywords" content="@yield('keywords', setting('meta_keywords', 'ecommerce, online shop, bangladesh, unibox, fashion, lifestyle'))">
+    <meta name="description" content="@yield('description', setting('meta_description', 'Explore premium products for your business, your everyday, and your next idea. Shop our collection and discover custom options.'))">
+    <meta name="keywords" content="@yield('keywords', setting('meta_keywords', 'ecommerce, online shop, bangladesh, fashion, lifestyle'))">
     <meta name="author" content="{{ setting('company_name', 'Unibox') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#202020">
 
     @php
-        $siteTitle = setting('meta_title') ?: setting('website_title') ?: setting('company_name', 'Unibox');
+        $siteTitle = setting('website_title') ?: setting('company_name') ?: setting('meta_title', 'Unibox');
     @endphp
-    <title>@hasSection('title')@yield('title') | {{ $siteTitle }}@else{{ $siteTitle }} - {{ setting('company_tagline', 'Best Online Shopping in Bangladesh') }}@endif</title>
+    <title>@hasSection('title')@yield('title') | {{ $siteTitle }}@else{{ $siteTitle }} - {{ setting('website_tagline', setting('company_tagline', 'Best Online Shopping in Bangladesh')) }}@endif</title>
 
     {{-- Open Graph / Social Media Sharing --}}
     <meta property="og:type" content="website">
@@ -42,8 +42,11 @@
 
 <body class="ub-store">
     {{-- Google Tag Manager (noscript fallback) --}}
-    @if(setting('gtm_id'))
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ setting('gtm_id') }}"
+    @php
+        $activeGtmId = setting('gtm_id') ?: config('store.google_tag_manager_id');
+    @endphp
+    @if($activeGtmId)
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $activeGtmId }}"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @endif
 

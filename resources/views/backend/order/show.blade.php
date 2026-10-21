@@ -43,10 +43,10 @@
                 </div>
                 <div class="info-box">
                     <h5 class="info-title">Company Info</h5>
-                    <h3>Unibox</h3>
-                    <p>Kataban, Dhaka, Bangladesh</p>
-                    <p>unibox4u@gmail.com</p>
-                    <p>+8801627188836</p>
+                    <h3>{{ setting('company_name', setting('website_title', 'Unibox')) }}</h3>
+                    <p>{{ setting('company_address', 'Kataban, Dhaka, Bangladesh') }}</p>
+                    <p>{{ setting('email', 'unibox4u@gmail.com') }}</p>
+                    <p>{{ setting('phone', '+8801627188836') }}</p>
                 </div>
                 <div class="info-box">
                     <h5 class="info-title">Invoice Info</h5>

@@ -3,14 +3,22 @@
 @section('content')
     @include('frontend.home.partials.hero')
     <section class="container ub-trust-strip" aria-label="Shopping information">
-        <div><i class="fa-regular fa-truck-fast" aria-hidden="true"></i><span><strong>Delivered to your door</strong>Choose
-                your delivery zone</span></div>
-        <div><i class="fa-regular fa-sliders" aria-hidden="true"></i><span><strong>Details, your way</strong>Explore
-                available custom options</span></div>
-        <div><i class="fa-regular fa-wallet" aria-hidden="true"></i><span><strong>Cash on delivery</strong>Pay when your
-                order arrives</span></div>
-        <div><i class="fa-regular fa-comments" aria-hidden="true"></i><span><strong>A real helping hand</strong>Talk to us
-                about your order</span></div>
+        <div>
+            <i class="fa-solid fa-truck-fast text-primary" aria-hidden="true"></i>
+            <span><strong>সারা দেশে হোম ডেলিভারি</strong>ক্যাশ অন ডেলিভারি সুবিধা</span>
+        </div>
+        <div>
+            <i class="fa-solid fa-sliders text-success" aria-hidden="true"></i>
+            <span><strong>কাস্টমাইজড প্রডাক্টস</strong>আপনার পছন্দমতো তৈরি</span>
+        </div>
+        <div>
+            <i class="fa-solid fa-wallet text-warning" aria-hidden="true"></i>
+            <span><strong>ক্যাশ অন ডেলিভারি</strong>পণ্য হাতে পেয়ে পেমেন্ট</span>
+        </div>
+        <div>
+            <i class="fa-solid fa-headset text-info" aria-hidden="true"></i>
+            <span><strong>২৪/৭ কাস্টমার সাপোর্ট</strong>যেকোনো তথ্যে পাশে আছি</span>
+        </div>
     </section>
     {{-- FEATURED CATEGORIES & COLLECTIONS --}}
     <section class="container ub-section ub-collections-premium" id="collections" aria-labelledby="collections-title">
@@ -105,31 +113,42 @@
             @endforelse
         </div>
 
-        <div class="ub-collections-bottom-bar mt-4 p-3 rounded-4 bg-white border d-flex justify-content-between align-items-center flex-wrap gap-2 shadow-sm">
+        <div class="ub-collections-bottom-bar mt-4 p-3 rounded-4 bg-white border d-flex justify-content-between align-items-center flex-wrap gap-3 shadow-sm">
             <div class="d-flex align-items-center gap-2">
-                <span class="rounded-circle bg-success bg-opacity-10 text-success p-2 d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px;">
-                    <i class="fa-solid fa-shield-halved" style="font-size: 14px;"></i>
+                <span class="rounded-circle bg-success bg-opacity-10 text-success p-2 d-inline-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                    <i class="fa-solid fa-shield-halved" style="font-size: 15px;"></i>
                 </span>
                 <span class="fw-semibold text-dark" style="font-size: 13.5px;">কর্পোরেট গিফট ও বাল্ক অর্ডারের জন্য বিশেষ ডিসকাউন্ট এবং দ্রুত ডেলিভারি সুবিধা।</span>
             </div>
-            <a class="btn btn-sm btn-dark rounded-pill px-3 py-1.5 fw-bold d-inline-flex align-items-center gap-1" href="{{ route('contact.us') }}" style="font-size: 12.5px;">
+            <a class="ub-bulk-quote-btn" href="{{ route('contact.us') }}">
                 <span>Get Bulk Quote</span>
                 <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
     </section>
     @if ($bestsellers->isNotEmpty())
-        <section class="ub-bestseller-section">
-            <div class="container ub-section">
-                <div class="ub-section-heading">
-                    <div><span class="ub-eyebrow">WORTH A CLOSER LOOK</span>
-                        <h2>Bestsellers</h2>
-                    </div><a class="ub-text-link" href="{{ route('shop.bestsellers') }}">Shop bestsellers <i
-                            class="fa-regular fa-arrow-right" aria-hidden="true"></i></a>
+        <section class="ub-bestseller-section py-4 py-md-5 my-2" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+                    <div>
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2 bg-warning bg-opacity-10 text-dark fw-bold" style="font-size: 11.5px; letter-spacing: 0.06em;">
+                            <i class="fa-solid fa-fire text-warning"></i> MOST LOVED & TRENDING
+                        </div>
+                        <h2 class="fw-bolder text-dark mb-1" style="font-size: clamp(24px, 3.2vw, 32px); letter-spacing: -0.02em;">
+                            জনপ্রিয় বেস্ট সেলার্স
+                        </h2>
+                        <p class="text-muted small mb-0" style="font-size: 14.5px;">
+                            গ্রাহকদের সর্বাধিক পছন্দের এবং সর্বোচ্চ রেটেড ট্রেন্ডিং প্রোডাক্টসমূহ।
+                        </p>
+                    </div>
+                    <a class="btn btn-sm btn-outline-dark rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center gap-2" href="{{ route('shop.bestsellers') }}">
+                        <span>সকল বেস্টসেলার দেখুন</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
                 <div class="ub-product-grid">
                     @foreach ($bestsellers as $product)
-                        @include('frontend.components.product-card')
+                        @include('frontend.components.product-card', ['product' => $product])
                     @endforeach
                 </div>
             </div>
@@ -140,12 +159,12 @@
             <div><span class="ub-eyebrow">MEET YOUR NEXT FAVORITE</span>
                 <h2>New in the shop</h2>
             </div><a class="ub-button ub-button-outline" href="{{ route('search') }}">Shop the collection <i
-                    class="fa-regular fa-arrow-right" aria-hidden="true"></i></a>
+                    class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
         <div class="ub-product-grid">
             @forelse($products->take(8) as $product)
                 @include('frontend.components.product-card')@empty
-                <div class="ub-empty"><i class="fa-regular fa-box-open" aria-hidden="true"></i>
+                <div class="ub-empty"><i class="fa-solid fa-box-open" aria-hidden="true"></i>
                     <h3>Good things are coming.</h3>
                     <p>Our collection is getting ready. Contact us for a custom order.</p><a
                         class="ub-button ub-button-primary" href="{{ route('contact.us') }}">Start a conversation</a>
@@ -158,7 +177,7 @@
             <span class="ub-eyebrow">A PERSONAL TOUCH</span>
             <h2>Good things start<br>with your idea.</h2>
             <p>A name, a message, a detail that makes it yours. Explore our custom options and create something worth keeping.</p>
-            <a class="ub-button ub-button-primary" href="{{ route('contact.us') }}">Create something personal <i class="fa-regular fa-arrow-right" aria-hidden="true"></i></a>
+            <a class="ub-button ub-button-primary" href="{{ route('contact.us') }}">Create something personal <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
     </section>
     @if (count($services))
@@ -176,7 +195,7 @@
                                 height="260">
                         @endif
                         <div>
-                            <h3>{{ $service->title ?? $service->name }}</h3><i class="fa-regular fa-arrow-up-right"
+                            <h3>{{ $service->title ?? $service->name }}</h3><i class="fa-solid fa-arrow-up-right-from-square"
                                 aria-hidden="true"></i>
                         </div>
                     </a>

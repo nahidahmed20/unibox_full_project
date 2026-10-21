@@ -19,6 +19,11 @@ class FontOrderController extends Controller
 {
     public function cartCheckout()
     {
+        if (! auth('customer')->check()) {
+            session(['redirect_after_login' => route('cart.checkout')]);
+            return redirect()->route('account.login')->with('info', 'অর্ডার সম্পন্ন করতে অনুগ্রহ করে আপনার মোবাইল নম্বর দিয়ে লগইন করুন।');
+        }
+
         $cart = session('cart', []);
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
@@ -149,6 +154,11 @@ class FontOrderController extends Controller
 
     public function placeOrder(Request $request)
     {
+        if (! auth('customer')->check()) {
+            session(['redirect_after_login' => route('cart.checkout')]);
+            return redirect()->route('account.login')->with('info', 'অর্ডার সম্পন্ন করতে অনুগ্রহ করে আপনার মোবাইল নম্বর দিয়ে লগইন করুন।');
+        }
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => ['required', 'regex:/^01[3-9][0-9]{8}$/'],

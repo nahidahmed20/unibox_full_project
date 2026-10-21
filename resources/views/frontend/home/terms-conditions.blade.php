@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Terms & Conditions | Unibox') 
+@section('title', 'Terms & Conditions')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/pages/home-terms-conditions-1.css') }}">

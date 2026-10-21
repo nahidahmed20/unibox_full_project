@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('uses-swiper', '1')
-@section('title', $product->name . ' | Unibox')
+@section('title', $product->name)
 
 @section('content')
 @push('css')
@@ -221,7 +221,7 @@
                                 <span>৭ দিনের সহজ রিটার্ন এবং মানিব্যাক গ্যারান্টি</span>
                             </div>
                             <div class="single-guarantee-item">
-                                <i class="fa-solid fa-shield-check"></i>
+                                <i class="fa-solid fa-shield-halved"></i>
                                 <span>১০০% অরিজিনাল ও অথেনটিক পণ্য নিশ্চিয়তা</span>
                             </div>
                         </div>
@@ -323,7 +323,7 @@
                                             <h4 class="name">{{ $review->user_name }} <span>{{ $review->created_at->format('d M, Y') }}</span></h4>
                                             <ul class="review">
                                                 @for($i=1; $i<=5; $i++)
-                                                    <li><i class="fa-sharp fa-solid fa-star {{ $i <= $review->rating ? 'text-warning' : 'text-muted' }}"></i></li>
+                                                    <li><i class="fa-solid fa-star {{ $i <= $review->rating ? 'text-warning' : 'text-muted' }}"></i></li>
                                                 @endfor
                                             </ul>
                                         </div>

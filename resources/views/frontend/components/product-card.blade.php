@@ -28,7 +28,7 @@
     <div class="ub-product-info">
         <div>
             <span class="ub-product-category">
-                {{ $product->category->name ?? ($product->brand_name ?? 'THE UNIBOX COLLECTION') }}
+                {{ $product->category->name ?? ($product->brand_name ?? strtoupper(setting('company_name', setting('website_title', 'Curated Collection')))) }}
             </span>
             <h3>
                 <a href="{{ route('product.show', $product->slug) }}" title="{{ $product->name }}">

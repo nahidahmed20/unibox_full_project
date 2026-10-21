@@ -180,7 +180,14 @@
 
         <!-- HEADER -->
         <div class="invoice-header">
-            <img src="{{ asset('uploads/Unibox-Logo.png') }}" class="logo">
+            @php
+                $invoiceLogo = setting('header_logo', setting('logo'));
+            @endphp
+            @if($invoiceLogo && file_exists(public_path($invoiceLogo)))
+                <img src="{{ asset($invoiceLogo) }}" class="logo" alt="{{ setting('company_name', 'Logo') }}">
+            @else
+                <h2 style="margin: 0; font-size: 26px; color: #1e293b;">{{ setting('company_name', setting('website_title', 'INVOICE')) }}</h2>
+            @endif
 
             <div class="invoice-meta">
                 <h1>INVOICE</h1>
@@ -200,9 +207,9 @@
 
             <div class="info-box">
                 <h4>From</h4>
-                <p><b>Your Company</b></p>
-                <p>Business Address</p>
-                <p>+880 123456789</p>
+                <p><b>{{ setting('company_name', setting('website_title', 'Your Company')) }}</b></p>
+                <p>{{ setting('company_address', 'Business Address') }}</p>
+                <p>{{ setting('phone', '+880 123456789') }}</p>
             </div>
         </div>
 

@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Order Success | Unibox')
+@section('title', 'Order Received')
 
 @section('content')
 
@@ -98,6 +98,41 @@
     }
     .success-item-row:last-child {
         border-bottom: none;
+    }
+
+    @media (max-width: 767px) {
+        .success-wrapper {
+            padding: 25px 0 60px 0;
+        }
+        .success-card {
+            border-radius: 16px;
+        }
+        .success-top {
+            padding: 28px 16px 20px 16px;
+        }
+        .success-check-badge {
+            width: 58px;
+            height: 58px;
+            font-size: 26px;
+            margin-bottom: 14px;
+        }
+        .success-title {
+            font-size: 20px;
+        }
+        .order-badge {
+            font-size: 13px;
+            padding: 5px 14px;
+        }
+        .success-details-card {
+            padding: 16px 14px;
+        }
+        .success-item-row img {
+            width: 44px !important;
+            height: 44px !important;
+        }
+        .success-item-row h6 {
+            font-size: 13.5px !important;
+        }
     }
 </style>
 @endpush

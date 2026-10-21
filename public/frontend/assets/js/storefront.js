@@ -142,7 +142,7 @@
     const menu = document.querySelector(".ub-menu-toggle");
     const menuOverlay = document.getElementById("menu-overlay");
     const menuClose = document.getElementById("menu-close");
-    const mobileNavigation = matchMedia("(max-width: 767px)");
+    const mobileNavigation = matchMedia("(max-width: 991px)");
     const closeMenu = (restoreFocus = true) => {
         const wasOpen = nav?.classList.contains("is-open");
         if (wasOpen && restoreFocus) menu?.focus();
