@@ -7,7 +7,64 @@
     $userInitial = mb_substr($userName, 0, 1);
     $userContact = $user->phone ?: $user->email;
 @endphp
-<nav class="ub-account-nav shadow-xs" aria-label="Customer account navigation">
+
+{{-- ================= MOBILE/TABLET HEADER & NAV (< 992px) ================= --}}
+<div class="ub-account-mobile-card d-lg-none mb-3 shadow-xs">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center gap-2.5 overflow-hidden">
+            @if($user->image && file_exists(public_path($user->image)))
+                <img src="{{ asset($user->image) }}" alt="{{ $userName }}" class="ub-account-mobile-avatar flex-shrink-0">
+            @else
+                <span class="ub-account-mobile-avatar flex-shrink-0" aria-hidden="true">{{ $userInitial }}</span>
+            @endif
+            <div class="text-truncate">
+                <div class="fw-bold text-dark text-truncate lh-sm" style="font-size: 15px;">{{ $userName }}</div>
+                <div class="text-muted small text-truncate" style="font-size: 12px;">{{ $userContact }}</div>
+            </div>
+        </div>
+        <form action="{{ route('account.logout') }}" method="POST" class="m-0 flex-shrink-0">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fw-bold d-inline-flex align-items-center gap-1" style="font-size: 11px;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>লগআউট</span>
+            </button>
+        </form>
+    </div>
+
+    {{-- Horizontal Scrollable Nav Pills --}}
+    <div class="ub-account-nav-pills-scroll" role="navigation" aria-label="Customer account navigation">
+        <a href="{{ route('account.dashboard') }}" class="ub-nav-pill {{ request()->routeIs('account.dashboard') ? 'active' : '' }}">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>ড্যাশবোর্ড</span>
+        </a>
+        <a href="{{ route('account.orders.index') }}" class="ub-nav-pill {{ (request()->routeIs('account.orders.index') || request()->routeIs('account.orders.show')) ? 'active' : '' }}">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>আমার অর্ডার</span>
+        </a>
+        <a href="{{ route('account.profile.edit') }}" class="ub-nav-pill {{ request()->routeIs('account.profile.edit') ? 'active' : '' }}">
+            <i class="fa-solid fa-user-pen"></i>
+            <span>প্রোফাইল ও ঠিকানা</span>
+        </a>
+        <a href="{{ route('account.password.edit') }}" class="ub-nav-pill {{ request()->routeIs('account.password.edit') ? 'active' : '' }}">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>পাসওয়ার্ড</span>
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var activePill = document.querySelector(".ub-nav-pill.active");
+        if (activePill && typeof activePill.scrollIntoView === "function") {
+            try {
+                activePill.scrollIntoView({ inline: "center", block: "nearest" });
+            } catch (e) {}
+        }
+    });
+</script>
+
+{{-- ================= DESKTOP VERTICAL SIDEBAR (>= 992px) ================= --}}
+<nav class="ub-account-nav shadow-xs d-none d-lg-block sticky-top" style="top: 90px; z-index: 10;" aria-label="Customer account navigation">
     <div class="ub-account-person">
         @if($user->image && file_exists(public_path($user->image)))
             <img src="{{ asset($user->image) }}" alt="{{ $userName }}" class="ub-account-avatar-img">

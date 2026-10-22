@@ -83,16 +83,16 @@ class UserController extends Controller
         if (! $isSent) {
             Log::warning("Failed to send OTP SMS to {$login}: " . ($smsError ?? 'Unknown error'));
 
-            // If developing on local machine or debug mode, do NOT trap the user in a broken loop:
-            if (app()->environment('local') || config('app.debug')) {
-                session()->flash('dev_otp_notice', "টেস্টিং মোড: SMS গেটওয়েতে আপনার বর্তমান IP Whitelist করা নেই ({$smsError})। টেস্টিং ওটিপি কোড: {$otp}");
-                return back()->with('info', 'ভেরিফিকেশন কোড তৈরি হয়েছে।');
+            // Safe fallback ONLY for local development with debug enabled (never expose OTP on production):
+            if (app()->environment('local') && config('app.debug')) {
+                $reason = $smsError ? " ({$smsError})" : "";
+                session()->flash('dev_otp_notice', "টেস্টিং মোড: এসএমএস গেটওয়ে সংযোগ পায়নি{$reason}। লোকাল টেস্টিং ওটিপি কোড: {$otp}");
+                return back()->with('info', 'টেস্টিং ভেরিফিকেশন কোড তৈরি হয়েছে।');
             }
 
             session()->forget(['otp_login', 'otp_code', 'otp_field', 'otp_expires_at']);
-            $errDetail = $smsError ? " ({$smsError})" : "";
 
-            return back()->withErrors(['name' => 'এসএমএস পাঠাতে ব্যর্থ হয়েছে' . $errDetail . '। দয়া করে কিছুক্ষণ পর চেষ্টা করুন।']);
+            return back()->withErrors(['name' => 'এসএমএস গেটওয়ে সংযোগে সমস্যা হচ্ছে। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।']);
         }
 
         return back()->with('success', 'আপনার প্রদত্ত নম্বরে ৪ ডিজিটের ওটিপি পাঠানো হয়েছে।');
@@ -309,11 +309,11 @@ class UserController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($user->image && file_exists(public_path($user->image))) {
-                unlink(public_path($user->image));
+            if ($user->image && ! Str::startsWith($user->image, ['http://', 'https://']) && file_exists(public_path($user->image))) {
+                @unlink(public_path($user->image));
             }
             $file = $request->file('image');
-            $fileName = time().'_'.$file->getClientOriginalName();
+            $fileName = time().'_'.uniqid().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('uploads/users'), $fileName);
             $data['image'] = 'uploads/users/'.$fileName;
         }

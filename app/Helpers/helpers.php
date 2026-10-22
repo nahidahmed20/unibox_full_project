@@ -38,30 +38,15 @@ if (! function_exists('setting')) {
     }
 
     if (! function_exists('sendSms')) {
-
         function sendSms($phone, $message)
         {
-            try {
+            $err = null;
+            $sent = \App\Services\SmsService::send($phone, $message, $err);
 
-                $response = Http::timeout(15)->get('http://bulksmsbd.net/api/smsapi', [
-                    'api_key' => env('BULKSMSBD_API_KEY'),
-                    'type' => 'text',
-                    'number' => $phone,
-                    'senderid' => env('BULKSMSBD_SENDER_ID'),
-                    'message' => $message,
-                ]);
-
-                return [
-                    'success' => $response->successful(),
-                    'response' => $response->body(),
-                ];
-
-            } catch (Exception $e) {
-                return [
-                    'success' => false,
-                    'response' => $e->getMessage(),
-                ];
-            }
+            return [
+                'success' => $sent,
+                'response' => $sent ? 'Sent successfully' : ($err ?? 'Failed to send SMS'),
+            ];
         }
     }
 }

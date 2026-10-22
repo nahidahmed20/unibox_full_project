@@ -34,13 +34,18 @@ class SmsService
 
             if ($response->successful()) {
                 $data = $response->json();
-                if (is_array($data) && isset($data['response_code'])) {
-                    $code = (int) $data['response_code'];
-                    if ($code === 200 || $code === 1000) {
+                if (is_array($data)) {
+                    $code = isset($data['response_code']) ? (int) $data['response_code'] : null;
+                    $hasMessageId = ! empty($data['message_id']);
+                    $hasSuccessMsg = ! empty($data['success_message']) && stripos($data['success_message'], 'success') !== false;
+
+                    // BulkSMSBD returns 202, 200, or 1000 on successful submission
+                    if (in_array($code, [200, 202, 1000], true) || $hasMessageId || $hasSuccessMsg) {
                         return true;
                     }
-                    $errorMessage = $data['error_message'] ?? ('Gateway response code ' . $code);
-                    Log::error('SMS Gateway rejected message: ' . $errorMessage, ['code' => $code, 'target' => $number]);
+
+                    $errorMessage = ! empty($data['error_message']) ? $data['error_message'] : ('Gateway response code ' . $code);
+                    Log::error('SMS Gateway rejected message: ' . $errorMessage, ['code' => $code, 'target' => $number, 'response' => $data]);
                     return false;
                 }
                 return true;

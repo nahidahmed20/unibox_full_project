@@ -6,7 +6,7 @@
 @endpush
 
 @section('content')
-<section class="ub-account-page py-4 py-md-5">
+<section class="ub-account-page py-3 py-md-5">
     <div class="container">
         <div class="row g-4">
             {{-- Sidebar --}}
@@ -17,8 +17,8 @@
             {{-- Content --}}
             <div class="col-lg-9">
                 {{-- Order Header Card --}}
-                <div class="p-4 rounded-4 bg-white border shadow-xs mb-4">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs mb-4">
+                    <div class="d-flex justify-content-between align-items-start align-items-sm-center flex-column flex-sm-row gap-3">
                         <div>
                             <div class="d-inline-flex align-items-center gap-1.5 px-2.5 py-0.5 rounded-pill mb-1 bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 11px;">
                                 <i class="fa-solid fa-receipt"></i> ORDER DETAILS
@@ -26,7 +26,7 @@
                             <h4 class="fw-bolder text-dark mb-0 fs-4">অর্ডার #{{ $order->order_number }}</h4>
                             <small class="text-muted">প্লেস করা হয়েছে: {{ $order->created_at->format('d M, Y (h:i A)') }}</small>
                         </div>
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-between justify-content-sm-end">
                             @php
                                 $statusColors = [
                                     'pending' => 'bg-warning text-dark',
@@ -38,10 +38,10 @@
                                 ];
                                 $badgeClass = $statusColors[strtolower($order->status)] ?? 'bg-secondary text-white';
                             @endphp
-                            <span class="badge {{ $badgeClass }} rounded-pill px-3 py-2 fw-bold" style="font-size: 13px;">
+                            <span class="badge {{ $badgeClass }} rounded-pill px-3 py-2 fw-bold" style="font-size: 12.5px;">
                                 <i class="fa-solid fa-circle-dot me-1 small"></i> {{ ucfirst($order->status) }}
                             </span>
-                            <a href="{{ route('account.orders.index') }}" class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 12.5px;">
+                            <a href="{{ route('account.orders.index') }}" class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 12px;">
                                 <i class="fa-solid fa-arrow-left me-1"></i> ফিরে যান
                             </a>
                         </div>
@@ -49,15 +49,15 @@
                 </div>
 
                 {{-- Order Info Cards --}}
-                <div class="row g-4 mb-4">
+                <div class="row g-3 g-md-4 mb-4">
                     {{-- Delivery Information --}}
                     <div class="col-md-6">
-                        <div class="p-4 rounded-4 bg-white border shadow-xs h-100">
+                        <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs h-100">
                             <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom text-primary">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <h6 class="fw-bold text-dark mb-0">ডেলিভারি তথ্য</h6>
                             </div>
-                            <div class="d-flex flex-column gap-1.5 small text-muted">
+                            <div class="d-flex flex-column gap-2 small text-muted">
                                 <div><strong class="text-dark">প্রাপকের নাম:</strong> {{ $order->full_name }}</div>
                                 <div><strong class="text-dark">ফোন নম্বর:</strong> {{ $order->phone }}</div>
                                 @if($order->email)
@@ -75,25 +75,27 @@
 
                     {{-- Payment & Shipping Details --}}
                     <div class="col-md-6">
-                        <div class="p-4 rounded-4 bg-white border shadow-xs h-100">
+                        <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs h-100">
                             <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom text-success">
                                 <i class="fa-solid fa-credit-card"></i>
                                 <h6 class="fw-bold text-dark mb-0">পেমেন্ট ও অর্ডার সারাংশ</h6>
                             </div>
-                            <div class="d-flex flex-column gap-1.5 small text-muted">
+                            <div class="d-flex flex-column gap-2 small text-muted">
                                 <div><strong class="text-dark">পেমেন্ট পদ্ধতি:</strong> <span class="badge bg-light text-dark border text-uppercase">{{ $order->payment_method ?: 'ক্যাশ অন ডেলিভারি' }}</span></div>
                                 <div><strong class="text-dark">পেমেন্ট স্ট্যাটাস:</strong> <span class="badge {{ $order->payment_status == 'paid' ? 'bg-success' : 'bg-warning text-dark' }}">{{ ucfirst($order->payment_status ?: 'pending') }}</span></div>
                                 <div><strong class="text-dark">অর্ডারের তারিখ:</strong> {{ $order->created_at->format('d M, Y (h:i A)') }}</div>
-                                <div><strong class="text-dark">মোট প্রোডাক্ট সংখ্যা:</strong> {{ $order->items->count() }}টি আইটেম</div>
+                                <div><strong class="text-dark">মোট প্রোডাক্ট:</strong> {{ $order->items->count() }}টি আইটেম</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Order Items Table --}}
-                <div class="p-4 rounded-4 bg-white border shadow-xs mb-4">
+                {{-- Order Items --}}
+                <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs mb-4">
                     <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom fs-5">অর্ডারের আইটেমসমূহ</h5>
-                    <div class="table-responsive">
+                    
+                    {{-- Desktop Table View (>= 768px) --}}
+                    <div class="table-responsive d-none d-md-block">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr class="small text-muted text-uppercase" style="font-size: 11px;">
@@ -137,12 +139,37 @@
                             </tbody>
                         </table>
                     </div>
+
+                    {{-- Mobile Card List View (< 768px) --}}
+                    <div class="d-flex flex-column gap-3 d-md-none">
+                        @foreach($order->items as $item)
+                            <div class="p-3 rounded-3 border bg-light-subtle d-flex gap-3 align-items-center">
+                                @if(optional($item->product)->image)
+                                    <img src="{{ asset($item->product->image) }}" class="rounded-3 border flex-shrink-0" width="56" height="56" style="object-fit: cover;">
+                                @else
+                                    <div class="rounded-3 border bg-light d-flex align-items-center justify-content-center flex-shrink-0" style="width: 56px; height: 56px;">
+                                        <i class="fa-solid fa-box text-muted"></i>
+                                    </div>
+                                @endif
+                                <div class="flex-grow-1 overflow-hidden">
+                                    <span class="fw-bold text-dark d-block text-truncate" style="font-size: 13.5px;">{{ $item->product_name }}</span>
+                                    @if($item->variant_name)
+                                        <span class="badge bg-light text-muted border mb-1" style="font-size: 10px;">{{ $item->variant_name }}</span>
+                                    @endif
+                                    <div class="d-flex align-items-center justify-content-between small text-muted mt-1">
+                                        <span>৳{{ number_format($item->price, 2) }} &times; {{ $item->quantity }}</span>
+                                        <strong class="text-dark fs-6">৳{{ number_format($item->total, 2) }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
                 {{-- Price Breakdown Summary --}}
-                <div class="p-4 rounded-4 bg-white border shadow-xs">
+                <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs">
                     <div class="row justify-content-end">
-                        <div class="col-md-5">
+                        <div class="col-12 col-md-6 col-lg-5">
                             <div class="d-flex flex-column gap-2">
                                 <div class="d-flex justify-content-between text-muted small">
                                     <span>সাবটোটাল (Subtotal):</span>

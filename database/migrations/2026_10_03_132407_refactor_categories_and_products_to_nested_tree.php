@@ -48,6 +48,10 @@ return new class extends Migration
         // 4. Drop subcategory_id from products
         if (Schema::hasColumn('products', 'subcategory_id')) {
             Schema::table('products', function (Blueprint $table) {
+                try {
+                    $table->dropIndex('store_products_subcategory');
+                } catch (\Throwable $e) {
+                }
                 $table->dropColumn('subcategory_id');
             });
         }
