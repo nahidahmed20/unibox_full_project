@@ -21,3 +21,22 @@ test('OTP view validates four digits without automatic submission', function () 
         ->get('/account/login')->assertOk()->assertSee('Check your phone')->assertSee('maxlength="4"', false);
     $this->post('/account/otp/verify', ['otp' => '12'])->assertSessionHasErrors('otp');
 });
+
+test('OTP login does not create a persistent remember-me login', function () {
+    $customer = User::factory()->create([
+        'type' => 'customer',
+        'phone' => '01712345678',
+    ]);
+    $rememberToken = $customer->remember_token;
+
+    $this->withSession([
+        'otp_login' => $customer->phone,
+        'otp_code' => '1234',
+        'otp_field' => 'phone',
+        'otp_expires_at' => now()->addMinutes(2)->timestamp,
+    ])->post('/account/otp/verify', ['otp' => '1234'])
+        ->assertRedirect(route('account.dashboard'));
+
+    expect($customer->fresh()->remember_token)->toBe($rememberToken);
+    $this->assertAuthenticatedAs($customer, 'customer');
+});

@@ -208,7 +208,7 @@
         @include('frontend.cart.partials.header-cart')
     </div>
     <div class="cart-footer p-3 border-top bg-light">
-        <a class="ub-button ub-button-primary w-100 d-flex justify-content-between align-items-center py-3 px-4 rounded-pill fw-bold text-decoration-none" href="{{ route('checkout') }}">
+        <a class="ub-button ub-button-primary w-100 d-flex justify-content-center align-items-center py-3 px-4 rounded-pill fw-bold text-decoration-none" href="{{ route('checkout') }}">
             <span>Proceed to Checkout</span>
             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </a>

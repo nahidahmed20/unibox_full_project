@@ -19,14 +19,17 @@
             <div class="col-lg-9" id="account-content">
 
                 {{-- Page Header --}}
-                <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2.5">
+                <div class="p-3 p-sm-4 rounded-4 bg-white border shadow-xs mb-4 d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+                    <!-- Left Side: Title & Info -->
                     <div>
-                        <div class="d-inline-flex align-items-center gap-1.5 px-2.5 py-0.5 rounded-pill mb-1 bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 11px;">
+                        <div class="d-inline-flex align-items-center gap-1.5 px-2.5 py-1 rounded-pill mb-1 bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 11px;">
                             <i class="fa-solid fa-bag-shopping"></i> ORDER HISTORY
                         </div>
-                        <h4 class="fw-bolder text-dark mb-0 fs-4">আমার অর্ডারসমূহ (My Orders)</h4>
-                        <small class="text-muted">আপনার পূর্বের সকল অর্ডারের তালিকা ও বর্তমান ডেলিভারি স্ট্যাটাস</small>
+                        <h4 class="fw-bolder text-dark mb-1 fs-5 fs-sm-4">আমার অর্ডারসমূহ (My Orders)</h4>
+                        <small class="text-muted d-block" style="font-size: 13px;">আপনার পূর্বের সকল অর্ডারের তালিকা ও বর্তমান ডেলিভারি স্ট্যাটাস</small>
                     </div>
+
+                    <!-- Right Side: Action Button -->
                     <a href="{{ route('search') }}" class="btn btn-sm btn-dark rounded-pill px-3 py-2 fw-semibold text-white shadow-xs w-100 w-sm-auto text-center" style="background: #0f172a; font-size: 12.5px;">
                         <i class="fa-solid fa-cart-shopping me-1"></i> নতুন অর্ডার করুন
                     </a>

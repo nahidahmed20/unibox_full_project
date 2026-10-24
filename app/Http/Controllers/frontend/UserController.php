@@ -139,7 +139,7 @@ class UserController extends Controller
             }
         }
 
-        Auth::guard('customer')->login($user, true);
+        Auth::guard('customer')->login($user);
         $request->session()->regenerate();
 
         session()->forget(['otp_login', 'otp_code', 'otp_field', 'otp_expires_at']);
@@ -221,7 +221,7 @@ class UserController extends Controller
             }
         }
 
-        Auth::guard('customer')->login($user, true);
+        Auth::guard('customer')->login($user);
 
         session()->regenerate();
         $redirect = session()->pull('redirect_after_login', route('account.dashboard'));

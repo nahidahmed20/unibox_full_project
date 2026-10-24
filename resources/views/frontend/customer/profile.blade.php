@@ -17,20 +17,20 @@
             <div class="col-lg-9" id="account-content">
 
                 {{-- Header Card --}}
-                <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs mb-4">
-                    <div class="d-inline-flex align-items-center gap-1.5 px-2.5 py-0.5 rounded-pill mb-1 bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 11px;">
+                <div class="p-3 p-sm-4 rounded-4 bg-white border shadow-xs mb-4">
+                    <div class="d-inline-flex align-items-center gap-1.5 px-2.5 py-1 rounded-pill mb-1 bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 11px;">
                         <i class="fa-solid fa-user-pen"></i> PROFILE SETTINGS
                     </div>
-                    <h4 class="fw-bolder text-dark mb-1 fs-4">ব্যক্তিগত তথ্য ও ঠিকানা</h4>
-                    <p class="text-muted small mb-0">আপনার নাম, মোবাইল নম্বর, ইমেইল ও ডেলিভারি ঠিকানা আপডেট করুন।</p>
+                    <h4 class="fw-bolder text-dark mb-1 fs-5 fs-sm-4">ব্যক্তিগত তথ্য ও ঠিকানা</h4>
+                    <p class="text-muted small mb-0" style="font-size: 13.5px; line-height: 1.5;">আপনার নাম, মোবাইল নম্বর, ইমেইল ও ডেলিভারি ঠিকানা আপডেট করুন।</p>
                 </div>
                 
                 {{-- Form Card --}}
-                <div class="p-3.5 p-sm-4 rounded-4 bg-white border shadow-xs">
+                <div class="p-3 p-sm-4 p-md-5 rounded-4 bg-white border shadow-xs">
                     {{-- Success Message --}}
                     @if(session('success'))
                         <div class="alert alert-success alert-dismissible fade show rounded-3 d-flex align-items-center gap-2 mb-4" role="alert">
-                            <i class="fa-solid fa-circle-check fs-5"></i>
+                            <i class="fa-solid fa-circle-check fs-5 flex-shrink-0"></i>
                             <div>{{ session('success') }}</div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -49,7 +49,7 @@
 
                     <form data-account-profile data-district-url="{{ route('get.districts') }}" data-upazila-url="{{ route('get.upazilas') }}" action="{{ route('account.profile.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="row g-3">
+                        <div class="row g-3 g-md-4">
                             {{-- Name --}}
                             <div class="col-12 col-md-6">
                                 <label class="form-label fw-semibold small text-dark mb-1">পূর্ণ নাম (Full Name) <span class="text-danger">*</span></label>
@@ -111,7 +111,7 @@
                                 <label class="form-label fw-semibold text-primary small mb-1">
                                     <i class="fa-solid fa-house me-1"></i> বাসার ডেলিভারি ঠিকানা (Home Address)
                                 </label>
-                                <textarea name="address" rows="2" class="form-control rounded-3 shadow-none" placeholder="বাসার নম্বর, রোড, এলাকা...">{{ old('address', $customer->address ?? '') }}</textarea>
+                                <textarea name="address" rows="3" class="form-control rounded-3 shadow-none" placeholder="বাসার নম্বর, রোড, এলাকা...">{{ old('address', $customer->address ?? '') }}</textarea>
                             </div>
                             
                             {{-- Office Address --}}
@@ -119,7 +119,7 @@
                                 <label class="form-label fw-semibold text-info small mb-1">
                                     <i class="fa-solid fa-building me-1"></i> অফিস ডেলিভারি ঠিকানা (Office Address)
                                 </label>
-                                <textarea name="office_address" rows="2" class="form-control rounded-3 shadow-none" placeholder="প্রতিষ্ঠানের নাম, ফ্লোর, এলাকা...">{{ old('office_address', $customer->office_address ?? '') }}</textarea>
+                                <textarea name="office_address" rows="3" class="form-control rounded-3 shadow-none" placeholder="প্রতিষ্ঠানের নাম, ফ্লোর, এলাকা...">{{ old('office_address', $customer->office_address ?? '') }}</textarea>
                             </div>
 
                             {{-- Image Upload --}}
@@ -129,7 +129,7 @@
                             </div>
 
                             {{-- Current Image Preview --}}
-                            <div class="col-12 col-md-6 d-flex align-items-center gap-3 pt-2">
+                            <div class="col-12 col-md-6 d-flex align-items-center gap-3 pt-2 pt-md-0">
                                 @if($customer->image && file_exists(public_path($customer->image)))
                                     <img src="{{ asset($customer->image) }}" width="56" height="56" class="rounded-circle border shadow-xs flex-shrink-0" style="object-fit: cover;">
                                 @else
@@ -141,7 +141,7 @@
                             </div>
 
                             {{-- Submit --}}
-                            <div class="col-12 mt-4 pt-3 border-top text-end">
+                            <div class="col-12 mt-4 pt-3 border-top text-md-end text-center">
                                 <button type="submit" class="btn btn-dark rounded-pill px-5 py-2.5 fw-bold text-white shadow-xs w-100 w-md-auto" style="background: #0f172a;">
                                     <i class="fa-solid fa-check me-1"></i> সংরক্ষণ করুন (Save Changes)
                                 </button>
