@@ -2,6 +2,7 @@
     $companyName = setting('company_name', setting('website_title', 'Unibox'));
     $adminLogo = setting('header_logo', setting('logo', setting('footer_logo')));
     $navIcon = setting('favicon', setting('nav_icon'));
+    $hasLogo = $adminLogo && file_exists(public_path($adminLogo));
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -12,514 +13,285 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500&display=swap" rel="stylesheet">
     @if($navIcon)
         <link rel="shortcut icon" href="{{ asset($navIcon) }}" type="image/x-icon">
     @endif
 
     <style>
         :root {
-            --ff-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --ff-display: 'Space Grotesk', 'Inter', sans-serif;
+            --ff-serif: 'Instrument Serif', Georgia, serif;
+            --ff-body: 'Manrope', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
 
-            /* Dark showcase side */
-            --dark-1: #071711;
-            --dark-2: #0C2A21;
-            --dark-3: #123D2F;
-            --lime: #A6EE7C;
-            --gold: #FFC168;
-            --glass-bg: rgba(255, 255, 255, 0.07);
-            --glass-bg-strong: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.14);
-            --on-dark: #F4F8F6;
-            --on-dark-muted: rgba(244, 248, 246, 0.62);
+            --night: #07110D;
+            --night-2: #0C1C15;
+            --forest: #123226;
+            --gold: #D4B97F;
+            --gold-soft: #E9D9B1;
+            --on-dark: #F1EFE8;
+            --on-dark-2: rgba(241,239,232,.62);
 
-            /* Light auth side */
-            --bg-light: #FFFFFF;
-            --text-primary: #14171A;
-            --text-secondary: #6B7177;
-            --text-muted: #9297A0;
-            --border: #E4E5E7;
-            --border-strong: #CBCDD1;
+            --bg: #F8F8F6;
+            --card: #FFFFFF;
+            --ink: #0E1A15;
+            --text-2: #5E6A64;
+            --text-3: #8E9893;
+            --line: #E4E6E3;
+            --line-strong: #CBD0CC;
+            --accent: #0B3D2B;
+            --accent-hover: #115239;
 
-            --ink: #14171A;
-            --ink-hover: #2B2E31;
-            --brand-grad: linear-gradient(135deg, #14C08C 0%, #04794F 100%);
-            --brand-glow: rgba(16, 185, 129, 0.18);
-
-            --radius-lg: 18px;
-            --radius-md: 12px;
-            --radius-sm: 9px;
+            --r-md: 12px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--ff-body);
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; }
 
         body {
-            min-height: 100vh;
-            color: var(--text-primary);
-            background: var(--bg-light);
+            font-family: var(--ff-body);
+            color: var(--ink);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
         }
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
+        .layout { display: grid; grid-template-columns: 1.1fr 1fr; min-height: 100vh; }
 
-        /* ============ LEFT: SHOWCASE ============ */
+        /* ================= LEFT ================= */
         .showcase {
             position: relative;
-            flex: 1.15;
             overflow: hidden;
-            padding: 48px 56px;
+            padding: 48px 64px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: linear-gradient(160deg, var(--dark-1) 0%, var(--dark-2) 52%, var(--dark-3) 100%);
             color: var(--on-dark);
+            background:
+                radial-gradient(ellipse 70% 55% at 85% 90%, rgba(212,185,127,.14), transparent 70%),
+                linear-gradient(165deg, var(--night-2) 0%, var(--night) 100%);
         }
 
-        .showcase-grid {
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
-            background-size: 24px 24px;
-            mask-image: radial-gradient(ellipse 80% 70% at 30% 20%, black 40%, transparent 90%);
-            opacity: 0.7;
-        }
+        .showcase > * { position: relative; z-index: 1; }
 
-        .glow {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(70px);
+        .rosette {
+            position: absolute !important;
+            z-index: 0 !important;
+            right: -190px; bottom: -190px;
+            width: 720px; height: 720px;
             pointer-events: none;
+            animation: rosette-in 2.2s ease-out both;
+        }
+        @keyframes rosette-in {
+            from { opacity: 0; transform: rotate(-14deg) scale(.94); }
+            to   { opacity: 1; transform: rotate(0) scale(1); }
         }
 
-        .glow-lime {
-            width: 420px; height: 420px;
-            background: rgba(166, 238, 124, 0.22);
-            top: -120px; left: -80px;
-        }
+        .brand { display: flex; align-items: center; gap: 12px; min-height: 40px; }
+        .brand img { max-height: 40px; max-width: 170px; object-fit: contain; }
 
-        .glow-gold {
-            width: 380px; height: 380px;
-            background: rgba(255, 193, 104, 0.16);
-            bottom: -140px; right: -100px;
-        }
-
-        .showcase-top,
-        .showcase-mid,
-        .dashboard-stack {
-            position: relative;
-            z-index: 1;
-        }
-
-        .brand-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .mini-mark {
-            position: relative;
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            background: linear-gradient(155deg, #1FD494 0%, #0B7A54 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 14px rgba(0, 128, 96, 0.35);
+        .mark {
+            width: 38px; height: 38px; border-radius: 50%;
+            display: grid; place-items: center;
+            background: linear-gradient(180deg, #17352A, #0C1F18);
+            box-shadow: 0 0 0 1px rgba(212,185,127,.45), inset 0 1px 0 rgba(255,255,255,.08);
             flex-shrink: 0;
         }
+        .mark svg { width: 17px; height: 17px; }
 
-        .mini-mark svg { width: 17px; height: 17px; }
+        .brand-name { font-weight: 600; font-size: 15px; letter-spacing: .01em; }
 
-        .mini-mark-ring {
-            position: absolute;
-            inset: -6px;
-            border-radius: 13px;
-            border: 1.5px solid var(--lime);
-            opacity: 0;
-            animation: ring-pulse 1.3s ease-out 0.4s 1;
-        }
-
-        @keyframes ring-pulse {
-            0%   { opacity: 0.6; transform: scale(0.9); }
-            100% { opacity: 0; transform: scale(1.4); }
-        }
-
-        .brand-name {
-            font-family: var(--ff-display);
-            font-weight: 600;
-            font-size: 15px;
-            letter-spacing: 0.01em;
-        }
-
-        .showcase-mid { max-width: 460px; }
+        .pitch { max-width: 470px; }
 
         .headline {
-            font-family: var(--ff-display);
-            font-weight: 700;
-            font-size: clamp(30px, 3.4vw, 42px);
-            line-height: 1.12;
-            letter-spacing: -0.01em;
-            margin-top: 18px;
+            font-family: var(--ff-serif);
+            font-weight: 400;
+            font-size: clamp(42px, 4.6vw, 66px);
+            line-height: 1.02;
+            letter-spacing: -.015em;
         }
+        .headline em { font-style: italic; color: var(--gold-soft); }
 
-        .headline-accent {
-            background: linear-gradient(100deg, var(--lime), #6FE3B4 60%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .showcase-sub {
-            margin-top: 16px;
-            font-size: 15.5px;
-            line-height: 1.55;
-            color: var(--on-dark-muted);
+        .pitch-sub {
+            margin-top: 22px;
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--on-dark-2);
             max-width: 380px;
         }
 
-        /* ---- Floating glass dashboard cards ---- */
-        .dashboard-stack {
-            height: 210px;
-            margin-top: 12px;
-        }
+        .showcase-foot { font-size: 13px; color: rgba(241,239,232,.42); }
 
-        .float-card {
-            position: absolute;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-md);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
-            opacity: 0;
-            transform: translateY(22px);
-            animation: card-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes card-in {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-stat {
-            top: 0;
-            left: 0;
-            width: 190px;
-            padding: 16px 18px;
-            transform: translateY(22px) rotate(-2.5deg);
-            animation-delay: 0.15s;
-        }
-        .card-stat.settled { transform: rotate(-2.5deg); }
-
-        .stat-label {
-            display: block;
-            font-size: 12px;
-            color: var(--on-dark-muted);
-            margin-bottom: 6px;
-        }
-
-        .stat-value {
-            display: block;
-            font-family: var(--ff-display);
-            font-weight: 700;
-            font-size: 24px;
-            letter-spacing: -0.01em;
-        }
-
-        .stat-delta {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--dark-1);
-            background: var(--lime);
-            padding: 3px 8px;
-            border-radius: 20px;
-        }
-
-        .card-chart {
-            top: 28px;
-            right: 0;
-            width: 178px;
-            padding: 14px 16px 10px;
-            animation-delay: 0.32s;
-        }
-
-        .chart-label {
-            display: block;
-            font-size: 11.5px;
-            color: var(--on-dark-muted);
-            margin-bottom: 6px;
-        }
-
-        .sparkline { width: 100%; height: 46px; overflow: visible; }
-
-        .spark-fill {
-            fill: url(#sparkGradient);
-            opacity: 0.9;
-        }
-
-        .spark-path {
-            fill: none;
-            stroke: var(--lime);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .card-order {
-            bottom: 0;
-            left: 46px;
-            width: 254px;
-            padding: 13px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation-delay: 0.52s;
-            background: var(--glass-bg-strong);
-        }
-
-        .order-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            background: rgba(255, 193, 104, 0.18);
-            border: 1px solid rgba(255, 193, 104, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .order-icon svg { width: 16px; height: 16px; }
-
-        .order-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .order-title { font-size: 13px; font-weight: 600; }
-        .order-sub { font-size: 12px; color: var(--on-dark-muted); }
-        .order-amount { font-family: var(--ff-display); font-weight: 700; font-size: 14px; color: var(--gold); }
-
-        /* ============ RIGHT: AUTH ============ */
+        /* ================= RIGHT ================= */
         .auth {
-            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 48px 40px;
-            background: var(--bg-light);
         }
 
-        .mobile-banner { display: none; }
+        .mobile-brand { display: none; }
 
-        .auth-card { width: 100%; max-width: 360px; }
+        .auth-card { width: 100%; max-width: 390px; }
 
         .heading {
-            font-family: var(--ff-display);
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            color: var(--text-primary);
+            font-family: var(--ff-serif);
+            font-weight: 400;
+            font-size: 42px;
+            line-height: 1.05;
+            letter-spacing: -.015em;
         }
 
         .subheading {
-            margin-top: 6px;
-            font-size: 14.5px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
+            margin: 10px 0 32px;
+            font-size: 15px;
+            color: var(--text-2);
+            line-height: 1.5;
         }
 
         .auth-alert {
-            padding: 11px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 13.5px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 14px;
             line-height: 1.45;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
-        .auth-alert-danger {
-            background: #FEF2F2;
-            border: 1px solid #FECACA;
-            color: #991B1B;
-        }
-        .auth-alert-success {
-            background: #F0FDF4;
-            border: 1px solid #BBF7D0;
-            color: #166534;
-        }
+        .auth-alert-danger { background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; }
+        .auth-alert-success { background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; }
 
-        .field { width: 100%; margin-bottom: 16px; }
+        .field { margin-bottom: 20px; }
 
         .field label {
             display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 8px;
         }
 
         .field-control { position: relative; }
 
         .field-control input {
             width: 100%;
-            padding: 12px 14px;
+            height: 52px;
+            padding: 0 16px;
+            font: inherit;
             font-size: 15px;
-            color: var(--text-primary);
-            background: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
+            color: var(--ink);
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--r-md);
             outline: none;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 1px 2px rgba(14,26,21,.04);
+            transition: border-color .15s, box-shadow .15s;
         }
 
-        .field-control input::placeholder { color: var(--text-muted); }
-        .field-control input:hover { border-color: var(--border-strong); }
-
+        .field-control input::placeholder { color: var(--text-3); }
+        .field-control input:hover { border-color: var(--line-strong); }
         .field-control input:focus {
-            border-color: #0B9A6C;
-            box-shadow: 0 0 0 3.5px var(--brand-glow);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(11,61,43,.1);
         }
 
-        .field-control.has-toggle input { padding-right: 60px; }
+        .field-control.has-toggle input { padding-right: 72px; }
 
         .toggle-pass {
             position: absolute;
-            right: 12px;
-            top: 50%;
+            right: 8px; top: 50%;
             transform: translateY(-50%);
-            font-size: 12px;
+            font: inherit;
+            font-size: 13px;
             font-weight: 600;
-            letter-spacing: 0.02em;
-            color: #0B9A6C;
+            color: var(--text-2);
             background: none;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
-            padding: 4px 2px;
+            padding: 8px 10px;
+            transition: color .15s, background .15s;
         }
-
-        .toggle-pass:hover { color: var(--ink); }
+        .toggle-pass:hover { color: var(--ink); background: rgba(14,26,21,.05); }
 
         .row-options {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 4px 0 22px;
+            margin: 4px 0 26px;
             font-size: 13.5px;
         }
 
         .remember {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            user-select: none;
+            display: flex; align-items: center; gap: 9px;
+            color: var(--text-2);
+            cursor: pointer; user-select: none;
         }
-
-        .remember input[type="checkbox"] {
-            width: 16px; height: 16px;
-            accent-color: var(--ink);
-            cursor: pointer;
-        }
+        .remember input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
 
         .row-options a {
-            color: var(--text-secondary);
-            font-weight: 500;
+            color: var(--ink);
+            font-weight: 600;
             text-decoration: none;
-            border-bottom: 1px solid transparent;
+            border-bottom: 1px solid var(--line-strong);
+            transition: border-color .15s;
         }
-        .row-options a:hover { color: var(--text-primary); border-bottom-color: var(--text-primary); }
+        .row-options a:hover { border-bottom-color: var(--ink); }
 
         button.btn-primary {
             width: 100%;
-            padding: 13px;
-            font-size: 15px;
+            height: 54px;
+            font: inherit;
+            font-size: 15.5px;
             font-weight: 600;
+            letter-spacing: .01em;
             color: #fff;
-            background: var(--brand-grad);
+            background: linear-gradient(180deg, #145138 0%, var(--accent) 100%);
             border: none;
-            border-radius: var(--radius-sm);
+            border-radius: var(--r-md);
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(4, 121, 79, 0.28);
-            transition: filter 0.15s ease, transform 0.05s ease;
+            box-shadow: 0 0 0 1px rgba(212,185,127,.0), inset 0 1px 0 rgba(255,255,255,.14), 0 12px 24px -10px rgba(11,61,43,.55);
+            transition: background .15s, transform .08s, box-shadow .15s;
         }
-        button.btn-primary:hover { filter: brightness(1.06); }
+        button.btn-primary:hover { background: linear-gradient(180deg, #1A6246 0%, var(--accent-hover) 100%); }
         button.btn-primary:active { transform: translateY(1px); }
 
-        .divider {
-            display: flex; align-items: center; gap: 12px;
-            margin: 20px 0;
-            color: var(--text-muted);
-            font-size: 12.5px; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 0.04em;
-        }
-        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-
-        button.btn-google {
-            width: 100%;
-            padding: 11.5px;
-            font-size: 14.5px;
+        .back-link { margin-top: 24px; text-align: center; }
+        .back-link a {
+            font-size: 14px;
             font-weight: 500;
-            color: var(--text-primary);
-            background: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            transition: background 0.15s ease, border-color 0.15s ease;
+            color: var(--text-2);
+            text-decoration: none;
         }
-        button.btn-google:hover { background: #FAFAFA; border-color: var(--border-strong); }
+        .back-link a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 
         .page-footer {
-            margin-top: 26px;
+            margin-top: 40px;
             text-align: center;
-            font-size: 13px;
-            color: var(--text-muted);
+            font-size: 12.5px;
+            color: var(--text-3);
         }
-        .page-footer a { color: var(--text-secondary); font-weight: 500; text-decoration: none; border-bottom: 1px solid transparent; }
-        .page-footer a:hover { color: var(--text-primary); border-bottom-color: var(--text-primary); }
 
         button:focus-visible, a:focus-visible, input:focus-visible {
-            outline: 2px solid #0B9A6C;
+            outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
 
-        /* ============ RESPONSIVE ============ */
+        /* ================= RESPONSIVE ================= */
         @media (max-width: 980px) {
+            .layout { grid-template-columns: 1fr; }
             .showcase { display: none; }
-            .mobile-banner {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-bottom: 34px;
-            }
-            .mobile-banner .brand-name { color: var(--text-primary); font-size: 15px; }
-            .auth { padding: 40px 24px; }
+            .auth { padding: 40px 24px; min-height: 100vh; }
+            .mobile-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; }
+            .mobile-brand img { max-height: 36px; max-width: 150px; object-fit: contain; }
+            .mobile-brand .brand-name { color: var(--ink); }
+            .heading { font-size: 38px; }
         }
 
         @media (max-width: 400px) {
             .auth { padding: 32px 18px; }
+            .heading { font-size: 34px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .mini-mark-ring { display: none; }
-            .float-card { animation: none; opacity: 1; transform: none !important; }
-            .spark-path { stroke-dashoffset: 0 !important; transition: none !important; }
+            .rosette { animation: none; }
         }
     </style>
 </head>
@@ -528,85 +300,46 @@
 
 <div class="layout">
 
-    <!-- ============ LEFT: LIVE DASHBOARD SHOWCASE ============ -->
+    <!-- ============ LEFT: SHOWCASE ============ -->
     <aside class="showcase">
-        <div class="showcase-grid"></div>
-        <div class="glow glow-lime"></div>
-        <div class="glow glow-gold"></div>
+        <svg class="rosette" id="rosette" viewBox="-300 -300 600 600" aria-hidden="true"></svg>
 
-        <div class="showcase-top">
-            <div class="brand-row">
-                @if($adminLogo && file_exists(public_path($adminLogo)))
-                    <a href="{{ url('/') }}" title="{{ $companyName }}" style="display: inline-block;">
-                        <img src="{{ asset($adminLogo) }}" alt="{{ $companyName }}" style="max-height: 40px; max-width: 160px; object-fit: contain;">
-                    </a>
-                @else
-                    <div class="mini-mark">
-                        <div class="mini-mark-ring"></div>
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
-                            <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <span class="brand-name">{{ $companyName }} Admin</span>
-                @endif
-            </div>
-        </div>
-
-        <div class="showcase-mid">
-            <h2 class="headline">Every order,<br>every insight,<br><span class="headline-accent">one dashboard.</span></h2>
-            <p class="showcase-sub">Track sales, fulfill orders, and grow your store — all from a single command center.</p>
-        </div>
-
-        <div class="dashboard-stack">
-            <div class="float-card card-stat">
-                <span class="stat-label">Total revenue</span>
-                <span class="stat-value" id="statValue">৳ 0</span>
-                <span class="stat-delta">▲ 18.2%</span>
-            </div>
-
-            <div class="float-card card-chart">
-                <span class="chart-label">Last 7 days</span>
-                <svg class="sparkline" viewBox="0 0 160 50" preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="sparkGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#A6EE7C" stop-opacity="0.45"/>
-                            <stop offset="100%" stop-color="#A6EE7C" stop-opacity="0"/>
-                        </linearGradient>
-                    </defs>
-                    <path class="spark-fill" d="M2,38 C18,34 26,16 40,20 C54,24 62,8 78,12 C94,16 100,30 118,20 C134,12 144,16 158,6 L158,50 L2,50 Z"/>
-                    <path class="spark-path" id="sparkPath" d="M2,38 C18,34 26,16 40,20 C54,24 62,8 78,12 C94,16 100,30 118,20 C134,12 144,16 158,6"/>
-                </svg>
-            </div>
-
-            <div class="float-card card-order">
-                <div class="order-icon">
+        <div class="brand">
+            @if($hasLogo)
+                <a href="{{ url('/') }}" title="{{ $companyName }}" style="display:inline-block;">
+                    <img src="{{ asset($adminLogo) }}" alt="{{ $companyName }}">
+                </a>
+            @else
+                <div class="mark">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="#FFC168" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="#FFC168" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="#E9D9B1" stroke-width="1.8" stroke-linejoin="round"/>
+                        <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="#E9D9B1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <div class="order-text">
-                    <span class="order-title">New order received</span>
-                    <span class="order-sub">#4821 · 2 items</span>
-                </div>
-                <span class="order-amount">৳ 2,450</span>
-            </div>
+                <span class="brand-name">{{ $companyName }} Admin</span>
+            @endif
         </div>
+
+        <div class="pitch">
+            <h2 class="headline">Your store, <em>in perfect order.</em></h2>
+            <p class="pitch-sub">Orders, stock and customers in one calm, clear workspace.</p>
+        </div>
+
+        <p class="showcase-foot">&copy; {{ date('Y') }} {{ $companyName }}</p>
     </aside>
 
     <!-- ============ RIGHT: LOGIN FORM ============ -->
     <main class="auth">
-        <div class="mobile-banner">
-            @if($adminLogo && file_exists(public_path($adminLogo)))
-                <a href="{{ url('/') }}" title="{{ $companyName }}" style="display: inline-block;">
-                    <img src="{{ asset($adminLogo) }}" alt="{{ $companyName }}" style="max-height: 36px; max-width: 140px; object-fit: contain;">
+        <div class="mobile-brand">
+            @if($hasLogo)
+                <a href="{{ url('/') }}" title="{{ $companyName }}" style="display:inline-block;">
+                    <img src="{{ asset($adminLogo) }}" alt="{{ $companyName }}">
                 </a>
             @else
-                <div class="mini-mark">
+                <div class="mark">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6 8H18L17.2 19.5C17.14 20.33 16.43 21 15.6 21H8.4C7.57 21 6.86 20.33 6.8 19.5L6 8Z" stroke="#E9D9B1" stroke-width="1.8" stroke-linejoin="round"/>
+                        <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" stroke="#E9D9B1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 <span class="brand-name">{{ $companyName }}</span>
@@ -615,22 +348,22 @@
 
         <div class="auth-card">
             <h1 class="heading">Welcome back</h1>
-            <p class="subheading">Log in to continue to your store admin</p>
+            <p class="subheading">Log in to manage your store.</p>
 
             @if(session('error'))
-                <div class="auth-alert auth-alert-danger">
+                <div class="auth-alert auth-alert-danger" role="alert">
                     <strong>Error:</strong> {{ session('error') }}
                 </div>
             @endif
 
             @if(isset($errors) && $errors->any() && !session('error'))
-                <div class="auth-alert auth-alert-danger">
+                <div class="auth-alert auth-alert-danger" role="alert">
                     {{ $errors->first() }}
                 </div>
             @endif
 
             @if(session('status'))
-                <div class="auth-alert auth-alert-success">
+                <div class="auth-alert auth-alert-success" role="status">
                     {{ session('status') }}
                 </div>
             @endif
@@ -649,7 +382,7 @@
                     <label for="pass">Password</label>
                     <div class="field-control has-toggle">
                         <input type="password" id="pass" name="password" placeholder="Enter your password" required autocomplete="current-password">
-                        <button type="button" class="toggle-pass" onclick="togglePass()">SHOW</button>
+                        <button type="button" class="toggle-pass" onclick="togglePass()" aria-label="Show or hide password">Show</button>
                     </div>
                 </div>
 
@@ -663,12 +396,10 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn-primary">Log in to Dashboard</button>
+                <button type="submit" class="btn-primary">Log in</button>
 
-                <div style="margin-top: 20px; text-align: center;">
-                    <a href="{{ url('/') }}" style="color: var(--text-secondary); font-size: 13.5px; text-decoration: none; font-weight: 500;">
-                        ← Return to Website (ওয়েবসাইটে যান)
-                    </a>
+                <div class="back-link">
+                    <a href="{{ url('/') }}">← Return to Website (ওয়েবসাইটে যান)</a>
                 </div>
             </form>
         </div>
@@ -686,40 +417,33 @@
         const btn = document.querySelector(".toggle-pass");
         const isHidden = input.type === "password";
         input.type = isHidden ? "text" : "password";
-        btn.textContent = isHidden ? "HIDE" : "SHOW";
+        btn.textContent = isHidden ? "Hide" : "Show";
     }
 
-    // Animate the revenue counter and sparkline draw-in once the page loads
-    window.addEventListener("load", function () {
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        const statEl = document.getElementById("statValue");
-        const target = 148500;
-
-        if (reduceMotion) {
-            statEl.textContent = "৳ " + target.toLocaleString('en-IN');
-        } else {
-            const duration = 1400;
-            const start = performance.now();
-            function tick(now) {
-                const progress = Math.min((now - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                statEl.textContent = "৳ " + Math.floor(eased * target).toLocaleString('en-IN');
-                if (progress < 1) requestAnimationFrame(tick);
-            }
-            requestAnimationFrame(tick);
+    // Guilloche rosette: rotated ellipses, like the pattern on banknotes and fine certificates
+    (function () {
+        const svg = document.getElementById("rosette");
+        if (!svg) return;
+        const NS = "http://www.w3.org/2000/svg";
+        const g = document.createElementNS(NS, "g");
+        g.setAttribute("fill", "none");
+        g.setAttribute("stroke", "#D4B97F");
+        g.setAttribute("stroke-width", "0.7");
+        const count = 36;
+        for (let i = 0; i < count; i++) {
+            const e = document.createElementNS(NS, "ellipse");
+            e.setAttribute("rx", "270");
+            e.setAttribute("ry", "96");
+            e.setAttribute("transform", "rotate(" + (i * 180 / count) + ")");
+            e.setAttribute("stroke-opacity", (0.38 - (i % 6) * 0.04).toFixed(2));
+            g.appendChild(e);
         }
-
-        const path = document.getElementById("sparkPath");
-        if (path && !reduceMotion) {
-            const length = path.getTotalLength();
-            path.style.strokeDasharray = length;
-            path.style.strokeDashoffset = length;
-            path.getBoundingClientRect(); // force reflow
-            path.style.transition = "stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s";
-            path.style.strokeDashoffset = "0";
-        }
-    });
+        const ring = document.createElementNS(NS, "circle");
+        ring.setAttribute("r", "280");
+        ring.setAttribute("stroke-opacity", "0.25");
+        g.appendChild(ring);
+        svg.appendChild(g);
+    })();
 </script>
 
 </body>

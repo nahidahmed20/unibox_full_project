@@ -1,146 +1,197 @@
 <style>
-    /* Professional Compact Sidebar Styling */
     .app-sidebar {
-        background: #111827 !important; /* Elegant Dark */
-        border-right: 1px solid #1f2937;
+        background: #0f172a !important;
+        border-right: 1px solid rgba(148, 163, 184, 0.12);
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    .sidebar-wrapper {
-        padding: 8px 10px;
+    .sidebar-brand {
+        padding: 8px 12px 14px;
     }
 
-    /* Menu Items */
+    .sidebar-brand .brand-link {
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid rgba(148, 163, 184, 0.12) !important;
+        border-radius: 12px;
+        text-decoration: none;
+    }
+
+    .sidebar-brand .brand-image {
+        max-height: 34px;
+        max-width: 150px;
+        margin: 0 !important;
+        object-fit: contain;
+        opacity: 1 !important;
+        box-shadow: none !important;
+    }
+
+    .sidebar-brand .brand-text {
+        min-width: 0;
+        overflow: hidden;
+        color: #f8fafc !important;
+        font-size: 0.95rem;
+        font-weight: 700 !important;
+        letter-spacing: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sidebar-wrapper {
+        padding: 8px 10px 18px;
+    }
+
     .sidebar-wrapper .nav-item {
-        margin-bottom: 1px;
+        margin-bottom: 3px;
     }
 
     .sidebar-wrapper .nav-link {
-        border-radius: 6px !important;
-        padding: 8px 12px !important;
-        transition: all 0.2s ease;
-        color: #9ca3af !important; /* Soft Gray */
+        min-height: 42px;
+        padding: 9px 12px !important;
+        border: 1px solid transparent;
+        border-left: 3px solid transparent;
+        border-radius: 10px !important;
+        color: #a8b3c5 !important;
         display: flex;
         align-items: center;
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 0.86rem;
         cursor: pointer;
         user-select: none;
+        transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
     }
 
-    /* Active & Hover States */
     .sidebar-wrapper .nav-link:hover {
-        background: rgba(255, 255, 255, 0.05) !important;
-        color: #f3f4f6 !important;
+        background: rgba(148, 163, 184, 0.1) !important;
+        color: #f8fafc !important;
     }
 
-    .sidebar-wrapper .nav-item.menu-open > .nav-link,
+    .sidebar-wrapper .nav-item.menu-open > .nav-link {
+        color: #e2e8f0 !important;
+    }
+
     .sidebar-wrapper .nav-link.active {
-        background: linear-gradient(90deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%) !important;
-        color: #60a5fa !important;
-        border-left: 3px solid #3b82f6;
+        background: linear-gradient(100deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.08)) !important;
+        border-color: rgba(96, 165, 250, 0.12);
+        border-left-color: #60a5fa;
+        color: #bfdbfe !important;
     }
 
-    /* Icons */
-    .sidebar-wrapper .nav-icon {
-        margin-right: 10px;
-        font-size: 1.1rem;
-        transition: transform 0.2s ease;
+    .sidebar-wrapper .nav-link > .nav-icon {
+        width: 1.35rem;
+        margin-right: 0.7rem;
+        color: #94a3b8;
+        font-size: 1.05rem;
+        text-align: center;
+        transition: color 0.18s ease, transform 0.18s ease;
     }
 
-    .sidebar-wrapper .nav-link.active .nav-icon {
-        color: #3b82f6 !important;
-        transform: scale(1.1);
+    .sidebar-wrapper .nav-link.active > .nav-icon {
+        color: #93c5fd !important;
+        transform: translateX(1px);
     }
 
-    /* Chevrons & Arrow Rotation */
+    .sidebar-wrapper .nav-link > p {
+        min-width: 0;
+        margin: 0;
+        line-height: 1.35;
+    }
+
     .sidebar-wrapper .nav-arrow {
-        display: inline-block !important;
-        transition: transform 0.22s ease !important;
+        color: #718096;
+        font-size: 0.72rem;
+        transition: color 0.18s ease, transform 0.22s ease !important;
     }
+
     .sidebar-wrapper .nav-item.menu-open > .nav-link .nav-arrow {
+        color: #93c5fd;
         transform: rotate(90deg) !important;
     }
 
-    /* Submenus */
-    .nav-treeview {
-        margin-top: 1px;
-        margin-bottom: 4px;
-        background: #0b0f19 !important; /* Darker background for submenus */
-        border-radius: 6px;
-        padding: 4px 0;
+    .sidebar-wrapper .nav-treeview {
+        margin: 3px 0 7px 10px;
+        padding: 5px 5px 5px 4px;
+        background: rgba(2, 6, 23, 0.42) !important;
+        border: 1px solid rgba(148, 163, 184, 0.08);
+        border-radius: 10px;
     }
 
-    .nav-treeview .nav-link {
+    .sidebar-wrapper .nav-treeview .nav-link {
         position: relative !important;
-        padding: 6px 14px 6px 36px !important;
-        font-size: 0.85rem;
-        color: #9ca3af !important;
+        min-height: 36px;
+        padding: 7px 9px 7px 12px !important;
+        border-radius: 7px !important;
+        color: #9aa8bc !important;
+        font-size: 0.81rem;
         border-left: none !important;
         background: transparent !important;
     }
 
-    .nav-treeview .nav-link:hover {
-        color: #f3f4f6 !important;
+    .sidebar-wrapper .nav-treeview .nav-link > i {
+        width: 1.1rem;
+        margin-right: 0.55rem;
+        color: #718096;
+        font-size: 0.9rem;
+        text-align: center;
     }
 
-    .nav-treeview .nav-link.active {
-        color: #60a5fa !important;
+    .sidebar-wrapper .nav-treeview .nav-link:hover {
+        background: rgba(148, 163, 184, 0.08) !important;
+        color: #f8fafc !important;
+    }
+
+    .sidebar-wrapper .nav-treeview .nav-link.active {
+        background: rgba(59, 130, 246, 0.12) !important;
+        color: #bfdbfe !important;
         font-weight: 600;
-        background: rgba(59, 130, 246, 0.08) !important;
     }
 
-    .nav-treeview .nav-link.active::before {
-        content: "" !important;
-        position: absolute;
-        left: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 6px;
-        height: 6px;
-        background-color: #3b82f6;
-        border-radius: 50%;
-        box-shadow: 0 0 8px rgba(59, 130, 246, 0.9);
+    .sidebar-wrapper .nav-treeview .nav-link.active > i {
+        color: #93c5fd;
     }
 
-    /* Headers */
-    .nav-header {
-        font-size: 0.7rem !important;
+    .sidebar-wrapper .nav-header {
+        padding: 17px 12px 7px !important;
+        color: #718096 !important;
+        font-size: 0.64rem !important;
         font-weight: 700;
-        letter-spacing: 0.5px;
-        color: #4b5563 !important;
-        padding: 16px 15px 6px !important;
+        letter-spacing: 0.09em;
         text-transform: uppercase;
     }
 
-    /* Branding */
-    .brand-link {
-        border-bottom: 1px solid #1f2937 !important;
-        padding: 12px 15px !important;
-        background: #111827 !important;
+    .sidebar-wrapper .nav-link:focus-visible,
+    .sidebar-brand .brand-link:focus-visible {
+        outline: 2px solid #60a5fa;
+        outline-offset: 2px;
     }
 
-    .brand-text {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700 !important;
-        letter-spacing: 0.5px;
-        color: #ffffff !important;
-        font-size: 1.1rem;
-    }
-
-    /* Custom Scrollbar for Sidebar */
     .sidebar-wrapper::-webkit-scrollbar {
-        width: 4px;
+        width: 5px;
     }
+
     .sidebar-wrapper::-webkit-scrollbar-track {
         background: transparent;
     }
+
     .sidebar-wrapper::-webkit-scrollbar-thumb {
-        background: #374151;
-        border-radius: 4px;
+        background: #334155;
+        border-radius: 8px;
     }
+
     .sidebar-wrapper:hover::-webkit-scrollbar-thumb {
-        background: #4b5563;
+        background: #475569;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .sidebar-wrapper .nav-link,
+        .sidebar-wrapper .nav-icon,
+        .sidebar-wrapper .nav-arrow {
+            transition: none !important;
+        }
     }
 </style>
 
@@ -641,5 +692,4 @@
     })();
 </script>
 @endpush
-
 
